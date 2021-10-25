@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_background_history.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_background_history2.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_background_oval.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_background_search.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_background_show.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_background_show2.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_backround_login.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_button_login.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_button_register.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_button_register2.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_linear_login.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_linear_register.xml" value="0.75" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/edit.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/more.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/more_black.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/font/font_family.xml" value="0.22239583333333332" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_add_barang.xml" value="0.1921875" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_history.xml" value="0.1921875" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_menu.xml" value="0.1921875" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_register.xml" value="0.22" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_show_barang.xml" value="0.22" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_splash_screen.xml" value="0.1921875" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_show_barang.xml" value="0.67" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_show_data.xml" value="0.1921875" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

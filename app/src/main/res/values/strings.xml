@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">LumecolorsApp</string>
+    <string name="get_started">Get Started</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="hallo">Hallo</string>
+    <string name="rp">Rp 150.000</string>
+    <string name="stok">stok : 20</string>
+    <string name="barang">Barang</string>
+    <string name="daftar">Daftar Barang :</string>
+    <string name="nama">Nama</string>
+    <string name="admin">Admin</string>
+    <string name="email">Email</string>
+    <string name="masuk">Masuk</string>
+    <string name="search">Search</string>
+    <string name="history">Histori :</string>
+    <string name="history1">Histori</string>
+    <string name="bulan">Bulan :</string>
+    <string name="loading_in">Loading In</string>
+    <string name="approve_in">Approve In</string>
+    <string name="approve_out">Approve Out</string>
+    <string name="stock_opname">Stock Opname</string>
+    <string name="stock_in">Stock In</string>
+    <string name="stock_out">Stock Out</string>
+    <string name="super_admin">Super Admin</string>
+    <string name="belum">Belum memiliki akun?</string>
+    <string name="sudah">Sudah memiliki akun?</string>
+    <string name="selamat_datang">Selamat Datang</string>
+</resources>
