@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:ignore="ContentDescription, TextFields, Autofill"
     android:background="@color/white"
-    tools:context=".main.ShowBarangActivity">
+    tools:context=".main.ApproveInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
