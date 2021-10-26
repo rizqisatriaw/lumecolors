@@ -6,13 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClients {
     fun getRetrofitInstance(): Retrofit {
 
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl("https://tes.smilink.id/api/")
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://swapi.dev/api/")
+            .baseUrl("https://tes.smilink.id/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
