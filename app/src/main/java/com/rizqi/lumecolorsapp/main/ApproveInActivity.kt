@@ -7,6 +7,6 @@ import com.rizqi.lumecolorsapp.R
 class ApproveInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_show_barang)
+        setContentView(R.layout.activity_approve_in)
     }
 }

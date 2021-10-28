@@ -7,6 +7,6 @@ import com.rizqi.lumecolorsapp.R
 class LoadingInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_barang)
+        setContentView(R.layout.activity_loading_in)
     }
 }
