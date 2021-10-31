@@ -22,7 +22,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -43,20 +44,20 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/nama"
+                            android:id="@+id/name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/barang"
+                            android:text="@string/goods"
                             android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/bold"
                             android:textSize="20sp" />
 
                         <TextView
-                            android:id="@+id/stok"
+                            android:id="@+id/stock"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:text="@string/stok"
+                            android:text="@string/stock"
                             android:fontFamily="@font/poppins_regular"
                             android:textColor="@color/bold"
                             android:textSize="16sp" />
@@ -85,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:cardBackgroundColor="@color/red"
+            app:cardBackgroundColor="@color/red_shadow"
             app:cardCornerRadius="20dp"
             app:cardElevation="2dp">
 
@@ -115,7 +116,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/barang"
+                                android:text="@string/goods"
                                 android:textColor="@color/black"
                                 android:textSize="20sp" />
 
@@ -123,16 +124,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
-                                android:text="@string/stok"
+                                android:text="@string/stock"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/edit" />
+                            android:src="@drawable/edit_card" />
 
                     </RelativeLayout>
 
@@ -157,10 +158,10 @@
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/edit" />
+                            android:src="@drawable/delete" />
                     </RelativeLayout>
 
                 </LinearLayout>

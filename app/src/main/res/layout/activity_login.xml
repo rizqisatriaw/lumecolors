@@ -9,15 +9,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:gravity="center"
-        android:background="@drawable/custom_background_oval">
+        android:layout_height="440dp"
+        android:background="@drawable/custom_background_oval"
+        android:gravity="center">
 
         <ImageView
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:layout_marginTop="-60dp"
-            android:src="@drawable/lumecolors_logo_putih"/>
+            android:src="@drawable/lumecolors_logo_putih" />
 
     </LinearLayout>
 
@@ -57,6 +57,7 @@
                     android:hint="@string/username"
                     android:inputType="text"
                     android:textColor="@color/bold"
+                    android:textColorHint="@color/shadow"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -90,6 +91,7 @@
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:textColor="@color/bold"
+                    android:textColorHint="@color/shadow"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -119,7 +121,7 @@
                 android:gravity="center"
                 android:paddingVertical="8dp"
                 android:text="@string/login"
-                android:textColor="@color/bold"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -137,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
-                android:text="@string/belum"
+                android:text="@string/dont"
                 android:textColor="@color/bold"
                 android:textSize="18sp" />
 

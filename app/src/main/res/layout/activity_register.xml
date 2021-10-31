@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".auth.RegisterActivity"
+    android:background="@color/white"
     tools:ignore="ContentDescription, AutoFill">
 
     <ImageView
