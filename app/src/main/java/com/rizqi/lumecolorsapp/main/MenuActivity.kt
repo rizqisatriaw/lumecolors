@@ -15,9 +15,15 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
 
         val loadingIn = findViewById<RelativeLayout>(R.id.card_loading_in)
+        val imageHistory = findViewById<ImageView>(R.id.img_history)
 
         loadingIn.setOnClickListener {
             val intent = Intent(this@MenuActivity, LoadingInActivity::class.java)
+            this@MenuActivity.startActivity(intent)
+        }
+
+        imageHistory.setOnClickListener {
+            val intent =Intent(this@MenuActivity, HistoryLoadingInActivity::class.java)
             this@MenuActivity.startActivity(intent)
         }
 
