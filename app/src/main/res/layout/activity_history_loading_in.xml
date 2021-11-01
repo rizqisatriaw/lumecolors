@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,6 +28,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="28dp"
                     android:src="@drawable/papers" />
+
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
@@ -37,17 +38,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="14dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="@string/bulan"
+            android:text="@string/date_entry"
             android:textColor="@color/white"
             android:textSize="20sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_month"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="14dp" />
 
         <RelativeLayout
             android:id="@+id/layout1"
@@ -87,4 +80,407 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_shadow"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linear_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/custom_linear_form"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/date_entry"
+            android:textColor="@color/bold"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/calendar_in" />
+
+            <EditText
+                android:id="@+id/date_entry"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="@string/ex_date"
+                android:inputType="text"
+                android:textColor="@color/bold"
+                android:textColorHint="@color/shadow"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/check_date_entry"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="-30dp"
+                android:src="@drawable/check"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_date_entry"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/shadow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/exp"
+            android:textColor="@color/bold"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/exp" />
+
+            <EditText
+                android:id="@+id/edit_exp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="@string/ex_date"
+                android:inputType="text"
+                android:textColor="@color/bold"
+                android:textColorHint="@color/shadow"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/check_exp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="-30dp"
+                android:src="@drawable/check"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_exp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/shadow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/product"
+            android:textColor="@color/bold"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/product" />
+
+            <EditText
+                android:id="@+id/edit_product"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="@string/app_name"
+                android:inputType="text"
+                android:textColor="@color/bold"
+                android:textColorHint="@color/shadow"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/check_product"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="-30dp"
+                android:src="@drawable/check"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_product"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/shadow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/delivery"
+            android:textColor="@color/bold"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/delivery" />
+
+            <EditText
+                android:id="@+id/edit_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="@string/delivery"
+                android:inputType="text"
+                android:textColor="@color/bold"
+                android:textColorHint="@color/shadow"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/check_delivery"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="-30dp"
+                android:src="@drawable/check"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_delivery"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/shadow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/batch"
+            android:textColor="@color/bold"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/numbers" />
+
+            <EditText
+                android:id="@+id/edit_batch"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="@string/no_batch"
+                android:inputType="text"
+                android:textColor="@color/bold"
+                android:textColorHint="@color/shadow"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/check_batch"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="-30dp"
+                android:src="@drawable/check"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_batch"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/shadow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/qty_pass"
+            android:textColor="@color/bold"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/qty_pass" />
+
+            <EditText
+                android:id="@+id/edit_qty_pass"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="@string/no"
+                android:inputType="text"
+                android:textColor="@color/bold"
+                android:textColorHint="@color/shadow"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/check_pass"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="-30dp"
+                android:src="@drawable/check"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_pass"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/shadow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/qty_reject"
+            android:textColor="@color/bold"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/qty_reject" />
+
+            <EditText
+                android:id="@+id/edit_qty_reject"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="@string/no"
+                android:inputType="text"
+                android:textColor="@color/bold"
+                android:textColorHint="@color/shadow"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/check_reject"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="-30dp"
+                android:src="@drawable/check"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_reject"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/shadow" />
+
+        <LinearLayout
+            android:id="@+id/button_simpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/custom_button_login">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:paddingVertical="4dp"
+                android:text="@string/simpan"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

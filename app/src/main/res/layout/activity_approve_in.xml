@@ -63,7 +63,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="#00000000"
+                        android:background="@color/white"
+                        android:textColorHint="@color/shadow"
                         android:hint="@string/search"
                         android:textColor="@color/bold"
                         android:textSize="18sp" />
@@ -88,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
                     android:layout_marginEnd="14dp"
-                    android:text="@string/daftar"
+                    android:text="@string/list"
                     android:textColor="@color/bold"
                     android:textSize="20sp" />
 
@@ -99,8 +100,8 @@
                     android:padding="14dp"
                     tools:listitem="@layout/item_show_barang" />
 
-
             </LinearLayout>
+
         </RelativeLayout>
 
         <LinearLayout
@@ -116,7 +117,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rp"
+                android:text="@string/qty_pass_"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -124,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:text="@string/stok"
+                android:text="@string/approve_in_"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
