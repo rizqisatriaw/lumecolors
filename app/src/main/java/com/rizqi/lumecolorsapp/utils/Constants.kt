@@ -1,4 +1,4 @@
-package com.rizqi.lumecolorsapp.response
+package com.rizqi.lumecolorsapp.utils
 
 object Constants {
 
@@ -13,5 +13,13 @@ object Constants {
     const val USERNAME = "username"
     const val PASSWORD = "password"
     const val LEVEL = "level"
+
+//    AUTH STATE
+    const val LOGGED_STATE = "logged_state"
+    const val LOGGED_IN = "logged_in"
+    const val LOGGED_OUT = "logged_out"
+
+//    DATA USER
+    const val SP_USERNAME = "sp_username"
 
 }

@@ -12,12 +12,17 @@ import com.rizqi.lumecolorsapp.api.GetDataService
 import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.main.MenuActivity
 import com.rizqi.lumecolorsapp.response.ResponseLogin
-import com.rizqi.lumecolorsapp.response.Constants
+import com.rizqi.lumecolorsapp.utils.Constants
+import com.rizqi.lumecolorsapp.utils.Constants.LOGGED_IN
+import com.rizqi.lumecolorsapp.utils.Constants.LOGGED_STATE
+import com.rizqi.lumecolorsapp.utils.Constants.SP_USERNAME
+import com.rizqi.lumecolorsapp.utils.SharedPreferencesUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferencesUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +32,17 @@ class LoginActivity : AppCompatActivity() {
         val username = findViewById<EditText>(R.id.edit_username)
         val password = findViewById<EditText>(R.id.edit_password)
 
-            login.setOnClickListener {
-                ResponseLogin(username.text.toString().trim(), password.text.toString().trim())
-            }
+        sharedPreferences = SharedPreferencesUtils(this@LoginActivity)
+
+        if (sharedPreferences.getStringSharedPreferences(LOGGED_STATE) == LOGGED_IN){
+            startActivity(Intent(this@LoginActivity, MenuActivity::class.java))
+            finish()
+            return
+        }
+
+        login.setOnClickListener {
+            ResponseLogin(username.text.toString().trim(), password.text.toString().trim())
+        }
     }
 
 
@@ -60,14 +73,12 @@ class LoginActivity : AppCompatActivity() {
 
                     val data = res.data[0]
 
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "NAMA: " + data.username + "\nLEVEL: " + data.level,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    setDataUser(SP_USERNAME, 0, data.nama)
+                    setDataUser(LOGGED_STATE, 0, LOGGED_IN)
 
                     val intent = Intent(this@LoginActivity, MenuActivity::class.java)
                     this@LoginActivity.startActivity(intent)
+                    finish()
 
                 } else {
 
@@ -79,22 +90,18 @@ class LoginActivity : AppCompatActivity() {
 
                 }
 
-//                Log.d("MESSAGE: ", response.message())
-//                Log.d("MESSAGE: ", response.message())
-
-//                Toast.makeText(
-//                    this@LoginActivity,
-//                    res.username +"  "+ res.password,
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//
-//                val intent = Intent(this@LoginActivity, MenuActivity::class.java)
-//                this@LoginActivity.startActivity(intent)
-
                 }
 
             }
         )
+    }
+
+    fun setDataUser(key: String, int: Int, string: String){
+        if (string != ""){
+            sharedPreferences.setSharedPreferences(key, string)
+        } else {
+            sharedPreferences.setSharedPreferences(key, int)
+        }
     }
 
 }
