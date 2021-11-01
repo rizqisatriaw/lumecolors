@@ -118,7 +118,7 @@
                 android:src="@drawable/exp" />
 
             <EditText
-                android:id="@+id/edit_exp"
+                android:id="@+id/date_exp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="15dp"
