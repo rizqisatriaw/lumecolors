@@ -3,11 +3,17 @@ package com.rizqi.lumecolorsapp.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.rizqi.lumecolorsapp.R
+import android.text.Editable
+
+
+
 
 class LoadingInActivity : AppCompatActivity() {
     private lateinit var imageHistory: ImageView
@@ -54,75 +60,182 @@ class LoadingInActivity : AppCompatActivity() {
         }
 
         btnSimpan.setOnClickListener {
-            validationForm()
+            if(validationForm()) {
+                loadingInSimpan()
+            }
         }
+
+        changeListener()
     }
 
-    fun validationForm(): Boolean {
+    private fun changeListener() {
+        dateEntry.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (s.isNotEmpty()) checkDateEntry.visibility = View.VISIBLE
+                else checkDateEntry.visibility = View.GONE
+            }
+        })
+
+        dateExp.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (s.isNotEmpty()) checkDateExp.visibility = View.VISIBLE
+                else checkDateExp.visibility = View.GONE
+            }
+        })
+
+        editProduct.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (s.isNotEmpty()) checkProduct.visibility = View.VISIBLE
+                else checkProduct.visibility = View.GONE
+            }
+        })
+
+        editDelivery.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (s.isNotEmpty()) checkDelivery.visibility = View.VISIBLE
+                else checkDelivery.visibility = View.GONE
+            }
+        })
+
+        editBatch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (s.isNotEmpty()) checkBatch.visibility = View.VISIBLE
+                else checkBatch.visibility = View.GONE
+            }
+        })
+
+        editQtyPass.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (s.isNotEmpty()) checkPass.visibility = View.VISIBLE
+                else checkPass.visibility = View.GONE
+            }
+        })
+
+        editQtyReject.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (s.isNotEmpty()) checkReject.visibility = View.VISIBLE
+                else checkReject.visibility = View.GONE
+            }
+        })
+    }
+
+    private fun validationForm(): Boolean {
         if (dateEntry.text?.isEmpty()!!) {
             dateEntry.error = "Enter Date"
             dateEntry.requestFocus()
             return false
         }
-        if (dateEntry.length() > 0) {
-            checkDateEntry.visibility = View.VISIBLE
-            return false
-        }
+
         if (dateExp.text?.isEmpty()!!) {
             dateExp.error = "Enter Date Exp"
             dateExp.requestFocus()
             return false
         }
-        if (dateExp.length() > 0) {
-            checkDateExp.visibility = View.VISIBLE
-            return false
-        }
+
         if (editProduct.text?.isEmpty()!!) {
             editProduct.error = "Enter Product"
             editProduct.requestFocus()
             return false
         }
-        if (editProduct.length() > 0) {
-            checkProduct.visibility = View.VISIBLE
-            return false
-        }
+
         if (editDelivery.text?.isEmpty()!!) {
             editDelivery.error = "Enter Delivery"
             editDelivery.requestFocus()
             return false
         }
-        if (editDelivery.length() > 0) {
-            checkDelivery.visibility = View.VISIBLE
-            return false
-        }
+
         if (editBatch.text?.isEmpty()!!) {
             editBatch.error = "Enter Batch"
             editBatch.requestFocus()
             return false
         }
-        if (editBatch.length() > 0) {
-            checkBatch.visibility = View.VISIBLE
-            return false
-        }
+
         if (editQtyPass.text?.isEmpty()!!) {
             editQtyPass.error = "Enter Qty Pass"
             editQtyPass.requestFocus()
             return false
         }
-        if (editQtyPass.length() > 0) {
-            checkPass.visibility = View.VISIBLE
-            return false
-        }
+
         if (editQtyReject.text?.isEmpty()!!) {
             editQtyReject.error = "Enter Qty Reject"
             editQtyReject.requestFocus()
             return false
         }
-        if (editQtyReject.length() > 0) {
-            checkReject.visibility = View.VISIBLE
-            return false
-        }
 
         return true
+    }
+
+    private fun loadingInSimpan() {
+        Toast.makeText(this@LoadingInActivity, "Do Something", Toast.LENGTH_SHORT).show()
     }
 }
