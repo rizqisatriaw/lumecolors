@@ -15,7 +15,7 @@ import com.rizqi.lumecolorsapp.response.ResponseLogin
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOGGED_IN
 import com.rizqi.lumecolorsapp.utils.Constants.LOGGED_STATE
-import com.rizqi.lumecolorsapp.utils.Constants.SP_USERNAME
+import com.rizqi.lumecolorsapp.utils.Constants.SP_LEVEL
 import com.rizqi.lumecolorsapp.utils.SharedPreferencesUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,12 +41,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         login.setOnClickListener {
-            ResponseLogin(username.text.toString().trim(), password.text.toString().trim())
+            responseLogin(username.text.toString().trim(), password.text.toString().trim())
         }
     }
 
 
-    fun ResponseLogin(username: String, password: String) {
+    private fun responseLogin(username: String, password: String) {
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
         val call = service.userLogin(username, password)
@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
 
                     val data = res.data[0]
 
-                    setDataUser(SP_USERNAME, 0, data.nama)
+                    setDataUser(SP_LEVEL, 0, data.nama)
                     setDataUser(LOGGED_STATE, 0, LOGGED_IN)
 
                     val intent = Intent(this@LoginActivity, MenuActivity::class.java)
@@ -84,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
 
                     Toast.makeText(
                         this@LoginActivity,
-                        "GAGAL",
+                        res.message,
                         Toast.LENGTH_LONG
                     ).show()
 

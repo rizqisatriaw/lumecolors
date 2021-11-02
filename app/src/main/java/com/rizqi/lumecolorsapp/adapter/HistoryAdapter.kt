@@ -27,7 +27,7 @@ class HistoryAdapter(private val mData: List<MHistory>, private val mContext: Co
 
 class ViewHolder(view: View, private val context: Context) : RecyclerView.ViewHolder(view) {
     private val mImageBarang = view.findViewById<ImageView>(R.id.image_barang)
-    private val mNama = view.findViewById<TextView>(R.id.nama)
+    private val mNama = view.findViewById<TextView>(R.id.name)
 
     fun bindHistory(data: MHistory) {
         Glide.with(context)

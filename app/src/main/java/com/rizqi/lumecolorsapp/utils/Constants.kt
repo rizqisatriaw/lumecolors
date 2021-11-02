@@ -20,6 +20,6 @@ object Constants {
     const val LOGGED_OUT = "logged_out"
 
 //    DATA USER
-    const val SP_USERNAME = "sp_username"
+    const val SP_LEVEL = "sp_level"
 
 }
