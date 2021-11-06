@@ -16,7 +16,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -33,14 +34,31 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="14dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/date_entry"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:orientation="horizontal"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/date_entry"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/date_entry"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/layout1"
@@ -62,8 +80,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
-                    android:text="@string/history"
                     android:fontFamily="@font/poppins_bold"
+                    android:text="@string/history"
                     android:textColor="@color/bold"
                     android:textSize="20sp" />
 

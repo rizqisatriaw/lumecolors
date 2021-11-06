@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
                     android:layout_marginEnd="14dp"
-                    android:text="@string/list"
+                    android:text="@string/approve_in"
                     android:textColor="@color/bold"
                     android:textSize="20sp" />
 
