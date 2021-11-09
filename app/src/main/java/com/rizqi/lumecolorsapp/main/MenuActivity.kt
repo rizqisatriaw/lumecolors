@@ -6,6 +6,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.rizqi.lumecolorsapp.R
+import com.rizqi.lumecolorsapp.utils.Constants.CHECKER
 import com.rizqi.lumecolorsapp.utils.Constants.SP_LEVEL
 import com.rizqi.lumecolorsapp.utils.SharedPreferencesUtils
 
@@ -14,6 +15,11 @@ class MenuActivity : AppCompatActivity() {
 
     private lateinit var mLevel: TextView
     private lateinit var loadingIn: RelativeLayout
+    private lateinit var approveIn: RelativeLayout
+    private lateinit var approveOut: RelativeLayout
+    private lateinit var stockIn: RelativeLayout
+    private lateinit var stockOut: RelativeLayout
+    private lateinit var stockOpname: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +31,16 @@ class MenuActivity : AppCompatActivity() {
 //        Define ID
         mLevel = findViewById(R.id.level)
         loadingIn = findViewById(R.id.card_loading_in)
+        approveIn = findViewById(R.id.card_approve_in)
+        approveOut = findViewById(R.id.card_approve_out)
+        stockIn = findViewById(R.id.card_stock_in)
+        stockOut = findViewById(R.id.card_stock_out)
+        stockOpname = findViewById(R.id.card_stock_opname)
+
 
 //        Set Variable SharedPreferences
         mLevel.text = sharedPreferences.getStringSharedPreferences(SP_LEVEL)
+
 
 //        Action
         loadingIn.setOnClickListener {
