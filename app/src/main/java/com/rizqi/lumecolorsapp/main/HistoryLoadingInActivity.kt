@@ -58,12 +58,6 @@ class HistoryLoadingInActivity : AppCompatActivity() {
 
                 if (res.status == Constants.STAT200) {
 
-//                    Toast.makeText(
-//                        this@HistoryLoadingInActivity,
-//                        "BERHASIL",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-
                     setRecyclerView(res.data)
 
                 } else {

@@ -11,8 +11,14 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.rizqi.lumecolorsapp.R
 import android.text.Editable
-
-
+import android.util.Log
+import com.rizqi.lumecolorsapp.api.GetDataService
+import com.rizqi.lumecolorsapp.api.RetrofitClients
+import com.rizqi.lumecolorsapp.response.ResponseHistory
+import com.rizqi.lumecolorsapp.utils.Constants
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class LoadingInActivity : AppCompatActivity() {
@@ -236,6 +242,49 @@ class LoadingInActivity : AppCompatActivity() {
     }
 
     private fun loadingInSimpan() {
-        Toast.makeText(this@LoadingInActivity, "Do Something", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this@LoadingInActivity,
+            "VALID",
+            Toast.LENGTH_SHORT
+        ).show()
+
+//        val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+//        val call = service.loadingInSave("", "", "", "", "", "", "", "", "")
+//
+//        call.enqueue(object : Callback<ResponseHistory> {
+//
+//            override fun onFailure(call: Call<ResponseHistory>, t: Throwable) {
+//
+//                Toast.makeText(
+//                    this@LoadingInActivity,
+//                    "Something went wrong...Please try later!",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//
+//                Log.d("FAILED :", t.message.toString())
+//
+//            }
+//
+//            override fun onResponse(call: Call<ResponseHistory>, response: Response<ResponseHistory>) {
+//
+//                val res = response.body()!!
+//
+//                if (res.status == Constants.STAT200) {
+//
+//                    val data = res.data
+//
+//                } else {
+//
+//                    Toast.makeText(
+//                        this@LoadingInActivity,
+//                        res.message,
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//
+//                }
+//
+//            }
+//
+//        })
     }
 }
