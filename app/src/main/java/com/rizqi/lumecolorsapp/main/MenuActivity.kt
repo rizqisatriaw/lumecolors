@@ -72,5 +72,10 @@ class MenuActivity : AppCompatActivity() {
             this@MenuActivity.startActivity(intent)
         }
 
+        approveIn.setOnClickListener {
+            val intent = Intent(this@MenuActivity, ApproveInActivity::class.java)
+            this@MenuActivity.startActivity(intent)
+        }
+
     }
 }
