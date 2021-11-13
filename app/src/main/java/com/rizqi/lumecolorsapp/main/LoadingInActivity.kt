@@ -1,17 +1,15 @@
 package com.rizqi.lumecolorsapp.main
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
 import com.rizqi.lumecolorsapp.R
 import android.text.Editable
 import android.util.Log
+import android.widget.*
 import com.rizqi.lumecolorsapp.api.GetDataService
 import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.response.ResponseHistory
@@ -19,12 +17,13 @@ import com.rizqi.lumecolorsapp.utils.Constants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 
 class LoadingInActivity : AppCompatActivity() {
     private lateinit var imageHistory: ImageView
-    private lateinit var dateEntry: EditText
-    private lateinit var dateExp: EditText
+    private lateinit var dateEntry: TextView
+    private lateinit var dateExp: TextView
     private lateinit var editProduct: EditText
     private lateinit var editDelivery: EditText
     private lateinit var editBatch: EditText
@@ -75,6 +74,27 @@ class LoadingInActivity : AppCompatActivity() {
     }
 
     private fun changeListener() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        dateEntry.setOnClickListener {
+            var datePicker = DatePickerDialog(this@LoadingInActivity,
+                { view, year, month, dayOfMonth ->
+                    dateEntry.setText("${year}-${month + 1}-${dayOfMonth}")
+                }, year, month, day)
+            datePicker.show()
+        }
+
+        dateExp.setOnClickListener {
+            var datePicker = DatePickerDialog(this@LoadingInActivity,
+                { view, year, month, dayOfMonth ->
+                    dateExp.setText("${year}-${month + 1}-${dayOfMonth}")
+                }, year, month, day)
+            datePicker.show()
+        }
+
         dateEntry.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
             override fun beforeTextChanged(

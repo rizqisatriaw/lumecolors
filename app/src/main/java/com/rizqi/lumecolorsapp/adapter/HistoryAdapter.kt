@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.model.MHistory
+import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
 
 class HistoryAdapter(private val mData: List<MHistory>, private val mContext: Context): RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,15 +27,24 @@ class HistoryAdapter(private val mData: List<MHistory>, private val mContext: Co
 }
 
 class ViewHolder(view: View, private val context: Context) : RecyclerView.ViewHolder(view) {
-    private val mImageBarang = view.findViewById<ImageView>(R.id.image_barang)
-    private val mNama = view.findViewById<TextView>(R.id.name)
+    var mGambar = view.findViewById<ImageView>(R.id.image_barang)
+    var mName = view.findViewById<TextView>(R.id.name)
+    var mDateEntry = view.findViewById<TextView>(R.id.date_entry_text)
+    var mDateExp = view.findViewById<TextView>(R.id.exp_date_text)
+    var mNoDelivery = view.findViewById<TextView>(R.id.no_delivery_text)
+    var mNoBatch = view.findViewById<TextView>(R.id.no_batch_text)
+    var mQty = view.findViewById<TextView>(R.id.qty)
 
     fun bindHistory(data: MHistory) {
         Glide.with(context)
-            .load(data.gambar)
-            .fitCenter()
-            .into(mImageBarang)
+            .load(URL_GAMBAR + data.gambar)
+            .into(mGambar)
 
-        mNama.text = data.nama_produk
+        mName.text = data.nama_produk
+        mDateEntry.text = data.insert_dt
+        mDateExp.text = data.exp_date
+        mNoDelivery.text = data.no_delivery
+        mNoBatch.text = data.no_batch
+        mQty.text = data.qty_lolos
     }
 }

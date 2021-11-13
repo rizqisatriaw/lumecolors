@@ -42,6 +42,7 @@
             android:paddingVertical="14dp">
 
             <TextView
+                android:id="@+id/date_from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
@@ -50,6 +51,7 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/date_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -70,7 +72,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="14dp"
                 android:orientation="vertical"
                 android:paddingStart="14dp"
@@ -84,6 +86,17 @@
                     android:text="@string/history_loading"
                     android:textColor="@color/bold"
                     android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/empty_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/poppins_light"
+                    android:textColor="@color/bold"
+                    android:textSize="20sp"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_show"

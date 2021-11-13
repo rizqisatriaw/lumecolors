@@ -1,5 +1,6 @@
 package com.rizqi.lumecolorsapp.api
 
+import com.rizqi.lumecolorsapp.utils.Constants.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -7,7 +8,7 @@ class RetrofitClients {
     fun getRetrofitInstance(): Retrofit {
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://tes.smilink.id/api/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

@@ -57,7 +57,7 @@
     <string name="number">A0111</string>
     <string name="status">Status</string>
     <string name="detail">Detail</string>
-    <string name="ex_date">01/09/2001</string>
+    <string name="ex_date">2001-10-11</string>
     <string name="exp_date">Expired Date</string>
     <string name="approve">Approve</string>
     <string name="pending">Pending</string>

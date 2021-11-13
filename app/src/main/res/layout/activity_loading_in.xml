@@ -65,7 +65,7 @@
                 android:layout_gravity="center"
                 android:src="@drawable/calendar_in" />
 
-            <EditText
+            <TextView
                 android:id="@+id/date_entry"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -74,7 +74,6 @@
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/poppins_light"
                 android:hint="@string/ex_date"
-                android:inputType="text"
                 android:textColor="@color/bold"
                 android:textColorHint="@color/shadow"
                 android:textSize="16sp" />
@@ -117,7 +116,7 @@
                 android:layout_gravity="center"
                 android:src="@drawable/exp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/date_exp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -126,7 +125,6 @@
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/poppins_light"
                 android:hint="@string/ex_date"
-                android:inputType="text"
                 android:textColor="@color/bold"
                 android:textColorHint="@color/shadow"
                 android:textSize="16sp" />
