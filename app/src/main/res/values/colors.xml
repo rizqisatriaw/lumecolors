@@ -13,4 +13,6 @@
     <color name="shadow1">#803A3A3C</color>
     <color name="red_shadow">#CCF44336</color>
     <color name="white_shadow">#80FFFFFF</color>
+    <color name="green">#4CAF50</color>
+    <color name="yellow">#FF9800</color>
 </resources>

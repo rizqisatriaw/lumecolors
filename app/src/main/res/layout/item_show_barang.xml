@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/custom_linear_register"
-    android:padding="4dp"
+    android:padding="2dp"
     android:layout_marginBottom="16dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="2dp"
@@ -31,14 +31,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="14dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginBottom="14dp"
                     android:orientation="horizontal"
                     android:weightSum="10">
 
                     <ImageView
                         android:id="@+id/image_barang"
                         android:layout_width="80dp"
-                        android:layout_height="80dp"/>
+                        android:layout_height="80dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -50,20 +53,44 @@
                             android:id="@+id/name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
                             android:text="@string/goods"
-                            android:fontFamily="@font/poppins_medium"
                             android:textColor="@color/bold"
                             android:textSize="20sp" />
 
                         <TextView
-                            android:id="@+id/stock"
+                            android:id="@+id/status"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="@string/stock"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/status"
                             android:textColor="@color/bold"
-                            android:textSize="16sp" />
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/stock"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@string/stock1"
+                                android:textColor="@color/bold"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/nominal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@string/no"
+                                android:textColor="@color/bold"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -90,8 +117,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:cardBackgroundColor="@color/red_shadow"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="2dp">
+            app:cardCornerRadius="20dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -107,36 +133,25 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="5"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="invisible">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/goods"
-                                android:textColor="@color/black"
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:text="@string/stock"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-                        </LinearLayout>
+                        android:layout_weight="5">
 
                         <ImageView
+                            android:id="@+id/img_detail"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/edit_card" />
+                            android:src="@drawable/detail" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/img_detail"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="6dp"
+                            android:gravity="center"
+                            android:text="@string/detail"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
 
                     </RelativeLayout>
 

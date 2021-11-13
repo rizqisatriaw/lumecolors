@@ -50,6 +50,8 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/search_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
@@ -98,7 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="14dp"
-                    tools:listitem="@layout/item_show_barang" />
+                    tools:listitem="@layout/item_approve_in" />
 
             </LinearLayout>
 
@@ -106,6 +108,7 @@
 
         <LinearLayout
             android:id="@+id/layout2"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.13"

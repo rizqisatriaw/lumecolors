@@ -68,7 +68,7 @@
                 app:cardElevation="3dp">
 
                 <RelativeLayout
-                    android:id="@+id/card_loading_in"
+                    android:id="@+id/card_history"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white">
@@ -82,12 +82,12 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/loading_in"/>
+                            android:src="@drawable/history"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/loading_in"
+                            android:text="@string/history1"
                             android:fontFamily="@font/poppins_medium"
                             android:textAlignment="center"
                             android:textColor="@color/bold"
@@ -96,6 +96,13 @@
                             android:textSize="18sp"/>
 
                     </LinearLayout>
+
+                    <View
+                        android:id="@+id/hidden_history"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/shadow1"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
 

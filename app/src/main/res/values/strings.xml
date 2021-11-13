@@ -9,6 +9,7 @@
     <string name="hello">Hello</string>
     <string name="rp">Rp 150.000</string>
     <string name="stock">Stock : 20</string>
+    <string name="stock1">Stock : </string>
     <string name="goods">Goods</string>
     <string name="list">List of item :</string>
     <string name="name">Name</string>
@@ -36,8 +37,8 @@
     <string name="qty_pass">Qty pass</string>
     <string name="qty_pass_">Qty pass : 100</string>
     <string name="qty_reject">Qty reject</string>
+    <string name="reject">Reject</string>
     <string name="level">Level</string>
-    <string name="ex_date">01-September-2021</string>
     <string name="product">Product</string>
     <string name="batch">No batch</string>
     <string name="delivery">No delivery</string>
@@ -45,4 +46,11 @@
     <string name="simpan">Simpan</string>
     <string name="no_batch">M1001</string>
     <string name="number">A0111</string>
+    <string name="status">Status</string>
+    <string name="detail">Detail</string>
+    <string name="ex_date">01/09/2001</string>
+    <string name="exp_date">Expired Date</string>
+    <string name="approve">Approve</string>
+    <string name="pending">Pending</string>
+    <string name="show">Show Approve Detail</string>
 </resources>
