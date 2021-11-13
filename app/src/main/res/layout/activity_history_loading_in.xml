@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/history"
+                    android:text="@string/history_loading"
                     android:textColor="@color/bold"
                     android:textSize="20sp" />
 
