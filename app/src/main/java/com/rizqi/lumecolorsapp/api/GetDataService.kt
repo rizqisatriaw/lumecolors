@@ -1,5 +1,6 @@
 package com.rizqi.lumecolorsapp.api
 
+import com.rizqi.lumecolorsapp.response.ResponseApprove
 import com.rizqi.lumecolorsapp.response.ResponseHistory
 import com.rizqi.lumecolorsapp.response.ResponseLogin
 import retrofit2.Call
@@ -34,4 +35,8 @@ interface GetDataService {
         @Field("insert_by") insert_by: String,
         @Field("insert_dt") insert_dt: String,
     ): Call<ResponseHistory>
+
+    @FormUrlEncoded
+    @POST("")
+    fun listApprove(): Call<ResponseApprove>
 }
