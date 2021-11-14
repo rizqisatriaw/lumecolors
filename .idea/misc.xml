@@ -32,7 +32,7 @@
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_edit_text.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_linear_form.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_linear_login.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_linear_register.xml" value="0.75" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_linear_register.xml" value="0.33" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/edit.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/more.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/more_black.xml" value="0.20833333333333334" />
@@ -50,13 +50,14 @@
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_show_barang.xml" value="0.22" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_splash_screen.xml" value="0.1921875" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_stock_in.xml" value="0.1921875" />
-        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_stock_opname.xml" value="0.1921875" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_stock_opname.xml" value="0.33" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_stock_out.xml" value="0.178125" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_approve_in.xml" value="0.25" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_approve_out.xml" value="0.3546875" />
-        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_show_barang.xml" value="0.25" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_show_barang.xml" value="0.33" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_show_data.xml" value="0.1921875" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_stock_in.xml" value="0.3546875" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_stock_out.xml" value="0.3546875" />
       </map>
     </option>
   </component>
