@@ -10,7 +10,8 @@ interface GetDataService {
     @POST("account/login")
     fun userLogin(
         @Field("username") username: String,
-        @Field("password") password: String
+        @Field("password") password: String,
+        @Field("periode") periode: String
     ): Call<ResponseLogin>
 
     @FormUrlEncoded

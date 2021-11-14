@@ -32,5 +32,6 @@ object Constants {
 
 //    DATA USER
     const val SP_LEVEL = "sp_level"
+    const val PERIODE = "periode"
 
 }
