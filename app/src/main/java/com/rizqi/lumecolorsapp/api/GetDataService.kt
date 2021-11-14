@@ -57,4 +57,10 @@ interface GetDataService {
     fun opname(
         @Field("periode") periode: String,
     ): Call<ResponseOpname>
+
+    @FormUrlEncoded
+    @POST("loading_in/qr")
+    fun listQr(
+        @Field("id_loading_in") id_loading_in: String,
+    ): Call<ResponseListQR>
 }

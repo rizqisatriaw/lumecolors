@@ -117,7 +117,7 @@
         android:layout_height="match_parent"
         android:paddingTop="100dp"
         android:background="@color/shadow_black"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -153,12 +153,23 @@
                     android:textColor="@color/bold"
                     android:textSize="20sp" />
 
+                <TextView
+                    android:id="@+id/empty_state_qr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins_light"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/bold"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_qr_show"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="14dp"
-                    tools:listitem="@layout/item_list_qr"/>
+                    tools:listitem="@layout/item_list_qr" />
 
             </LinearLayout>
 

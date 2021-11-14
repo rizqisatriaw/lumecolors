@@ -8,17 +8,21 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.adapter.HistoryAdapter
+import com.rizqi.lumecolorsapp.adapter.QRListAdapter
 import com.rizqi.lumecolorsapp.api.GetDataService
 import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.model.MHistory
+import com.rizqi.lumecolorsapp.model.MListQR
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.response.ResponseHistory
+import com.rizqi.lumecolorsapp.response.ResponseListQR
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
 import org.w3c.dom.Text
 import retrofit2.Call
@@ -30,13 +34,18 @@ import kotlin.collections.ArrayList
 class HistoryLoadingInActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var mAdapter: HistoryAdapter
+    private lateinit var mAdapterQR: QRListAdapter
     private lateinit var datePicker: DatePickerDialog
     private lateinit var mLoading: ProgressDialog
 //    Variable From Layout
     private lateinit var emptyState: TextView
+    private lateinit var emptyStateQR: TextView
     private lateinit var recyclerView: RecyclerView
+    private lateinit var listQRShow: RecyclerView
     private lateinit var dateFrom: TextView
     private lateinit var dateTo: TextView
+    private lateinit var lytQrList: LinearLayout
+    private lateinit var vBack: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +57,13 @@ class HistoryLoadingInActivity : AppCompatActivity() {
 
 //        Variable From Layout
         emptyState = findViewById(R.id.empty_state)
+        emptyStateQR = findViewById(R.id.empty_state_qr)
         recyclerView = findViewById(R.id.rv_show)
+        listQRShow = findViewById(R.id.list_qr_show)
         dateFrom = findViewById(R.id.date_from)
         dateTo = findViewById(R.id.date_to)
+        lytQrList = findViewById(R.id.layout_qr_list)
+        vBack = findViewById(R.id.view_back)
 
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -70,6 +83,7 @@ class HistoryLoadingInActivity : AppCompatActivity() {
     private fun getListHistory(dari: String, sampai: String) {
         mLoading.setMessage(LOADING_MSG)
         mLoading.show()
+        
         emptyState.visibility = View.GONE
         recyclerView.visibility = View.GONE
         
@@ -88,9 +102,10 @@ class HistoryLoadingInActivity : AppCompatActivity() {
 
                 Log.d("FAILED :", t.message.toString())
 
-                emptyState.text = "Terjadi kesalahan saat memuat data."
                 emptyState.visibility = View.VISIBLE
                 recyclerView.visibility = View.GONE
+                emptyState.text = "Terjadi kesalahan saat memuat data."
+
                 mLoading.dismiss()
             }
 
@@ -105,9 +120,9 @@ class HistoryLoadingInActivity : AppCompatActivity() {
                         recyclerView.visibility = View.VISIBLE
                         setRecyclerView(res.data)
                     } else {
-                        emptyState.text = "Tidak ada data pada jangka waktu ini."
                         emptyState.visibility = View.VISIBLE
                         recyclerView.visibility = View.GONE
+                        emptyState.text = "Tidak ada data pada jangka waktu ini."
                     }
 
 //                    Log.d("DATASIZE: ", "${res.data.size}")
@@ -120,9 +135,9 @@ class HistoryLoadingInActivity : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
 
-                    emptyState.text = res.message
                     emptyState.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
+                    emptyState.text = res.message
                 }
 
                 mLoading.dismiss()
@@ -137,6 +152,89 @@ class HistoryLoadingInActivity : AppCompatActivity() {
         recyclerView.apply {
             layoutManager = linearLayoutManager
             adapter = mAdapter
+        }
+
+        vBack.setOnClickListener {
+            lytQrList.visibility = View.GONE
+        }
+
+        mAdapter.interfaceClick(object: HistoryAdapter.BtnClickListener{
+            override fun onBtnClick(data: MHistory) {
+//                Log.d("BACOD: ", data.id)
+                lytQrList.visibility = View.VISIBLE
+
+                fetchListQR(data)
+            }
+
+        })
+    }
+
+    private fun fetchListQR(data: MHistory) {
+        emptyStateQR.visibility = View.VISIBLE
+        listQRShow.visibility = View.GONE
+        emptyStateQR.text = "Memuat..."
+
+        val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.listQr(data.id)
+
+        call.enqueue(object : Callback<ResponseListQR> {
+
+            override fun onFailure(call: Call<ResponseListQR>, t: Throwable) {
+
+                Toast.makeText(
+                    this@HistoryLoadingInActivity,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Log.d("FAILED :", t.message.toString())
+
+                emptyStateQR.visibility = View.VISIBLE
+                listQRShow.visibility = View.GONE
+                emptyStateQR.text = "Terjadi kesalahan saat memuat data."
+            }
+
+            override fun onResponse(call: Call<ResponseListQR>, response: Response<ResponseListQR>) {
+
+                val res = response.body()!!
+
+                if (res.status == Constants.STAT200) {
+                    if(res.data.size != 0) {
+                        emptyStateQR.visibility = View.GONE
+                        listQRShow.visibility = View.VISIBLE
+
+                        setRecyclerQR(res.data)
+
+                    } else {
+                        emptyStateQR.visibility = View.VISIBLE
+                        listQRShow.visibility = View.GONE
+                        emptyStateQR.text = "Tidak ada data."
+                    }
+
+
+                } else {
+
+                    Toast.makeText(
+                        this@HistoryLoadingInActivity,
+                        "GAGAL",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    emptyStateQR.visibility = View.VISIBLE
+                    listQRShow.visibility = View.GONE
+                    emptyStateQR.text = "${res.message}"
+                }
+            }
+
+        })
+    }
+
+    private fun setRecyclerQR(data: ArrayList<MListQR>) {
+        linearLayoutManager = LinearLayoutManager(this@HistoryLoadingInActivity)
+        mAdapterQR = QRListAdapter(data, this@HistoryLoadingInActivity)
+        listQRShow.apply {
+            layoutManager = linearLayoutManager
+            adapter = mAdapterQR
         }
     }
 

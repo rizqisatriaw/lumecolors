@@ -1,10 +1,12 @@
 package com.rizqi.lumecolorsapp.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -13,6 +15,13 @@ import com.rizqi.lumecolorsapp.model.MHistory
 import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
 
 class HistoryAdapter(private val mData: List<MHistory>, private val mContext: Context): RecyclerView.Adapter<ViewHolder>() {
+
+    var mClickListener: BtnClickListener? = null
+
+    fun interfaceClick(interfaces: BtnClickListener) {
+        this.mClickListener = interfaces
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_show_barang, parent, false)
 
@@ -23,6 +32,14 @@ class HistoryAdapter(private val mData: List<MHistory>, private val mContext: Co
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindHistory(mData[position])
+        holder.mBtnListQr.setOnClickListener {
+//            Log.d("CLICKME: ", mData[position].id)
+            mClickListener!!.onBtnClick(mData[position])
+        }
+    }
+
+    interface BtnClickListener {
+        fun onBtnClick(data: MHistory)
     }
 }
 
@@ -34,6 +51,7 @@ class ViewHolder(view: View, private val context: Context) : RecyclerView.ViewHo
     var mNoDelivery = view.findViewById<TextView>(R.id.no_delivery_text)
     var mNoBatch = view.findViewById<TextView>(R.id.no_batch_text)
     var mQty = view.findViewById<TextView>(R.id.qty)
+    var mBtnListQr = view.findViewById<LinearLayout>(R.id.button_list_qr)
 
     fun bindHistory(data: MHistory) {
         Glide.with(context)
