@@ -10,8 +10,6 @@
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_menu.xml" value="0.25" />
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_register.xml" value="0.22447916666666667" />
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_stock_in.xml" value="0.22447916666666667" />
-        <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_stock_opname.xml" value="0.22447916666666667" />
-        <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_stock_out.xml" value="0.22447916666666667" />
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/item_show_barang.xml" value="0.25" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_background_approve.xml" value="0.37083333333333335" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_background_detail.xml" value="0.20833333333333334" />
@@ -56,6 +54,7 @@
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/activity_stock_out.xml" value="0.178125" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_approve_in.xml" value="0.25" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_approve_out.xml" value="0.3546875" />
+        <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_list_qr.xml" value="0.3546875" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_show_barang.xml" value="0.33" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_show_data.xml" value="0.1921875" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_stock_in.xml" value="0.3546875" />
