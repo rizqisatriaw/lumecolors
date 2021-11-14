@@ -39,7 +39,7 @@ class MenuActivity : AppCompatActivity() {
 //        Define ID
         mLevel = findViewById(R.id.level)
         history = findViewById(R.id.card_history)
-        approveIn = findViewById(R.id.card_approve_in)
+//        approveIn = findViewById(R.id.card_approve_in)
         approveOut = findViewById(R.id.card_approve_out)
         stockIn = findViewById(R.id.card_stock_in)
         stockOut = findViewById(R.id.card_stock_out)
@@ -47,7 +47,7 @@ class MenuActivity : AppCompatActivity() {
         hiddenStockOpname = findViewById(R.id.hidden_stock_opname)
         hiddenStockIn = findViewById(R.id.hidden_stock_in)
         hiddenStockOut = findViewById(R.id.hidden_stock_out)
-        hiddenApproveIn = findViewById(R.id.hidden_approve_in)
+//        hiddenApproveIn = findViewById(R.id.hidden_approve_in)
         hiddenApproveOut = findViewById(R.id.hidden_approve_out)
 
 
@@ -68,14 +68,14 @@ class MenuActivity : AppCompatActivity() {
 
 //        Action
         history.setOnClickListener {
-            val intent = Intent(this@MenuActivity, LoadingInActivity::class.java)
+            val intent = Intent(this@MenuActivity, HistoryLoadingInActivity::class.java)
             this@MenuActivity.startActivity(intent)
         }
 
-        approveIn.setOnClickListener {
-            val intent = Intent(this@MenuActivity, ApproveInActivity::class.java)
-            this@MenuActivity.startActivity(intent)
-        }
+//        approveIn.setOnClickListener {
+//            val intent = Intent(this@MenuActivity, ApproveInActivity::class.java)
+//            this@MenuActivity.startActivity(intent)
+//        }
 
         stockIn.setOnClickListener {
             val intent = Intent(this@MenuActivity, StockInActivity::class.java)
