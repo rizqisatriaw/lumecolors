@@ -36,8 +36,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/view_barang"
                     android:layout_marginTop="14dp"
+                    android:paddingVertical="2dp"
                     android:background="@drawable/custom_button_login"
-                    android:paddingVertical="4dp"
                     android:visibility="visible">
 
                     <LinearLayout
@@ -49,7 +49,7 @@
 
                         <ImageView
                             android:layout_width="30dp"
-                            android:layout_height="36dp"
+                            android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:src="@drawable/qr_code_white" />
 
@@ -60,7 +60,7 @@
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="center"
                             android:paddingVertical="4dp"
-                            android:paddingStart="6dp"
+                            android:paddingHorizontal="14dp"
                             android:text="@string/list_qr"
                             android:textColor="@color/white"
                             android:textSize="18sp"

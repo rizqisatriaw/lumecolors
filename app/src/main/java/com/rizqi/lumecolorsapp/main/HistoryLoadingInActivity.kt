@@ -8,10 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rizqi.lumecolorsapp.R
@@ -48,7 +45,7 @@ class HistoryLoadingInActivity : AppCompatActivity() {
     private lateinit var imgDateFrom: ImageView
     private lateinit var imgDateTo: ImageView
     private lateinit var lytQrList: LinearLayout
-    private lateinit var vBack: View
+    private lateinit var vBack: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#F44336</color>
     <color name="bold">#3A3A3C</color>
+    <color name="semi_bold">#CC3A3A3C</color>
     <color name="shadow">#4D3A3A3C</color>
     <color name="shadow_black">#CC000000</color>
     <color name="shadow1">#803A3A3C</color>

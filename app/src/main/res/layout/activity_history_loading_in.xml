@@ -253,12 +253,18 @@
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp">
 
-                <View
+                <LinearLayout
                     android:id="@+id/view_back"
-                    android:layout_width="100dp"
-                    android:layout_height="6dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/custom_background_view" />
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp">
+
+                    <View
+                        android:layout_width="100dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/custom_background_view" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/text_qr"
@@ -292,6 +298,23 @@
             </LinearLayout>
 
         </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_image_show"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/shadow_black"
+        android:paddingHorizontal="44dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_show"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

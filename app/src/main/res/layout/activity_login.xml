@@ -54,11 +54,12 @@
                     android:layout_marginStart="15dp"
                     android:backgroundTint="@color/white"
                     android:fontFamily="@font/poppins_medium"
+                    android:gravity="center_vertical"
                     android:hint="@string/username"
                     android:inputType="text"
                     android:textColor="@color/bold"
                     android:textColorHint="@color/shadow"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -88,11 +89,12 @@
                     android:layout_marginStart="15dp"
                     android:backgroundTint="@color/white"
                     android:fontFamily="@font/poppins_medium"
+                    android:gravity="center_vertical"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:textColor="@color/bold"
                     android:textColorHint="@color/shadow"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -102,6 +104,32 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/shadow" />
+
+            <LinearLayout
+                android:id="@+id/periode"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/calendar_time" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="center_vertical"
+                    android:text="@string/ex_period"
+                    android:textColor="@color/bold"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -133,17 +161,28 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="center"
+            android:visibility="visible"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
+                android:text="@string/tip"
+                android:textColor="@color/bold"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:fontFamily="@font/poppins_regular"
                 android:text="@string/dont"
                 android:textColor="@color/bold"
                 android:textSize="18sp" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/button_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

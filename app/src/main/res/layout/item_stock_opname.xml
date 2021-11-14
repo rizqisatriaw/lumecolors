@@ -32,21 +32,31 @@
                 android:background="@drawable/custom_linear_register">
 
                 <LinearLayout
-                    android:id="@+id/button_ref"
+                    android:id="@+id/button_kartu"
                     android:layout_below="@+id/view_barang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="visible"
+                    android:gravity="center"
+                    android:paddingVertical="2dp"
                     android:layout_marginTop="14dp"
+                    android:orientation="horizontal"
                     android:background="@drawable/custom_background_ref">
 
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/card" />
+                    
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="center"
                         android:paddingVertical="4dp"
-                        android:text="@string/ref"
+                        android:paddingHorizontal="14dp"
+                        android:text="@string/kartu_stock"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -110,32 +120,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
-                                android:text="@string/id"
-                                android:textColor="@color/bold"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:id="@+id/id_text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="-4dp"
-                                android:text="@string/id_in"
-                                android:textColor="@color/semi_bold"
-                                android:textSize="20sp"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="4dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_bold"
                                 android:text="@string/kode"
                                 android:textColor="@color/bold"
                                 android:textSize="16sp" />
@@ -148,7 +132,8 @@
                                 android:layout_marginTop="-4dp"
                                 android:text="@string/kode_ex"
                                 android:textColor="@color/semi_bold"
-                                android:textSize="20sp" />
+                                android:textSize="20sp"
+                                android:fontFamily="@font/poppins_regular"/>
 
                         </LinearLayout>
 
@@ -162,18 +147,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
-                                android:text="@string/date_entry"
+                                android:text="@string/kategori"
                                 android:textColor="@color/bold"
                                 android:textSize="16sp" />
 
                             <TextView
-                                android:id="@+id/date_entry"
+                                android:id="@+id/kategori_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="-4dp"
                                 android:text="@string/ex_date"
+                                android:layout_marginTop="-4dp"
                                 android:textColor="@color/semi_bold"
-                                android:textSize="20sp"/>
+                                android:textSize="20sp" />
 
                         </LinearLayout>
 
@@ -192,14 +177,14 @@
                                 android:textSize="16sp" />
 
                             <TextView
-                                android:id="@+id/qty"
+                                android:id="@+id/qty_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
                                 android:layout_marginTop="-4dp"
                                 android:text="@string/no"
                                 android:textColor="@color/semi_bold"
-                                android:textSize="20sp" />
+                                android:textSize="18sp" />
 
                         </LinearLayout>
 

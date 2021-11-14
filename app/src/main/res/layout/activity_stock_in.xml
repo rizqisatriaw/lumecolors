@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -228,4 +228,252 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_refrensi_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="100dp"
+        android:background="@color/shadow_black"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layout_refrensi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_background_history2"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp">
+
+                <LinearLayout
+                    android:id="@+id/view_back"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp">
+
+                    <View
+                        android:layout_width="100dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/custom_background_view" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_detail_refrensi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:paddingTop="8dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/detail_refrensi"
+                    android:textColor="@color/bold"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/empty_state_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins_light"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/bold"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingTop="44dp"
+                    android:paddingHorizontal="14dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/linear_refrensi_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="14dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/ref"
+                            android:textColor="@color/bold"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/refrensi_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/loading_in"
+                            android:textAllCaps="true"
+                            android:textColor="@color/bold"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="20sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_no_ref_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="14dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/no_ref"
+                            android:textColor="@color/bold"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/no_refrensi_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kode_ex"
+                            android:textAllCaps="true"
+                            android:textColor="@color/bold"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="20sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_qty_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="14dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/qty"
+                            android:textColor="@color/bold"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/qty_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no"
+                            android:textAllCaps="true"
+                            android:textColor="@color/bold"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="20sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_insert_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="14dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/insert_by"
+                            android:textColor="@color/bold"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/insert_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/admin"
+                            android:textAllCaps="true"
+                            android:textColor="@color/bold"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="20sp"/>
+
+                        <TextView
+                            android:id="@+id/insert_date_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ex_date"
+                            android:textAllCaps="true"
+                            android:textColor="@color/bold"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="20sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_approve_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="14dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/approve_by"
+                            android:textColor="@color/bold"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/approve_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/admin"
+                            android:textAllCaps="true"
+                            android:textColor="@color/bold"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="20sp"/>
+
+                        <TextView
+                            android:id="@+id/approve_date_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ex_date"
+                            android:textAllCaps="true"
+                            android:textColor="@color/bold"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="20sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_image_show"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/shadow_black"
+        android:paddingHorizontal="44dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_show"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

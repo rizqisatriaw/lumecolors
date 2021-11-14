@@ -77,14 +77,71 @@
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp">
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/search_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
-                    android:text="@string/stock_opname"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textColor="@color/bold"
-                    android:textSize="20sp" />
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@drawable/custom_background_search"
+                    android:orientation="horizontal"
+                    android:padding="14dp"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/edit_text_search"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:hint="@string/search"
+                        android:textColor="@color/bold"
+                        android:textColorHint="@color/shadow"
+                        android:textSize="18sp" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2">
+
+                        <ImageView
+                            android:id="@+id/button_search"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/search" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="14dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/stock_opname"
+                        android:textColor="@color/bold"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:id="@+id/logo_search"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="14dp"
+                        android:src="@drawable/search" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/empty_state"
@@ -102,7 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="14dp"
-                    tools:listitem="@layout/item_show_barang" />
+                    tools:listitem="@layout/item_stock_opname" />
 
             </LinearLayout>
 
@@ -510,6 +567,23 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_image_show"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/shadow_black"
+        android:paddingHorizontal="44dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_show"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 
