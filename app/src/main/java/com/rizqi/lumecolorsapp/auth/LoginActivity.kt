@@ -136,7 +136,7 @@ class LoginActivity : AppCompatActivity() {
                     val data = res.data[0]
 
                     setDataUser(SP_LEVEL, 0, data.nama)
-                    setDataUser(PERIODE, 0, data.periode)
+                    setDataUser(PERIODE, 0, res.periode)
                     setDataUser(LOGGED_STATE, 0, LOGGED_IN)
 
                     val intent = Intent(this@LoginActivity, MenuActivity::class.java)

@@ -20,6 +20,8 @@ import com.rizqi.lumecolorsapp.model.MOpname
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.response.ResponseOpname
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
+import com.rizqi.lumecolorsapp.utils.Constants.PERIODE
+import com.rizqi.lumecolorsapp.utils.SharedPreferencesUtils
 import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,9 +30,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class StockOpnameActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferencesUtils
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var mAdapter: OpnameAdapter
-    private lateinit var datePicker: DatePickerDialog
     private lateinit var mLoading: ProgressDialog
     //    Variable From Layout
     private lateinit var emptyState: TextView
@@ -41,7 +43,7 @@ class StockOpnameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stock_opname)
 
-
+        sharedPreferences = SharedPreferencesUtils(this@StockOpnameActivity)
         mLoading = ProgressDialog(this@StockOpnameActivity)
         mLoading.setCancelable(false)
 
@@ -50,18 +52,11 @@ class StockOpnameActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.rv_show)
         datePeriod = findViewById(R.id.periode)
 
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+        val periode = sharedPreferences.getStringSharedPreferences(PERIODE)!!
 
-        val dateNow = "${month + 1}/${year}"
+        datePeriod.text = periode
 
-        datePeriod.text = dateNow
-
-        getListOpname(dateNow)
-
-        setDateRange(day, month, year)
+        getListOpname(periode)
     }
 
     private fun getListOpname(periode: String) {
@@ -137,28 +132,4 @@ class StockOpnameActivity : AppCompatActivity() {
         }
     }
 
-    private fun setDateRange(day: Int, month: Int, year: Int) {
-        datePeriod.setOnClickListener {
-            datePicker = DatePickerDialog(this@StockOpnameActivity,
-                { view, year, month, dayOfMonth ->
-                    datePeriod.text = "${month + 1}/${year}"
-                }, year, month, day)
-            datePicker.show()
-        }
-
-        datePeriod.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//                Do Something
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                Do Something
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                getListOpname(datePeriod.text.toString())
-            }
-
-        })
-    }
 }

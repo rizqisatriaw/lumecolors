@@ -5,7 +5,6 @@ class MUser (
     var username : String = "",
     var password : String = "",
     var nama : String = "",
-    var periode : String = "",
     var level : String = "",
     var valid : String = "",
 )
