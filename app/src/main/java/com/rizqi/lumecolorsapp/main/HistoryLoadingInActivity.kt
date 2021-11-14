@@ -19,6 +19,7 @@ import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.model.MHistory
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.response.ResponseHistory
+import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
 import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,24 +30,27 @@ import kotlin.collections.ArrayList
 class HistoryLoadingInActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var mAdapter: HistoryAdapter
+    private lateinit var datePicker: DatePickerDialog
+    private lateinit var mLoading: ProgressDialog
+//    Variable From Layout
     private lateinit var emptyState: TextView
     private lateinit var recyclerView: RecyclerView
-    private lateinit var datePicker: DatePickerDialog
     private lateinit var dateFrom: TextView
     private lateinit var dateTo: TextView
-    private lateinit var mLoading: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history_loading_in)
 
+
+        mLoading = ProgressDialog(this@HistoryLoadingInActivity)
+        mLoading.setCancelable(false)
+
+//        Variable From Layout
         emptyState = findViewById(R.id.empty_state)
         recyclerView = findViewById(R.id.rv_show)
         dateFrom = findViewById(R.id.date_from)
         dateTo = findViewById(R.id.date_to)
-
-        mLoading = ProgressDialog(this@HistoryLoadingInActivity)
-        mLoading.setCancelable(false)
 
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -64,7 +68,7 @@ class HistoryLoadingInActivity : AppCompatActivity() {
     }
     
     private fun getListHistory(dari: String, sampai: String) {
-        mLoading.setMessage("Loading...")
+        mLoading.setMessage(LOADING_MSG)
         mLoading.show()
         emptyState.visibility = View.GONE
         recyclerView.visibility = View.GONE
@@ -106,7 +110,7 @@ class HistoryLoadingInActivity : AppCompatActivity() {
                         recyclerView.visibility = View.GONE
                     }
 
-                    Log.d("DATASIZE: ", "${res.data.size}")
+//                    Log.d("DATASIZE: ", "${res.data.size}")
 
                 } else {
 

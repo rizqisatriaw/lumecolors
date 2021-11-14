@@ -1,9 +1,6 @@
 package com.rizqi.lumecolorsapp.api
 
-import com.rizqi.lumecolorsapp.response.ResponseApprove
-import com.rizqi.lumecolorsapp.response.ResponseHistory
-import com.rizqi.lumecolorsapp.response.ResponseLogin
-import com.rizqi.lumecolorsapp.response.ResponseStok
+import com.rizqi.lumecolorsapp.response.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -54,4 +51,10 @@ interface GetDataService {
         @Field("dari") dari: String,
         @Field("sampai") sampai: String
     ): Call<ResponseStok>
+
+    @FormUrlEncoded
+    @POST("stok/opname")
+    fun opname(
+        @Field("periode") periode: String,
+    ): Call<ResponseOpname>
 }
