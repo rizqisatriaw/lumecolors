@@ -10,6 +10,7 @@
     <color name="red">#F44336</color>
     <color name="bold">#3A3A3C</color>
     <color name="shadow">#4D3A3A3C</color>
+    <color name="shadow_black">#CC000000</color>
     <color name="shadow1">#803A3A3C</color>
     <color name="red_shadow">#CCF44336</color>
     <color name="white_shadow">#80FFFFFF</color>
