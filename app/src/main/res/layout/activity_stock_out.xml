@@ -178,6 +178,7 @@
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/header_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -203,6 +204,17 @@
                         android:src="@drawable/search" />
 
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/empty_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/poppins_light"
+                    android:textColor="@color/bold"
+                    android:textSize="20sp"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_show"
