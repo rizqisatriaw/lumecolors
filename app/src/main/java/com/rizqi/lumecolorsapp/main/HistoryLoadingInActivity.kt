@@ -8,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -42,8 +43,10 @@ class HistoryLoadingInActivity : AppCompatActivity() {
     private lateinit var emptyStateQR: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var listQRShow: RecyclerView
-    private lateinit var dateFrom: TextView
-    private lateinit var dateTo: TextView
+    private lateinit var textDateFrom: TextView
+    private lateinit var textDateTo: TextView
+    private lateinit var imgDateFrom: ImageView
+    private lateinit var imgDateTo: ImageView
     private lateinit var lytQrList: LinearLayout
     private lateinit var vBack: View
 
@@ -60,8 +63,10 @@ class HistoryLoadingInActivity : AppCompatActivity() {
         emptyStateQR = findViewById(R.id.empty_state_qr)
         recyclerView = findViewById(R.id.rv_show)
         listQRShow = findViewById(R.id.list_qr_show)
-        dateFrom = findViewById(R.id.date_from)
-        dateTo = findViewById(R.id.date_to)
+        textDateFrom = findViewById(R.id.txt_date_from)
+        textDateTo = findViewById(R.id.txt_date_to)
+        imgDateFrom = findViewById(R.id.img_date_from)
+        imgDateTo = findViewById(R.id.img_date_to)
         lytQrList = findViewById(R.id.layout_qr_list)
         vBack = findViewById(R.id.view_back)
 
@@ -72,8 +77,8 @@ class HistoryLoadingInActivity : AppCompatActivity() {
 
         val dateNow = "${year}-${month + 1}-${day}"
 
-        dateFrom.text = dateNow
-        dateTo.text = dateNow
+        textDateFrom.text = dateNow
+        textDateTo.text = dateNow
 
         getListHistory(dateNow, dateNow)
 
@@ -239,15 +244,15 @@ class HistoryLoadingInActivity : AppCompatActivity() {
     }
 
     private fun setDateRange(day: Int, month: Int, year: Int) {
-        dateFrom.setOnClickListener {
+        imgDateFrom.setOnClickListener {
             datePicker = DatePickerDialog(this@HistoryLoadingInActivity,
                 { view, year, month, dayOfMonth ->
-                    dateFrom.text = "${year}-${month + 1}-${dayOfMonth}"
+                    textDateFrom.text = "${year}-${month + 1}-${dayOfMonth}"
                 }, year, month, day)
             datePicker.show()
         }
 
-        dateFrom.addTextChangedListener(object : TextWatcher{
+        textDateFrom.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 //                Do Something
             }
@@ -257,20 +262,20 @@ class HistoryLoadingInActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                getListHistory(dateFrom.text.toString(), dateTo.text.toString())
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
         })
 
-        dateTo.setOnClickListener {
+        imgDateTo.setOnClickListener {
             datePicker = DatePickerDialog(this@HistoryLoadingInActivity,
                 { view, year, month, dayOfMonth ->
-                    dateTo.text = "${year}-${month + 1}-${dayOfMonth}"
+                    textDateTo.text = "${year}-${month + 1}-${dayOfMonth}"
                 }, year, month, day)
             datePicker.show()
         }
 
-        dateTo.addTextChangedListener(object : TextWatcher{
+        textDateTo.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 //                Do Something
             }
@@ -280,7 +285,7 @@ class HistoryLoadingInActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                getListHistory(dateFrom.text.toString(), dateTo.text.toString())
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
         })
