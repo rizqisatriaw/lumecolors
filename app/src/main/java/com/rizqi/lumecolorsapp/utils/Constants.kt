@@ -22,6 +22,9 @@ object Constants {
 
     const val LOADING_MSG = "Loading..."
 
+    const val STOCK_IN = "stock_in"
+    const val STOCK_OUT = "stock_out"
+
 //    AUTH STATE
     const val LOGGED_STATE = "logged_state"
     const val LOGGED_IN = "logged_in"

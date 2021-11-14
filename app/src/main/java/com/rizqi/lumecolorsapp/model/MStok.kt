@@ -14,4 +14,5 @@ class MStok(
     var insert_dt : String = "",
     var kode_produk : String = "",
     var nama_produk : String = "",
+    var gambar : String = "",
 )

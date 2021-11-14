@@ -4,14 +4,25 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.model.MStok
+import com.rizqi.lumecolorsapp.utils.Constants.STOCK_IN
+import com.rizqi.lumecolorsapp.utils.Constants.STOCK_OUT
+import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
 
-class StockAdapter(private val mData: List<MStok>, private val mContext: Context): RecyclerView.Adapter<ViewHolderStok>() {
+class StockAdapter(private val mData: List<MStok>, private val mContext: Context, private val mType: String): RecyclerView.Adapter<ViewHolderStok>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderStok {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_show_barang, parent, false)
+        var type = R.layout.item_stock_in
+
+        if(mType == STOCK_OUT) {
+            type = R.layout.item_stock_out
+        }
+
+        val view = LayoutInflater.from(parent.context).inflate(type, parent, false)
 
         return ViewHolderStok(view, mContext)
     }
@@ -24,19 +35,22 @@ class StockAdapter(private val mData: List<MStok>, private val mContext: Context
 }
 
 class ViewHolderStok(view: View, private val context: Context) : RecyclerView.ViewHolder(view) {
+    var mImage = view.findViewById<ImageView>(R.id.image_barang)
     var mName = view.findViewById<TextView>(R.id.name)
-    var mDateEntry = view.findViewById<TextView>(R.id.date_entry_text)
-    var mDateExp = view.findViewById<TextView>(R.id.exp_date_text)
-    var mNoDelivery = view.findViewById<TextView>(R.id.no_delivery_text)
-    var mNoBatch = view.findViewById<TextView>(R.id.no_batch_text)
+    var mDateEntry = view.findViewById<TextView>(R.id.date_entry)
+    var mKode = view.findViewById<TextView>(R.id.kode_text)
+    var mId = view.findViewById<TextView>(R.id.id_text)
     var mQty = view.findViewById<TextView>(R.id.qty)
 
     fun bindData(data: MStok) {
+        Glide.with(context)
+            .load(URL_GAMBAR + data.gambar)
+            .into(mImage)
+
         mName.text = data.nama_produk
-        mDateEntry.text = data.nama_produk
-        mDateExp.text = data.nama_produk
-        mNoDelivery.text = data.nama_produk
-        mNoBatch.text = data.nama_produk
+        mDateEntry.text = data.insert_dt
+        mKode.text = data.kode_produk
+        mId.text = data.id
         mQty.text = data.qty
     }
 }
