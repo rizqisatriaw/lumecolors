@@ -7,11 +7,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClients {
     fun getRetrofitInstance(): Retrofit {
 
-        val retrofit = Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
-        return retrofit
     }
 }

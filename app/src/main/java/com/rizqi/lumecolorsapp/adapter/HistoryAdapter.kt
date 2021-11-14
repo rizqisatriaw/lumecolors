@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.model.MHistory
+import com.rizqi.lumecolorsapp.model.MStok
 import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
 
 class HistoryAdapter(private val mData: List<MHistory>, private val mContext: Context): RecyclerView.Adapter<ViewHolder>() {
@@ -36,10 +37,14 @@ class HistoryAdapter(private val mData: List<MHistory>, private val mContext: Co
 //            Log.d("CLICKME: ", mData[position].id)
             mClickListener!!.onBtnClick(mData[position])
         }
+        holder.mGambar.setOnClickListener {
+            mClickListener!!.onBtnClickImage(mData[position])
+        }
     }
 
     interface BtnClickListener {
         fun onBtnClick(data: MHistory)
+        fun onBtnClickImage(data: MHistory)
     }
 }
 

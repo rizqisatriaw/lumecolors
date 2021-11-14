@@ -8,10 +8,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.adapter.OpnameAdapter
 import com.rizqi.lumecolorsapp.api.GetDataService
@@ -21,6 +24,7 @@ import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.response.ResponseOpname
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
 import com.rizqi.lumecolorsapp.utils.Constants.PERIODE
+import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
 import com.rizqi.lumecolorsapp.utils.SharedPreferencesUtils
 import org.w3c.dom.Text
 import retrofit2.Call
@@ -38,6 +42,12 @@ class StockOpnameActivity : AppCompatActivity() {
     private lateinit var emptyState: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var datePeriod: TextView
+    private lateinit var lytQrList: LinearLayout
+    private lateinit var vBack: LinearLayout
+    private lateinit var lnrImageShow: LinearLayout
+    private lateinit var mImgShow: ImageView
+    var isDetail: Boolean = false
+    var isImgShow: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +61,12 @@ class StockOpnameActivity : AppCompatActivity() {
         emptyState = findViewById(R.id.empty_state)
         recyclerView = findViewById(R.id.rv_show)
         datePeriod = findViewById(R.id.periode)
+//        lytQrList = findViewById(R.id.layout_qr)
+//        vBack = findViewById(R.id.view_back)
+        lnrImageShow = findViewById(R.id.linear_image_show)
+        mImgShow = findViewById(R.id.image_show)
+        isDetail = false
+        isImgShow = false
 
         val periode = sharedPreferences.getStringSharedPreferences(PERIODE)!!
 
@@ -130,6 +146,42 @@ class StockOpnameActivity : AppCompatActivity() {
             layoutManager = linearLayoutManager
             adapter = mAdapter
         }
+
+//        vBack.setOnClickListener {
+//            lytQrList.visibility= View.GONE
+//            isDetail = false
+//        }
+
+        mAdapter.interfaAction(object: OpnameAdapter.InterfaceAdapter{
+            override fun onBtnClick(data: MOpname) {
+//                lytQrList.visibility = View.VISIBLE
+//                isDetail = true
+            }
+
+            override fun onBtnClickImage(data: MOpname) {
+                lnrImageShow.visibility = View.VISIBLE
+                isImgShow = true
+
+                Glide.with(this@StockOpnameActivity)
+                    .load(URL_GAMBAR + data.gambar)
+                    .into(mImgShow)
+            }
+
+        })
+    }
+
+    override fun onBackPressed() {
+        if(isImgShow) {
+            isImgShow = false
+            lnrImageShow.visibility = View.GONE
+            return
+        }
+        if(isDetail) {
+            isDetail = false
+//            lytQrList.visibility = View.GONE
+            return
+        }
+        super.onBackPressed()
     }
 
 }

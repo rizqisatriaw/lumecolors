@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.adapter.HistoryAdapter
 import com.rizqi.lumecolorsapp.adapter.QRListAdapter
@@ -22,6 +23,7 @@ import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.response.ResponseHistory
 import com.rizqi.lumecolorsapp.response.ResponseListQR
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
+import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
 import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
@@ -45,7 +47,11 @@ class HistoryLoadingInActivity : AppCompatActivity() {
     private lateinit var imgDateFrom: ImageView
     private lateinit var imgDateTo: ImageView
     private lateinit var lytQrList: LinearLayout
-    private lateinit var vBack: RelativeLayout
+    private lateinit var vBack: LinearLayout
+    private lateinit var lnrImageShow: LinearLayout
+    private lateinit var mImgShow: ImageView
+    var isDetail: Boolean = false
+    var isImgShow: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +72,10 @@ class HistoryLoadingInActivity : AppCompatActivity() {
         imgDateTo = findViewById(R.id.img_date_to)
         lytQrList = findViewById(R.id.layout_qr_list)
         vBack = findViewById(R.id.view_back)
+        lnrImageShow = findViewById(R.id.linear_image_show)
+        mImgShow = findViewById(R.id.image_show)
+        isDetail = false
+        isImgShow = false
 
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -158,14 +168,25 @@ class HistoryLoadingInActivity : AppCompatActivity() {
 
         vBack.setOnClickListener {
             lytQrList.visibility = View.GONE
+            isDetail = false
         }
 
         mAdapter.interfaceClick(object: HistoryAdapter.BtnClickListener{
             override fun onBtnClick(data: MHistory) {
 //                Log.d("BACOD: ", data.id)
                 lytQrList.visibility = View.VISIBLE
+                isDetail = true
 
                 fetchListQR(data)
+            }
+
+            override fun onBtnClickImage(data: MHistory) {
+                lnrImageShow.visibility = View.VISIBLE
+                isImgShow = true
+
+                Glide.with(this@HistoryLoadingInActivity)
+                    .load(URL_GAMBAR + data.gambar)
+                    .into(mImgShow)
             }
 
         })
@@ -286,5 +307,19 @@ class HistoryLoadingInActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onBackPressed() {
+        if(isImgShow) {
+            isImgShow = false
+            lnrImageShow.visibility = View.GONE
+            return
+        }
+        if(isDetail) {
+            isDetail = false
+            lytQrList.visibility = View.GONE
+            return
+        }
+        super.onBackPressed()
     }
 }

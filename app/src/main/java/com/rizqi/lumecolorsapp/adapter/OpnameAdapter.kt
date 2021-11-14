@@ -5,16 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.model.MOpname
+import com.rizqi.lumecolorsapp.model.MStok
 import com.rizqi.lumecolorsapp.utils.Constants
 
 class OpnameAdapter(private val mData: List<MOpname>, private val mContext: Context): RecyclerView.Adapter<ViewHolderOpname>() {
+    var interfaceAdapter: OpnameAdapter.InterfaceAdapter? = null
+
+    fun interfaAction(interfaces: OpnameAdapter.InterfaceAdapter) {
+        this.interfaceAdapter = interfaces
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderOpname {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_show_barang, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_stock_opname, parent, false)
 
         return ViewHolderOpname(view, mContext)
     }
@@ -23,17 +31,29 @@ class OpnameAdapter(private val mData: List<MOpname>, private val mContext: Cont
 
     override fun onBindViewHolder(holder: ViewHolderOpname, position: Int) {
         holder.bindData(mData[position])
+
+        holder.mImage.setOnClickListener {
+            interfaceAdapter!!.onBtnClickImage(mData[position])
+        }
+
+        holder.btnListQr.setOnClickListener {
+            interfaceAdapter!!.onBtnClick(mData[position])
+        }
+    }
+
+    interface InterfaceAdapter {
+        fun onBtnClick(data: MOpname)
+        fun onBtnClickImage(data: MOpname)
     }
 }
 
 class ViewHolderOpname(view: View, private val context: Context) : RecyclerView.ViewHolder(view) {
     var mImage = view.findViewById<ImageView>(R.id.image_barang)
     var mName = view.findViewById<TextView>(R.id.name)
-    var mDateEntry = view.findViewById<TextView>(R.id.date_entry_text)
-    var mDateExp = view.findViewById<TextView>(R.id.exp_date_text)
-    var mNoDelivery = view.findViewById<TextView>(R.id.no_delivery_text)
-    var mNoBatch = view.findViewById<TextView>(R.id.no_batch_text)
-    var mQty = view.findViewById<TextView>(R.id.qty)
+    var mKode = view.findViewById<TextView>(R.id.kode_text)
+    var mKategori = view.findViewById<TextView>(R.id.kategori_text)
+    var mQty = view.findViewById<TextView>(R.id.qty_text)
+    var btnListQr = view.findViewById<LinearLayout>(R.id.button_kartu)
 
     fun bindData(data: MOpname) {
         Glide.with(context)
@@ -41,10 +61,8 @@ class ViewHolderOpname(view: View, private val context: Context) : RecyclerView.
             .into(mImage)
 
         mName.text = data.nama_produk
-        mDateEntry.text = data.nama_produk
-        mDateExp.text = data.nama_produk
-        mNoDelivery.text = data.nama_produk
-        mNoBatch.text = data.nama_produk
+        mKode.text = data.kode_produk
+        mKategori.text = data.nama_kategori
         mQty.text = data.qty
     }
 }
