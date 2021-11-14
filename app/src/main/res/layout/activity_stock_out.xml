@@ -30,16 +30,34 @@
                     android:id="@+id/img_date_from"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/calendar_in"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/date_from"/>
 
-                <TextView
-                    android:id="@+id/txt_date_from"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/date_entry"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="@string/date_from"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_date_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/date_from"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -52,17 +70,34 @@
                     android:id="@+id/img_date_to"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/calendar_out"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/date_to"/>
 
-                <TextView
-                    android:id="@+id/txt_date_to"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/date_entry"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="@string/date_to"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_date_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/date_to"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -116,6 +151,7 @@
                     android:layout_marginBottom="14dp">
 
                     <EditText
+                        android:id="@+id/edit_text_search"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -131,6 +167,7 @@
                         android:layout_weight="0.2">
 
                         <ImageView
+                            android:id="@+id/button_search"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_alignParentEnd="true"
@@ -140,26 +177,32 @@
 
                 </LinearLayout>
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:text="@string/stock_out"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textColor="@color/bold"
-                    android:textSize="20sp" />
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="14dp"
+                    android:visibility="visible">
 
-                <TextView
-                    android:id="@+id/empty_state"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:gravity="center"
-                    android:fontFamily="@font/poppins_light"
-                    android:textColor="@color/bold"
-                    android:textSize="20sp"
-                    android:visibility="gone"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/stock_out"
+                        android:textColor="@color/bold"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:id="@+id/logo_search"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="14dp"
+                        android:src="@drawable/search" />
+
+                </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_show"
