@@ -33,6 +33,8 @@
     <string name="ready">Already have an account?</string>
     <string name="welcome">Welcome</string>
     <string name="date_entry">Date entry</string>
+    <string name="date_from">Date from</string>
+    <string name="date_to">Date to</string>
     <string name="out_date">Out date</string>
     <string name="exp">Expired date</string>
     <string name="ref">Refrensi</string>
