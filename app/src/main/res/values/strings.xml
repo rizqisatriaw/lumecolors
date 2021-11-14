@@ -63,4 +63,7 @@
     <string name="pending">Pending</string>
     <string name="show">Show Approve Detail</string>
     <string name="periode">Periode</string>
+    <string name="yes">Yes</string>
+    <string name="not">No</string>
+    <string name="logout">Apakah anda yakin ingin logout ?</string>
 </resources>
