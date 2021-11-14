@@ -19,6 +19,8 @@ object Constants {
     const val PASSWORD = "password"
     const val LEVEL = "level"
 
+    const val LOADING_MSG = "Loading..."
+
 //    AUTH STATE
     const val LOGGED_STATE = "logged_state"
     const val LOGGED_IN = "logged_in"
