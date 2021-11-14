@@ -151,6 +151,7 @@
                     android:visibility="gone">
 
                     <EditText
+                        android:id="@+id/edit_text_search"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -166,6 +167,7 @@
                         android:layout_weight="0.2">
 
                         <ImageView
+                            android:id="@+id/button_search"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_alignParentEnd="true"
