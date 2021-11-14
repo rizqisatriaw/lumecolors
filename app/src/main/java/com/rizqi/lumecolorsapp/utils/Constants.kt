@@ -4,6 +4,7 @@ object Constants {
 
 //    BASE URL
     const val URL_GAMBAR = "https://tes.smilink.id/assets_user/images/produk/"
+    const val URL_QR = "https://tes.smilink.id/assets_user/images/qrcode_stok/"
     const val BASE_URL = "https://tes.smilink.id/api/"
 
 //    ANY VARIABLE
@@ -20,6 +21,9 @@ object Constants {
     const val LEVEL = "level"
 
     const val LOADING_MSG = "Loading..."
+
+    const val STOCK_IN = "stock_in"
+    const val STOCK_OUT = "stock_out"
 
 //    AUTH STATE
     const val LOGGED_STATE = "logged_state"

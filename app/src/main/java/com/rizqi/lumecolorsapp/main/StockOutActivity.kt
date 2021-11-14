@@ -8,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.model.MStok
 import com.rizqi.lumecolorsapp.response.ResponseStok
 import com.rizqi.lumecolorsapp.utils.Constants
+import com.rizqi.lumecolorsapp.utils.Constants.STOCK_OUT
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,8 +35,10 @@ class StockOutActivity : AppCompatActivity() {
 //    Variable From Layout
     private lateinit var emptyState: TextView
     private lateinit var recyclerView: RecyclerView
-    private lateinit var dateFrom: TextView
-    private lateinit var dateTo: TextView
+    private lateinit var txtDateFrom: TextView
+    private lateinit var txtDateTo: TextView
+    private lateinit var imgDateFrom: ImageView
+    private lateinit var imgDateTo: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +50,10 @@ class StockOutActivity : AppCompatActivity() {
 //        Variable From Layout
         emptyState = findViewById(R.id.empty_state)
         recyclerView = findViewById(R.id.rv_show)
-        dateFrom = findViewById(R.id.date_from)
-        dateTo = findViewById(R.id.date_to)
+        txtDateFrom = findViewById(R.id.txt_date_from)
+        txtDateTo = findViewById(R.id.txt_date_to)
+        imgDateFrom = findViewById(R.id.img_date_from)
+        imgDateTo = findViewById(R.id.img_date_to)
 
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -56,8 +62,8 @@ class StockOutActivity : AppCompatActivity() {
 
         val dateNow = "${year}-${month + 1}-${day}"
 
-        dateFrom.text = dateNow
-        dateTo.text = dateNow
+        txtDateFrom.text = dateNow
+        txtDateTo.text = dateNow
 
         getListStockOut(dateNow, dateNow)
 
@@ -127,7 +133,7 @@ class StockOutActivity : AppCompatActivity() {
 
     private fun setRecyclerView(data: ArrayList<MStok>) {
         linearLayoutManager = LinearLayoutManager(this@StockOutActivity)
-        mAdapter = StockAdapter(data, this@StockOutActivity)
+        mAdapter = StockAdapter(data, this@StockOutActivity, STOCK_OUT)
         recyclerView.apply {
             layoutManager = linearLayoutManager
             adapter = mAdapter
@@ -135,15 +141,15 @@ class StockOutActivity : AppCompatActivity() {
     }
 
     private fun setDateRange(day: Int, month: Int, year: Int) {
-        dateFrom.setOnClickListener {
+        imgDateFrom.setOnClickListener {
             datePicker = DatePickerDialog(this@StockOutActivity,
                 { view, year, month, dayOfMonth ->
-                    dateFrom.text = "${year}-${month + 1}-${dayOfMonth}"
+                    txtDateFrom.text = "${year}-${month + 1}-${dayOfMonth}"
                 }, year, month, day)
             datePicker.show()
         }
 
-        dateFrom.addTextChangedListener(object : TextWatcher {
+        txtDateFrom.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 //                Do Something
             }
@@ -153,20 +159,20 @@ class StockOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                getListStockOut(dateFrom.text.toString(), dateTo.text.toString())
+                getListStockOut(txtDateFrom.text.toString(), txtDateTo.text.toString())
             }
 
         })
 
-        dateTo.setOnClickListener {
+        imgDateTo.setOnClickListener {
             datePicker = DatePickerDialog(this@StockOutActivity,
                 { view, year, month, dayOfMonth ->
-                    dateTo.text = "${year}-${month + 1}-${dayOfMonth}"
+                    txtDateTo.text = "${year}-${month + 1}-${dayOfMonth}"
                 }, year, month, day)
             datePicker.show()
         }
 
-        dateTo.addTextChangedListener(object : TextWatcher {
+        txtDateTo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 //                Do Something
             }
@@ -176,7 +182,7 @@ class StockOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                getListStockOut(dateFrom.text.toString(), dateTo.text.toString())
+                getListStockOut(txtDateFrom.text.toString(), txtDateTo.text.toString())
             }
 
         })

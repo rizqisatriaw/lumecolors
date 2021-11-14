@@ -15,6 +15,7 @@ import com.rizqi.lumecolorsapp.model.MStok
 import com.rizqi.lumecolorsapp.response.ResponseStok
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
+import com.rizqi.lumecolorsapp.utils.Constants.STOCK_IN
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -87,7 +88,7 @@ class StockInActivity : AppCompatActivity() {
 
     private fun setRecyclerView(data: ArrayList<MStok>) {
         linearLayoutManager = LinearLayoutManager(this@StockInActivity)
-        mAdapter = StockAdapter(data, this@StockInActivity)
+        mAdapter = StockAdapter(data, this@StockInActivity, STOCK_IN)
         recyclerView.apply {
             layoutManager = linearLayoutManager
             adapter = mAdapter
