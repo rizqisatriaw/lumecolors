@@ -45,11 +45,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                android:text="@string/date_entry"
+                android:text="@string/periode"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/periode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
@@ -70,7 +71,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="14dp"
                 android:orientation="vertical"
                 android:paddingStart="14dp"
@@ -84,6 +85,17 @@
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/bold"
                     android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/empty_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/poppins_light"
+                    android:textColor="@color/bold"
+                    android:textSize="20sp"
+                    android:visibility="gone"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_show"
