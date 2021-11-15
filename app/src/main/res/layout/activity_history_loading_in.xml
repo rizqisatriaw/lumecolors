@@ -235,7 +235,7 @@
         android:layout_height="match_parent"
         android:paddingTop="100dp"
         android:background="@color/shadow_black"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <RelativeLayout

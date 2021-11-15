@@ -97,6 +97,11 @@ class MenuActivity : AppCompatActivity() {
             this@MenuActivity.startActivity(intent)
         }
 
+        approveOut.setOnClickListener {
+            val intent = Intent(this@MenuActivity, ApproveOutActivity::class.java)
+            this@MenuActivity.startActivity(intent)
+        }
+
         btnLogout.setOnClickListener {
             showDialogLogout()
         }

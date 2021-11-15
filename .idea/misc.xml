@@ -4,12 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_approve_in.xml" value="0.22447916666666667" />
+        <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_approve_out.xml" value="0.19322916666666667" />
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_history_loading_in.xml" value="0.19610507246376813" />
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_loading_in.xml" value="0.22447916666666667" />
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_login.xml" value="0.19610507246376813" />
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_menu.xml" value="0.25" />
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_register.xml" value="0.22447916666666667" />
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/activity_stock_in.xml" value="0.22447916666666667" />
+        <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/item_approve_out.xml" value="0.19322916666666667" />
         <entry key="..\:/Project/ProjectMobile/lumecolors/app/src/main/res/layout/item_show_barang.xml" value="0.25" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_background_alamat.xml" value="0.37083333333333335" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/drawable/custom_background_approve.xml" value="0.37083333333333335" />
