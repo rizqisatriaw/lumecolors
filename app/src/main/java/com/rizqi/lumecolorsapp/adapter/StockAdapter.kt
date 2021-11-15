@@ -18,9 +18,9 @@ import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
 
 class StockAdapter(private val mData: List<MStok>, private val mContext: Context, private val mType: String): RecyclerView.Adapter<ViewHolderStok>() {
 
-    var interfaceAdapter: StockAdapter.InterfaceAdapter? = null
+    var interfaceAdapter: InterfaceAdapter? = null
 
-    fun interfaAction(interfaces: StockAdapter.InterfaceAdapter) {
+    fun interfaAction(interfaces: InterfaceAdapter) {
         this.interfaceAdapter = interfaces
     }
 

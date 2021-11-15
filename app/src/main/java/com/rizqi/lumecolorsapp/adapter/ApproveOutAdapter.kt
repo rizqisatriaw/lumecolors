@@ -13,9 +13,9 @@ import com.rizqi.lumecolorsapp.model.MApprove
 
 class ApproveOutAdapter(private val mData: List<MApprove>, private val mContext: Context): RecyclerView.Adapter<ViewHolderApprove>() {
 
-    var interfaceAdapter: ApproveOutAdapter.InterfaceAdapter? = null
+    var interfaceAdapter: InterfaceAdapter? = null
 
-    fun interfaAction(interfaces: ApproveOutAdapter.InterfaceAdapter) {
+    fun interfaAction(interfaces: InterfaceAdapter) {
         this.interfaceAdapter = interfaces
     }
 

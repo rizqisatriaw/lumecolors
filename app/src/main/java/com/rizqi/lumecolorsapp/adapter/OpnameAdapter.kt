@@ -15,9 +15,9 @@ import com.rizqi.lumecolorsapp.model.MStok
 import com.rizqi.lumecolorsapp.utils.Constants
 
 class OpnameAdapter(private val mData: List<MOpname>, private val mContext: Context): RecyclerView.Adapter<ViewHolderOpname>() {
-    var interfaceAdapter: OpnameAdapter.InterfaceAdapter? = null
+    var interfaceAdapter: InterfaceAdapter? = null
 
-    fun interfaAction(interfaces: OpnameAdapter.InterfaceAdapter) {
+    fun interfaAction(interfaces: InterfaceAdapter) {
         this.interfaceAdapter = interfaces
     }
 

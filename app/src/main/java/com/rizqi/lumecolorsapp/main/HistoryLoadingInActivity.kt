@@ -2,13 +2,13 @@ package com.rizqi.lumecolorsapp.main
 
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,12 +19,11 @@ import com.rizqi.lumecolorsapp.api.GetDataService
 import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.model.MHistory
 import com.rizqi.lumecolorsapp.model.MListQR
-import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.response.ResponseHistory
 import com.rizqi.lumecolorsapp.response.ResponseListQR
+import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
 import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,8 +49,17 @@ class HistoryLoadingInActivity : AppCompatActivity() {
     private lateinit var vBack: LinearLayout
     private lateinit var lnrImageShow: LinearLayout
     private lateinit var mImgShow: ImageView
+    private lateinit var mImageSearch: ImageView
+    private lateinit var lnrSearchView: LinearLayout
+    private lateinit var etSearch: EditText
+    private lateinit var rlHeader: RelativeLayout
+
+    private lateinit var itemList: ArrayList<MHistory>
+    private lateinit var searchItem: ArrayList<MHistory>
+
     var isDetail: Boolean = false
     var isImgShow: Boolean = false
+    var isSearch: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,8 +82,21 @@ class HistoryLoadingInActivity : AppCompatActivity() {
         vBack = findViewById(R.id.view_back)
         lnrImageShow = findViewById(R.id.linear_image_show)
         mImgShow = findViewById(R.id.image_show)
+        mImageSearch = findViewById(R.id.logo_search)
+        lnrSearchView = findViewById(R.id.search_view)
+        etSearch = findViewById(R.id.edit_text_search)
+        rlHeader = findViewById(R.id.header_title)
+
+        itemList = ArrayList()
+        searchItem = ArrayList()
+
         isDetail = false
         isImgShow = false
+        isSearch = false
+
+        mImageSearch.setOnClickListener {
+            showSearch(true)
+        }
 
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -90,6 +111,8 @@ class HistoryLoadingInActivity : AppCompatActivity() {
         getListHistory(dateNow, dateNow)
 
         setDateRange(day, month, year)
+
+        searchAction()
     }
     
     private fun getListHistory(dari: String, sampai: String) {
@@ -126,6 +149,8 @@ class HistoryLoadingInActivity : AppCompatActivity() {
                 val res = response.body()!!
 
                 if (res.status == Constants.STAT200) {
+
+                    itemList = res.data
 
                     if(res.data.size != 0) {
                         emptyState.visibility = View.GONE
@@ -187,6 +212,54 @@ class HistoryLoadingInActivity : AppCompatActivity() {
                 Glide.with(this@HistoryLoadingInActivity)
                     .load(URL_GAMBAR + data.gambar)
                     .into(mImgShow)
+            }
+
+        })
+    }
+
+    private fun searchAction() {
+        etSearch.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if(isSearch && etSearch.text.isNotEmpty()) {
+                    searchItem = ArrayList()
+
+                    for (i in 0 until itemList.size) {
+                        val item = itemList[i]
+                        if(item.nama_produk.contains(etSearch.text)) {
+                            searchItem.add(item)
+                        }
+                    }
+
+                    if(searchItem.size != 0) {
+                        emptyState.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                        setRecyclerView(searchItem)
+                    } else {
+                        emptyState.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                        if(itemList.size == 0) emptyState.text = "Tidak ada data pada jangka waktu ini."
+                        else emptyState.text = "Barang tidak ditemukan."
+                    }
+                } else if(isSearch && etSearch.text.isEmpty()) {
+                    setRecyclerView(itemList)
+                    if(itemList.size == 0) {
+                        emptyState.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                        emptyState.text = "Tidak ada data pada jangka waktu ini."
+                    } else {
+                        emptyState.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                        emptyState.text = ""
+                    }
+                }
             }
 
         })
@@ -280,6 +353,7 @@ class HistoryLoadingInActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                showSearch(false)
                 getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
@@ -303,10 +377,24 @@ class HistoryLoadingInActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                showSearch(false)
                 getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
         })
+    }
+
+    private fun showSearch(show: Boolean) {
+        if(show) {
+            isSearch = true
+            lnrSearchView.visibility = View.VISIBLE
+            rlHeader.visibility = View.GONE
+        } else {
+            isSearch = false
+            lnrSearchView.visibility = View.GONE
+            rlHeader.visibility = View.VISIBLE
+        }
+        etSearch.setText("")
     }
 
     override fun onBackPressed() {
@@ -318,6 +406,20 @@ class HistoryLoadingInActivity : AppCompatActivity() {
         if(isDetail) {
             isDetail = false
             lytQrList.visibility = View.GONE
+            return
+        }
+        if(isSearch) {
+            showSearch(false)
+            if(itemList.size != 0) {
+                emptyState.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+
+                setRecyclerView(itemList)
+            } else {
+                emptyState.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+                emptyState.text = "Tidak ada data pada jangka waktu ini."
+            }
             return
         }
         super.onBackPressed()

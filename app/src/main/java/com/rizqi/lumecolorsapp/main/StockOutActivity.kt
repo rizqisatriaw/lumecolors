@@ -8,10 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -55,8 +52,17 @@ class StockOutActivity : AppCompatActivity() {
     private lateinit var dateApprove: TextView
     private lateinit var lnrImageShow: LinearLayout
     private lateinit var mImgShow: ImageView
+    private lateinit var mImageSearch: ImageView
+    private lateinit var lnrSearchView: LinearLayout
+    private lateinit var etSearch: EditText
+    private lateinit var rlHeader: RelativeLayout
+
+    private lateinit var itemList: ArrayList<MStok>
+    private lateinit var searchItem: ArrayList<MStok>
+
     var isDetail: Boolean = false
     var isImgShow: Boolean = false
+    var isSearch: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,8 +92,21 @@ class StockOutActivity : AppCompatActivity() {
         dateApprove = findViewById(R.id.approve_date_text)
         lnrImageShow = findViewById(R.id.linear_image_show)
         mImgShow = findViewById(R.id.image_show)
+        mImageSearch = findViewById(R.id.logo_search)
+        lnrSearchView = findViewById(R.id.search_view)
+        etSearch = findViewById(R.id.edit_text_search)
+        rlHeader = findViewById(R.id.header_title)
+
+        itemList = ArrayList()
+        searchItem = ArrayList()
+
         isDetail = false
         isImgShow = false
+        isSearch = false
+
+        mImageSearch.setOnClickListener {
+            showSearch(true)
+        }
 
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -102,6 +121,8 @@ class StockOutActivity : AppCompatActivity() {
         getListStockOut(dateNow, dateNow)
 
         setDateRange(day, month, year)
+
+        searchAction()
     }
 
     private fun getListStockOut(dari: String, sampai: String) {
@@ -134,6 +155,8 @@ class StockOutActivity : AppCompatActivity() {
                 val res = response.body()!!
 
                 if (res.status == Constants.STAT200) {
+
+                    itemList = res.data
 
                     if(res.data.size != 0) {
                         emptyState.visibility = View.GONE
@@ -193,6 +216,56 @@ class StockOutActivity : AppCompatActivity() {
                 Glide.with(this@StockOutActivity)
                     .load(Constants.URL_GAMBAR + data.gambar)
                     .into(mImgShow)
+            }
+
+        })
+
+    }
+
+    private fun searchAction() {
+        etSearch.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if(isSearch && etSearch.text.isNotEmpty()) {
+                    searchItem = ArrayList()
+
+                    for (i in 0 until itemList.size) {
+                        val item = itemList[i]
+                        if(item.nama_produk.contains(etSearch.text)) {
+                            searchItem.add(item)
+                        }
+                    }
+
+                    if(searchItem.size != 0) {
+                        setRecyclerView(searchItem)
+                        emptyState.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                    } else {
+                        emptyState.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                        if(itemList.size == 0) emptyState.text = "Tidak ada data pada jangka waktu ini."
+                        else emptyState.text = "Barang tidak ditemukan."
+                    }
+                } else if(isSearch && etSearch.text.isEmpty()) {
+                    setRecyclerView(itemList)
+
+                    if(itemList.size == 0) {
+                        emptyState.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                        emptyState.text = "Tidak ada data pada jangka waktu ini."
+                    } else {
+                        emptyState.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                        emptyState.text = ""
+                    }
+                }
             }
 
         })
@@ -288,6 +361,7 @@ class StockOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                showSearch(false)
                 getListStockOut(txtDateFrom.text.toString(), txtDateTo.text.toString())
             }
 
@@ -311,10 +385,24 @@ class StockOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                showSearch(false)
                 getListStockOut(txtDateFrom.text.toString(), txtDateTo.text.toString())
             }
 
         })
+    }
+
+    private fun showSearch(show: Boolean) {
+        if(show) {
+            isSearch = true
+            lnrSearchView.visibility = View.VISIBLE
+            rlHeader.visibility = View.GONE
+        } else {
+            isSearch = false
+            lnrSearchView.visibility = View.GONE
+            rlHeader.visibility = View.VISIBLE
+        }
+        etSearch.setText("")
     }
 
     override fun onBackPressed() {
@@ -326,6 +414,11 @@ class StockOutActivity : AppCompatActivity() {
         if(isDetail) {
             isDetail = false
             lnrReferensi.visibility = View.GONE
+            return
+        }
+        if(isSearch) {
+            showSearch(false)
+            setRecyclerView(itemList)
             return
         }
         super.onBackPressed()
