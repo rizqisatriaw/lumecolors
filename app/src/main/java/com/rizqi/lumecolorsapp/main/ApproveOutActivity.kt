@@ -2,34 +2,28 @@ package com.rizqi.lumecolorsapp.main
 
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.adapter.ApproveOutAdapter
 import com.rizqi.lumecolorsapp.adapter.QRListAdapter
 import com.rizqi.lumecolorsapp.api.GetDataService
 import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.model.MApprove
-import com.rizqi.lumecolorsapp.model.MListQR
-import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.response.ResponseApprove
-import com.rizqi.lumecolorsapp.response.ResponseListQR
+import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
-import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ApproveOutActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -48,6 +42,7 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var imgDateTo: ImageView
     private lateinit var lnrChooseQr: LinearLayout
     private lateinit var vBack: LinearLayout
+    private lateinit var vBackQR: LinearLayout
     private lateinit var lnrImageShow: LinearLayout
     private lateinit var mImgShow: ImageView
     private lateinit var btnAlamat: LinearLayout
@@ -75,6 +70,7 @@ class ApproveOutActivity : AppCompatActivity() {
         imgDateTo = findViewById(R.id.img_date_to)
         lnrChooseQr = findViewById(R.id.layout_pilih_qr)
         vBack = findViewById(R.id.view_back)
+        vBackQR = findViewById(R.id.view_back_qr)
         lnrImageShow = findViewById(R.id.linear_image_show)
         mImgShow = findViewById(R.id.image_show)
         btnAlamat = findViewById(R.id.button_alamat)
@@ -97,8 +93,13 @@ class ApproveOutActivity : AppCompatActivity() {
             lnrAlamatView.visibility = View.VISIBLE
             isAlamatShow = true
         }
+        
+        vBack.setOnClickListener {
+            lnrAlamatView.visibility = View.GONE
+            isAlamatShow = false
+        }
 
-//        getListHistory(dateNow, dateNow)
+        getListHistory(dateNow, dateNow)
 
         setDateRange(day, month, year)
     }
@@ -111,7 +112,7 @@ class ApproveOutActivity : AppCompatActivity() {
         recyclerView.visibility = View.GONE
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
-        val call = service.listApprove()
+        val call = service.approveOutHistory(dari, sampai)
 
         call.enqueue(object : Callback<ResponseApprove> {
 
@@ -141,6 +142,7 @@ class ApproveOutActivity : AppCompatActivity() {
                     if(res.data.size != 0) {
                         emptyState.visibility = View.GONE
                         recyclerView.visibility = View.VISIBLE
+//                        Log.d("MERCHANT: ", res.data[0].nama_vendor)
                         setRecyclerView(res.data)
                     } else {
                         emptyState.visibility = View.VISIBLE
@@ -177,7 +179,7 @@ class ApproveOutActivity : AppCompatActivity() {
             adapter = mAdapter
         }
 
-        vBack.setOnClickListener {
+        vBackQR.setOnClickListener {
             lnrChooseQr.visibility = View.GONE
             isDetail = false
         }
@@ -188,16 +190,12 @@ class ApproveOutActivity : AppCompatActivity() {
                 lnrChooseQr.visibility = View.VISIBLE
                 isDetail = true
 
-                fetchListQR(data)
+//                fetchListQR(data)
             }
 
             override fun onBtnClickImage(data: MApprove) {
                 lnrImageShow.visibility = View.VISIBLE
                 isImgShow = true
-
-                Glide.with(this@ApproveOutActivity)
-                    .load(URL_GAMBAR + data.gambar)
-                    .into(mImgShow)
             }
 
         })
@@ -209,11 +207,11 @@ class ApproveOutActivity : AppCompatActivity() {
         emptyStateQR.text = "Memuat..."
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
-        val call = service.listQr(data.id)
+        val call = service.approveOutQR(data.order_id)
 
-        call.enqueue(object : Callback<ResponseListQR> {
+        call.enqueue(object : Callback<ResponseApprove> {
 
-            override fun onFailure(call: Call<ResponseListQR>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseApprove>, t: Throwable) {
 
                 Toast.makeText(
                     this@ApproveOutActivity,
@@ -228,7 +226,7 @@ class ApproveOutActivity : AppCompatActivity() {
                 emptyStateQR.text = "Terjadi kesalahan saat memuat data."
             }
 
-            override fun onResponse(call: Call<ResponseListQR>, response: Response<ResponseListQR>) {
+            override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
 
                 val res = response.body()!!
 
@@ -263,13 +261,13 @@ class ApproveOutActivity : AppCompatActivity() {
         })
     }
 
-    private fun setRecyclerQR(data: ArrayList<MListQR>) {
-        linearLayoutManager = LinearLayoutManager(this@ApproveOutActivity)
-        mAdapterQR = QRListAdapter(data, this@ApproveOutActivity)
-        listQRShow.apply {
-            layoutManager = linearLayoutManager
-            adapter = mAdapterQR
-        }
+    private fun setRecyclerQR(data: ArrayList<MApprove>) {
+//        linearLayoutManager = LinearLayoutManager(this@ApproveOutActivity)
+//        mAdapterQR = QRListAdapter(data, this@ApproveOutActivity)
+//        listQRShow.apply {
+//            layoutManager = linearLayoutManager
+//            adapter = mAdapterQR
+//        }
     }
 
     private fun setDateRange(day: Int, month: Int, year: Int) {
@@ -291,7 +289,7 @@ class ApproveOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
         })
@@ -314,7 +312,7 @@ class ApproveOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
         })

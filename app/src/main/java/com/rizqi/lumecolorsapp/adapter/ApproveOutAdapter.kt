@@ -1,6 +1,7 @@
 package com.rizqi.lumecolorsapp.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,7 @@ class ApproveOutAdapter(private val mData: List<MApprove>, private val mContext:
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderApprove {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_approve_in, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_approve_out, parent, false)
 
         return ViewHolderApprove(view, mContext)
     }
@@ -29,6 +30,10 @@ class ApproveOutAdapter(private val mData: List<MApprove>, private val mContext:
 
     override fun onBindViewHolder(holder: ViewHolderApprove, position: Int) {
         holder.bindData(mData[position])
+
+        holder.btnQR.setOnClickListener {
+            interfaceAdapter!!.onBtnClick(mData[position])
+        }
     }
 
     interface InterfaceAdapter {
@@ -46,5 +51,10 @@ class ViewHolderApprove(view: View, private val context: Context) : RecyclerView
     var btnQR = view.findViewById<LinearLayout>(R.id.button_list_qr)
 
     fun bindData(data: MApprove) {
+        mMerchant.text = data.nama_vendor
+        mOrder.text = data.order_id
+        mCustomer.text = data.penerima
+        mCart.text = data.cart
+        mTanggal.text = data.dt_approve_act
     }
 }
