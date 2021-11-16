@@ -36,10 +36,6 @@ interface GetDataService {
     ): Call<ResponseHistory>
 
     @FormUrlEncoded
-    @POST("")
-    fun listApprove(): Call<ResponseApprove>
-
-    @FormUrlEncoded
     @POST("stok/in")
     fun stokIn(
         @Field("dari") dari: String,
@@ -71,4 +67,21 @@ interface GetDataService {
     fun detailStok(
         @Field("id") id: String,
     ): Call<ResponseStokDetail>
+
+    @FormUrlEncoded
+    @POST("approve_out/history")
+    fun approveOutHistory(
+        @Field("dari") dari: String,
+        @Field("sampai") sampai: String,
+    ): Call<ResponseApprove>
+
+    @FormUrlEncoded
+    @POST("master/produk")
+    fun dataProduk(): Call<ResponseApprove>
+
+    @FormUrlEncoded
+    @POST("approve_out/get_qr")
+    fun approveOutQR(
+        @Field("id_produk") id_produk: String,
+    ): Call<ResponseApprove>
 }

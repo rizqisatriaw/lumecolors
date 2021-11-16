@@ -46,6 +46,7 @@ class HistoryLoadingInActivity : AppCompatActivity() {
     private lateinit var imgDateFrom: ImageView
     private lateinit var imgDateTo: ImageView
     private lateinit var lytQrList: LinearLayout
+    private lateinit var lytQr: RelativeLayout
     private lateinit var vBack: LinearLayout
     private lateinit var lnrImageShow: LinearLayout
     private lateinit var mImgShow: ImageView
@@ -79,6 +80,7 @@ class HistoryLoadingInActivity : AppCompatActivity() {
         imgDateFrom = findViewById(R.id.img_date_from)
         imgDateTo = findViewById(R.id.img_date_to)
         lytQrList = findViewById(R.id.layout_qr_list)
+        lytQr = findViewById(R.id.layout_qr)
         vBack = findViewById(R.id.view_back)
         lnrImageShow = findViewById(R.id.linear_image_show)
         mImgShow = findViewById(R.id.image_show)
@@ -94,10 +96,6 @@ class HistoryLoadingInActivity : AppCompatActivity() {
         isImgShow = false
         isSearch = false
 
-        mImageSearch.setOnClickListener {
-            showSearch(true)
-        }
-
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
@@ -108,11 +106,26 @@ class HistoryLoadingInActivity : AppCompatActivity() {
         textDateFrom.text = dateNow
         textDateTo.text = dateNow
 
+        setOnClickHanlder()
+
         getListHistory(dateNow, dateNow)
 
         setDateRange(day, month, year)
 
         searchAction()
+    }
+
+    private fun setOnClickHanlder() {
+        mImageSearch.setOnClickListener {
+            showSearch(true)
+        }
+
+        lytQrList.setOnClickListener {
+            lytQrList.visibility = View.GONE
+            isDetail = false
+        }
+
+        lytQr.setOnClickListener {  }
     }
     
     private fun getListHistory(dari: String, sampai: String) {

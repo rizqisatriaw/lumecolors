@@ -2,34 +2,28 @@ package com.rizqi.lumecolorsapp.main
 
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.adapter.ApproveOutAdapter
 import com.rizqi.lumecolorsapp.adapter.QRListAdapter
 import com.rizqi.lumecolorsapp.api.GetDataService
 import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.model.MApprove
-import com.rizqi.lumecolorsapp.model.MListQR
-import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.response.ResponseApprove
-import com.rizqi.lumecolorsapp.response.ResponseListQR
+import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
-import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ApproveOutActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -47,13 +41,25 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var imgDateFrom: ImageView
     private lateinit var imgDateTo: ImageView
     private lateinit var lnrChooseQr: LinearLayout
+    private lateinit var lytQr: RelativeLayout
     private lateinit var vBack: LinearLayout
+    private lateinit var vBackQR: LinearLayout
     private lateinit var lnrImageShow: LinearLayout
     private lateinit var mImgShow: ImageView
     private lateinit var btnAlamat: LinearLayout
     private lateinit var lnrAlamatView: LinearLayout
+    private lateinit var lytAlamat: RelativeLayout
+    private lateinit var mImageSearch: ImageView
+    private lateinit var lnrSearchView: LinearLayout
+    private lateinit var etSearch: EditText
+    private lateinit var rlHeader: RelativeLayout
+
+    private lateinit var itemList: ArrayList<MApprove>
+    private lateinit var searchItem: ArrayList<MApprove>
+
     var isDetail: Boolean = false
     var isImgShow: Boolean = false
+    var isSearch: Boolean = false
     var isAlamatShow: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,13 +80,25 @@ class ApproveOutActivity : AppCompatActivity() {
         imgDateFrom = findViewById(R.id.img_date_from)
         imgDateTo = findViewById(R.id.img_date_to)
         lnrChooseQr = findViewById(R.id.layout_pilih_qr)
+        lytQr = findViewById(R.id.layout_qr)
         vBack = findViewById(R.id.view_back)
+        vBackQR = findViewById(R.id.view_back_qr)
         lnrImageShow = findViewById(R.id.linear_image_show)
         mImgShow = findViewById(R.id.image_show)
         btnAlamat = findViewById(R.id.button_alamat)
         lnrAlamatView = findViewById(R.id.layout_alamat_view)
+        lytAlamat = findViewById(R.id.layout_alamat)
+        mImageSearch = findViewById(R.id.logo_search)
+        lnrSearchView = findViewById(R.id.search_view)
+        etSearch = findViewById(R.id.edit_text_search)
+        rlHeader = findViewById(R.id.header_title)
+
+        itemList = ArrayList()
+        searchItem = ArrayList()
+
         isDetail = false
         isImgShow = false
+        isSearch = false
         isAlamatShow = false
 
         val c = Calendar.getInstance()
@@ -93,14 +111,44 @@ class ApproveOutActivity : AppCompatActivity() {
         textDateFrom.text = dateNow
         textDateTo.text = dateNow
 
+        setOnClickHandler()
+
+        getListHistory(dateNow, dateNow)
+
+        setDateRange(day, month, year)
+
+        searchAction()
+    }
+
+    private fun setOnClickHandler() {
+
+        mImageSearch.setOnClickListener {
+            showSearch(true)
+        }
+        
         btnAlamat.setOnClickListener {
             lnrAlamatView.visibility = View.VISIBLE
             isAlamatShow = true
         }
 
-//        getListHistory(dateNow, dateNow)
+        vBack.setOnClickListener {
+            lnrAlamatView.visibility = View.GONE
+            isAlamatShow = false
+        }
 
-        setDateRange(day, month, year)
+        lnrAlamatView.setOnClickListener {
+            lnrAlamatView.visibility = View.GONE
+            isAlamatShow = false
+        }
+
+        lnrChooseQr.setOnClickListener {
+            lnrChooseQr.visibility = View.GONE
+            isDetail = false
+        }
+
+        lytQr.setOnClickListener {  }
+
+        lytAlamat.setOnClickListener {  }
     }
 
     private fun getListHistory(dari: String, sampai: String) {
@@ -111,7 +159,7 @@ class ApproveOutActivity : AppCompatActivity() {
         recyclerView.visibility = View.GONE
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
-        val call = service.listApprove()
+        val call = service.approveOutHistory(dari, sampai)
 
         call.enqueue(object : Callback<ResponseApprove> {
 
@@ -138,9 +186,12 @@ class ApproveOutActivity : AppCompatActivity() {
 
                 if (res.status == Constants.STAT200) {
 
+                    itemList = res.data
+
                     if(res.data.size != 0) {
                         emptyState.visibility = View.GONE
                         recyclerView.visibility = View.VISIBLE
+//                        Log.d("MERCHANT: ", res.data[0].nama_vendor)
                         setRecyclerView(res.data)
                     } else {
                         emptyState.visibility = View.VISIBLE
@@ -177,7 +228,7 @@ class ApproveOutActivity : AppCompatActivity() {
             adapter = mAdapter
         }
 
-        vBack.setOnClickListener {
+        vBackQR.setOnClickListener {
             lnrChooseQr.visibility = View.GONE
             isDetail = false
         }
@@ -188,16 +239,60 @@ class ApproveOutActivity : AppCompatActivity() {
                 lnrChooseQr.visibility = View.VISIBLE
                 isDetail = true
 
-                fetchListQR(data)
+//                fetchListQR(data)
             }
 
             override fun onBtnClickImage(data: MApprove) {
                 lnrImageShow.visibility = View.VISIBLE
                 isImgShow = true
+            }
 
-                Glide.with(this@ApproveOutActivity)
-                    .load(URL_GAMBAR + data.gambar)
-                    .into(mImgShow)
+        })
+    }
+
+    private fun searchAction() {
+        etSearch.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if(isSearch && etSearch.text.isNotEmpty()) {
+                    searchItem = ArrayList()
+
+                    for (i in 0 until itemList.size) {
+                        val item = itemList[i]
+                        if(item.nama_vendor.contains(etSearch.text)) {
+                            searchItem.add(item)
+                        }
+                    }
+
+                    if(searchItem.size != 0) {
+                        emptyState.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                        setRecyclerView(searchItem)
+                    } else {
+                        emptyState.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                        if(itemList.size == 0) emptyState.text = "Tidak ada data pada jangka waktu ini."
+                        else emptyState.text = "Barang tidak ditemukan."
+                    }
+                } else if(isSearch && etSearch.text.isEmpty()) {
+                    setRecyclerView(itemList)
+                    if(itemList.size == 0) {
+                        emptyState.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                        emptyState.text = "Tidak ada data pada jangka waktu ini."
+                    } else {
+                        emptyState.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                        emptyState.text = ""
+                    }
+                }
             }
 
         })
@@ -209,11 +304,11 @@ class ApproveOutActivity : AppCompatActivity() {
         emptyStateQR.text = "Memuat..."
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
-        val call = service.listQr(data.id)
+        val call = service.approveOutQR(data.order_id)
 
-        call.enqueue(object : Callback<ResponseListQR> {
+        call.enqueue(object : Callback<ResponseApprove> {
 
-            override fun onFailure(call: Call<ResponseListQR>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseApprove>, t: Throwable) {
 
                 Toast.makeText(
                     this@ApproveOutActivity,
@@ -228,7 +323,7 @@ class ApproveOutActivity : AppCompatActivity() {
                 emptyStateQR.text = "Terjadi kesalahan saat memuat data."
             }
 
-            override fun onResponse(call: Call<ResponseListQR>, response: Response<ResponseListQR>) {
+            override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
 
                 val res = response.body()!!
 
@@ -263,13 +358,13 @@ class ApproveOutActivity : AppCompatActivity() {
         })
     }
 
-    private fun setRecyclerQR(data: ArrayList<MListQR>) {
-        linearLayoutManager = LinearLayoutManager(this@ApproveOutActivity)
-        mAdapterQR = QRListAdapter(data, this@ApproveOutActivity)
-        listQRShow.apply {
-            layoutManager = linearLayoutManager
-            adapter = mAdapterQR
-        }
+    private fun setRecyclerQR(data: ArrayList<MApprove>) {
+//        linearLayoutManager = LinearLayoutManager(this@ApproveOutActivity)
+//        mAdapterQR = QRListAdapter(data, this@ApproveOutActivity)
+//        listQRShow.apply {
+//            layoutManager = linearLayoutManager
+//            adapter = mAdapterQR
+//        }
     }
 
     private fun setDateRange(day: Int, month: Int, year: Int) {
@@ -291,7 +386,8 @@ class ApproveOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+                showSearch(false)
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
         })
@@ -314,10 +410,24 @@ class ApproveOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+                showSearch(false)
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
         })
+    }
+
+    private fun showSearch(show: Boolean) {
+        if(show) {
+            isSearch = true
+            lnrSearchView.visibility = View.VISIBLE
+            rlHeader.visibility = View.GONE
+        } else {
+            isSearch = false
+            lnrSearchView.visibility = View.GONE
+            rlHeader.visibility = View.VISIBLE
+        }
+        etSearch.setText("")
     }
 
     override fun onBackPressed() {
@@ -334,6 +444,20 @@ class ApproveOutActivity : AppCompatActivity() {
         if(isAlamatShow) {
             isAlamatShow = false
             lnrAlamatView.visibility = View.GONE
+            return
+        }
+        if(isSearch) {
+            showSearch(false)
+            if(itemList.size != 0) {
+                emptyState.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+
+                setRecyclerView(itemList)
+            } else {
+                emptyState.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+                emptyState.text = "Tidak ada data pada jangka waktu ini."
+            }
             return
         }
         super.onBackPressed()

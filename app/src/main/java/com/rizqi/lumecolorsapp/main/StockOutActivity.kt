@@ -40,6 +40,7 @@ class StockOutActivity : AppCompatActivity() {
     private lateinit var imgDateFrom: ImageView
     private lateinit var imgDateTo: ImageView
     private lateinit var lnrReferensi: LinearLayout
+    private lateinit var lytReferensi: RelativeLayout
     private lateinit var vBack: LinearLayout
     private lateinit var emptyStateDetail: TextView
     private lateinit var lnrDetail: LinearLayout
@@ -80,6 +81,7 @@ class StockOutActivity : AppCompatActivity() {
         imgDateTo = findViewById(R.id.img_date_to)
 //        Detail Variable
         lnrReferensi = findViewById(R.id.layout_refrensi_view)
+        lytReferensi = findViewById(R.id.layout_refrensi)
         vBack = findViewById(R.id.view_back)
         emptyStateDetail = findViewById(R.id.empty_state_detail)
         lnrDetail = findViewById(R.id.lnr_detail)
@@ -104,10 +106,6 @@ class StockOutActivity : AppCompatActivity() {
         isImgShow = false
         isSearch = false
 
-        mImageSearch.setOnClickListener {
-            showSearch(true)
-        }
-
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
@@ -118,11 +116,26 @@ class StockOutActivity : AppCompatActivity() {
         txtDateFrom.text = dateNow
         txtDateTo.text = dateNow
 
+        setOnClickHandler()
+
         getListStockOut(dateNow, dateNow)
 
         setDateRange(day, month, year)
 
         searchAction()
+    }
+
+    private fun setOnClickHandler() {
+        mImageSearch.setOnClickListener {
+            showSearch(true)
+        }
+
+        lnrReferensi.setOnClickListener {
+            lnrReferensi.visibility = View.GONE
+            isDetail = false
+        }
+
+        lytReferensi.setOnClickListener {  }
     }
 
     private fun getListStockOut(dari: String, sampai: String) {
