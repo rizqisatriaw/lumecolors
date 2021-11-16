@@ -41,14 +41,25 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var imgDateFrom: ImageView
     private lateinit var imgDateTo: ImageView
     private lateinit var lnrChooseQr: LinearLayout
+    private lateinit var lytQr: RelativeLayout
     private lateinit var vBack: LinearLayout
     private lateinit var vBackQR: LinearLayout
     private lateinit var lnrImageShow: LinearLayout
     private lateinit var mImgShow: ImageView
     private lateinit var btnAlamat: LinearLayout
     private lateinit var lnrAlamatView: LinearLayout
+    private lateinit var lytAlamat: RelativeLayout
+    private lateinit var mImageSearch: ImageView
+    private lateinit var lnrSearchView: LinearLayout
+    private lateinit var etSearch: EditText
+    private lateinit var rlHeader: RelativeLayout
+
+    private lateinit var itemList: ArrayList<MApprove>
+    private lateinit var searchItem: ArrayList<MApprove>
+
     var isDetail: Boolean = false
     var isImgShow: Boolean = false
+    var isSearch: Boolean = false
     var isAlamatShow: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,15 +80,30 @@ class ApproveOutActivity : AppCompatActivity() {
         imgDateFrom = findViewById(R.id.img_date_from)
         imgDateTo = findViewById(R.id.img_date_to)
         lnrChooseQr = findViewById(R.id.layout_pilih_qr)
+        lytQr = findViewById(R.id.layout_qr)
         vBack = findViewById(R.id.view_back)
         vBackQR = findViewById(R.id.view_back_qr)
         lnrImageShow = findViewById(R.id.linear_image_show)
         mImgShow = findViewById(R.id.image_show)
         btnAlamat = findViewById(R.id.button_alamat)
         lnrAlamatView = findViewById(R.id.layout_alamat_view)
+        lytAlamat = findViewById(R.id.layout_alamat)
+        mImageSearch = findViewById(R.id.logo_search)
+        lnrSearchView = findViewById(R.id.search_view)
+        etSearch = findViewById(R.id.edit_text_search)
+        rlHeader = findViewById(R.id.header_title)
+
+        itemList = ArrayList()
+        searchItem = ArrayList()
+
         isDetail = false
         isImgShow = false
+        isSearch = false
         isAlamatShow = false
+
+        mImageSearch.setOnClickListener {
+            showSearch(true)
+        }
 
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -89,19 +115,39 @@ class ApproveOutActivity : AppCompatActivity() {
         textDateFrom.text = dateNow
         textDateTo.text = dateNow
 
+        setOnClickHandler()
+
+        getListHistory(dateNow, dateNow)
+
+        setDateRange(day, month, year)
+
+        searchAction()
+    }
+
+    private fun setOnClickHandler() {
         btnAlamat.setOnClickListener {
             lnrAlamatView.visibility = View.VISIBLE
             isAlamatShow = true
         }
-        
+
         vBack.setOnClickListener {
             lnrAlamatView.visibility = View.GONE
             isAlamatShow = false
         }
 
-        getListHistory(dateNow, dateNow)
+        lnrAlamatView.setOnClickListener {
+            lnrAlamatView.visibility = View.GONE
+            isAlamatShow = false
+        }
 
-        setDateRange(day, month, year)
+        lnrChooseQr.setOnClickListener {
+            lnrChooseQr.visibility = View.GONE
+            isDetail = false
+        }
+
+        lytQr.setOnClickListener {  }
+
+        lytAlamat.setOnClickListener {  }
     }
 
     private fun getListHistory(dari: String, sampai: String) {
@@ -138,6 +184,8 @@ class ApproveOutActivity : AppCompatActivity() {
                 val res = response.body()!!
 
                 if (res.status == Constants.STAT200) {
+
+                    itemList = res.data
 
                     if(res.data.size != 0) {
                         emptyState.visibility = View.GONE
@@ -196,6 +244,54 @@ class ApproveOutActivity : AppCompatActivity() {
             override fun onBtnClickImage(data: MApprove) {
                 lnrImageShow.visibility = View.VISIBLE
                 isImgShow = true
+            }
+
+        })
+    }
+
+    private fun searchAction() {
+        etSearch.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if(isSearch && etSearch.text.isNotEmpty()) {
+                    searchItem = ArrayList()
+
+                    for (i in 0 until itemList.size) {
+                        val item = itemList[i]
+                        if(item.nama_vendor.contains(etSearch.text)) {
+                            searchItem.add(item)
+                        }
+                    }
+
+                    if(searchItem.size != 0) {
+                        emptyState.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                        setRecyclerView(searchItem)
+                    } else {
+                        emptyState.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                        if(itemList.size == 0) emptyState.text = "Tidak ada data pada jangka waktu ini."
+                        else emptyState.text = "Barang tidak ditemukan."
+                    }
+                } else if(isSearch && etSearch.text.isEmpty()) {
+                    setRecyclerView(itemList)
+                    if(itemList.size == 0) {
+                        emptyState.visibility = View.VISIBLE
+                        recyclerView.visibility = View.GONE
+                        emptyState.text = "Tidak ada data pada jangka waktu ini."
+                    } else {
+                        emptyState.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                        emptyState.text = ""
+                    }
+                }
             }
 
         })
@@ -289,6 +385,7 @@ class ApproveOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                showSearch(false)
                 getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
@@ -312,10 +409,24 @@ class ApproveOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                showSearch(false)
                 getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
         })
+    }
+
+    private fun showSearch(show: Boolean) {
+        if(show) {
+            isSearch = true
+            lnrSearchView.visibility = View.VISIBLE
+            rlHeader.visibility = View.GONE
+        } else {
+            isSearch = false
+            lnrSearchView.visibility = View.GONE
+            rlHeader.visibility = View.VISIBLE
+        }
+        etSearch.setText("")
     }
 
     override fun onBackPressed() {
@@ -332,6 +443,20 @@ class ApproveOutActivity : AppCompatActivity() {
         if(isAlamatShow) {
             isAlamatShow = false
             lnrAlamatView.visibility = View.GONE
+            return
+        }
+        if(isSearch) {
+            showSearch(false)
+            if(itemList.size != 0) {
+                emptyState.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+
+                setRecyclerView(itemList)
+            } else {
+                emptyState.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+                emptyState.text = "Tidak ada data pada jangka waktu ini."
+            }
             return
         }
         super.onBackPressed()
