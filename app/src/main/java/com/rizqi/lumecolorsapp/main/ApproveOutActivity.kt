@@ -266,7 +266,7 @@ class ApproveOutActivity : AppCompatActivity() {
 
                     for (i in 0 until itemList.size) {
                         val item = itemList[i]
-                        if(item.nama_vendor.contains(etSearch.text)) {
+                        if(item.nama_vendor.contains(etSearch.text, ignoreCase = true)) {
                             searchItem.add(item)
                         }
                     }

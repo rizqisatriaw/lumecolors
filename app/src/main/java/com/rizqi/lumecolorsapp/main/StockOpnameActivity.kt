@@ -212,7 +212,7 @@ class StockOpnameActivity : AppCompatActivity() {
 
                     for (i in 0 until itemList.size) {
                         val item = itemList[i]
-                        if(item.nama_produk.contains(etSearch.text)) {
+                        if(item.nama_produk.contains(etSearch.text, ignoreCase = true)) {
                             searchItem.add(item)
                         }
                     }
