@@ -101,10 +101,6 @@ class ApproveOutActivity : AppCompatActivity() {
         isSearch = false
         isAlamatShow = false
 
-        mImageSearch.setOnClickListener {
-            showSearch(true)
-        }
-
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
@@ -125,6 +121,11 @@ class ApproveOutActivity : AppCompatActivity() {
     }
 
     private fun setOnClickHandler() {
+
+        mImageSearch.setOnClickListener {
+            showSearch(true)
+        }
+        
         btnAlamat.setOnClickListener {
             lnrAlamatView.visibility = View.VISIBLE
             isAlamatShow = true
