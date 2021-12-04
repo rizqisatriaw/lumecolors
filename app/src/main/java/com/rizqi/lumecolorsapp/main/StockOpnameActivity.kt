@@ -1,14 +1,15 @@
 package com.rizqi.lumecolorsapp.main
 
-import android.app.DatePickerDialog
 import android.app.ProgressDialog
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,13 +18,13 @@ import com.rizqi.lumecolorsapp.adapter.OpnameAdapter
 import com.rizqi.lumecolorsapp.api.GetDataService
 import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.model.MOpname
-import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.response.ResponseOpname
+import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
 import com.rizqi.lumecolorsapp.utils.Constants.PERIODE
 import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
+import com.rizqi.lumecolorsapp.utils.Constants.URL_KARTU
 import com.rizqi.lumecolorsapp.utils.SharedPreferencesUtils
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -177,10 +178,8 @@ class StockOpnameActivity : AppCompatActivity() {
 
         mAdapter.interfaAction(object: OpnameAdapter.InterfaceAdapter{
             override fun onBtnClick(data: MOpname) {
-//                lytQrList.visibility = View.VISIBLE
-//                isDetail = true
-                Toast.makeText(this@StockOpnameActivity, data.kode_produk, Toast.LENGTH_SHORT).show()
-//                Log.d("CLICKED: ", data.id)
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(URL_KARTU + data.id))
+                this@StockOpnameActivity.startActivity(browserIntent)
             }
 
             override fun onBtnClickImage(data: MOpname) {

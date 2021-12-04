@@ -61,7 +61,7 @@ interface GetDataService {
         @Field("id_loading_in") id_loading_in: String,
     ): Call<ResponseListQR>
 
-    @Headers("Content-Type: application/json")
+//    @Headers("Content-Type: application/json")
     @FormUrlEncoded
     @POST("stok/detail")
     fun detailStok(
