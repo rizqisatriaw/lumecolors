@@ -1,14 +1,20 @@
 package com.rizqi.lumecolorsapp.main
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.ProgressDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rizqi.lumecolorsapp.R
@@ -20,6 +26,7 @@ import com.rizqi.lumecolorsapp.model.MApprove
 import com.rizqi.lumecolorsapp.response.ResponseApprove
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
+import com.rizqi.lumecolorsapp.utils.Constants.SP_LEVEL
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,6 +60,11 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var lnrSearchView: LinearLayout
     private lateinit var etSearch: EditText
     private lateinit var rlHeader: RelativeLayout
+
+    private lateinit var buttonListQR: LinearLayout
+    private lateinit var buttonPacking: LinearLayout
+    private lateinit var buttonSender: LinearLayout
+    private lateinit var buttonApproved: LinearLayout
 
     private lateinit var itemList: ArrayList<MApprove>
     private lateinit var searchItem: ArrayList<MApprove>
@@ -93,6 +105,11 @@ class ApproveOutActivity : AppCompatActivity() {
         etSearch = findViewById(R.id.edit_text_search)
         rlHeader = findViewById(R.id.header_title)
 
+        buttonListQR = findViewById(R.id.button_list_qr)
+        buttonPacking = findViewById(R.id.button_packing)
+        buttonSender = findViewById(R.id.button_sender)
+        buttonApproved = findViewById(R.id.button_approved)
+
         itemList = ArrayList()
         searchItem = ArrayList()
 
@@ -118,6 +135,78 @@ class ApproveOutActivity : AppCompatActivity() {
         setDateRange(day, month, year)
 
         searchAction()
+
+        setLevelApprove()
+    }
+
+//  Set Status Approve
+    private fun setLevelApprove(){
+
+        if (SP_LEVEL == "PICKER" || SP_LEVEL == "CHECKER"){
+            buttonPacking.visibility = View.GONE
+            buttonSender.visibility = View.GONE
+            buttonListQR.visibility = View.VISIBLE
+            buttonListQR.setOnClickListener {
+                //iki isien seng nampilno QR le
+            }
+        }
+
+        if (SP_LEVEL == "PACKING") {
+            buttonListQR.visibility = View.GONE
+            buttonSender.visibility = View.GONE
+            buttonPacking.visibility = View.VISIBLE
+            buttonPacking.setOnClickListener {
+                showDialogPaking()
+            }
+        }
+
+        if (SP_LEVEL == "SENDER") {
+            buttonListQR.visibility = View.GONE
+            buttonPacking.visibility = View.GONE
+            buttonSender.visibility = View.VISIBLE
+            buttonPacking.setOnClickListener {
+                showDialogSender()
+            }
+        }
+
+    }
+
+    private fun showDialogSender(){
+        val dialog = Dialog(this@ApproveOutActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_sender)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val btnNo = dialog.findViewById<Button>(R.id.button_no)
+        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
+
+        btnNo.setOnClickListener { dialog.dismiss() }
+        btnYes.setOnClickListener {
+            buttonApproved.visibility = View.VISIBLE
+
+        } //isi en iki le cek pindah kondisi e
+
+        dialog.show()
+    }
+
+    private fun showDialogPaking(){
+        val dialog = Dialog(this@ApproveOutActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_packing)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val btnNo = dialog.findViewById<Button>(R.id.button_no)
+        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
+
+        btnNo.setOnClickListener { dialog.dismiss() }
+        btnYes.setOnClickListener {
+            buttonApproved.visibility = View.VISIBLE
+
+        } //isi en iki le cek pindah kondisi e
+
+        dialog.show()
     }
 
     private fun setOnClickHandler() {

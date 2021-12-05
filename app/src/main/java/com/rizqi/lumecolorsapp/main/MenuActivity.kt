@@ -8,6 +8,7 @@ import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.auth.LoginActivity
 import com.rizqi.lumecolorsapp.utils.Constants
@@ -61,14 +62,14 @@ class MenuActivity : AppCompatActivity() {
 
 //        Set LEVEL Access
         if (SP_LEVEL == "CHECKER"){
-            hiddenApproveIn.visibility
+            hiddenApproveIn.visibility = View.VISIBLE
         }
         if (SP_LEVEL == "PACKING" || SP_LEVEL == "SENDER"){
-            hiddenHistory.visibility
-            hiddenApproveIn.visibility
-            hiddenStockIn.visibility
-            hiddenStockOut.visibility
-            hiddenStockOpname.visibility
+            hiddenHistory.visibility = View.VISIBLE
+            hiddenApproveIn.visibility = View.VISIBLE
+            hiddenStockIn.visibility = View.VISIBLE
+            hiddenStockOut.visibility = View.VISIBLE
+            hiddenStockOpname.visibility = View.VISIBLE
         }
 
 //        Action
