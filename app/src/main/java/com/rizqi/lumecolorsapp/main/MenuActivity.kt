@@ -30,7 +30,7 @@ class MenuActivity : AppCompatActivity() {
     private lateinit var hiddenStockOpname: View
     private lateinit var hiddenStockOut: View
     private lateinit var hiddenStockIn: View
-    private lateinit var hiddenApproveIn: View
+//    private lateinit var hiddenApproveIn: View
     private lateinit var hiddenApproveOut: View
     private lateinit var hiddenHistory: View
 
@@ -50,6 +50,7 @@ class MenuActivity : AppCompatActivity() {
         stockIn = findViewById(R.id.card_stock_in)
         stockOut = findViewById(R.id.card_stock_out)
         stockOpname = findViewById(R.id.card_stock_opname)
+        hiddenHistory = findViewById(R.id.hidden_history)
         hiddenStockOpname = findViewById(R.id.hidden_stock_opname)
         hiddenStockIn = findViewById(R.id.hidden_stock_in)
         hiddenStockOut = findViewById(R.id.hidden_stock_out)
@@ -58,30 +59,36 @@ class MenuActivity : AppCompatActivity() {
 
 
 //        Set Variable SharedPreferences
-        mLevel.text = sharedPreferences.getStringSharedPreferences(SP_LEVEL)
+        val _SPLEVEL = sharedPreferences.getStringSharedPreferences(SP_LEVEL)
+        mLevel.text = _SPLEVEL
 
 //        Set LEVEL Access
-        if (SP_LEVEL == "CHECKER"){
-            hiddenApproveIn.visibility = View.VISIBLE
-        }
-        if (SP_LEVEL == "PACKING" || SP_LEVEL == "SENDER"){
+//        if (_SPLEVEL == "CHECKER"){
+//            actionALl()
+//        }
+        if (_SPLEVEL == "PACKING" || _SPLEVEL == "SENDER"){
             hiddenHistory.visibility = View.VISIBLE
-            hiddenApproveIn.visibility = View.VISIBLE
+//            hiddenApproveIn.visibility = View.VISIBLE
             hiddenStockIn.visibility = View.VISIBLE
             hiddenStockOut.visibility = View.VISIBLE
             hiddenStockOpname.visibility = View.VISIBLE
+
+            approveOut.setOnClickListener {
+                val intent = Intent(this@MenuActivity, ApproveOutActivity::class.java)
+                this@MenuActivity.startActivity(intent)
+            }
+        }
+        if (_SPLEVEL == "ADMIN" || _SPLEVEL == "PICKER" || _SPLEVEL == "CHECKER") {
+            actionALl()
         }
 
-//        Action
+    }
+
+    private fun actionALl() {
         history.setOnClickListener {
             val intent = Intent(this@MenuActivity, HistoryLoadingInActivity::class.java)
             this@MenuActivity.startActivity(intent)
         }
-
-//        approveIn.setOnClickListener {
-//            val intent = Intent(this@MenuActivity, ApproveInActivity::class.java)
-//            this@MenuActivity.startActivity(intent)
-//        }
 
         stockIn.setOnClickListener {
             val intent = Intent(this@MenuActivity, StockInActivity::class.java)
@@ -106,7 +113,6 @@ class MenuActivity : AppCompatActivity() {
         btnLogout.setOnClickListener {
             showDialogLogout()
         }
-
     }
 
     private fun showDialogLogout() {

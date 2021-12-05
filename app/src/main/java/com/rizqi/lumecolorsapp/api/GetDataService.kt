@@ -84,4 +84,10 @@ interface GetDataService {
     fun approveOutQR(
         @Field("id_produk") id_produk: String,
     ): Call<ResponseApprove>
+
+    @FormUrlEncoded
+    @POST("approve_out/isi_tab_qr")
+    fun tabQR(
+        @Field("order_id") order_id: String,
+    ): Call<ResponseTabQR>
 }

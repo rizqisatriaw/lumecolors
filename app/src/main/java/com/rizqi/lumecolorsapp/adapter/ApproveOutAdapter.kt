@@ -1,20 +1,27 @@
 package com.rizqi.lumecolorsapp.adapter
 
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.model.MApprove
+import com.rizqi.lumecolorsapp.utils.Constants.SP_LEVEL
+import com.rizqi.lumecolorsapp.utils.SharedPreferencesUtils
 
 class ApproveOutAdapter(private val mData: List<MApprove>, private val mContext: Context): RecyclerView.Adapter<ViewHolderApprove>() {
 
-    var interfaceAdapter: InterfaceAdapter? = null
+    private var interfaceAdapter: InterfaceAdapter? = null
 
     fun interfaAction(interfaces: InterfaceAdapter) {
         this.interfaceAdapter = interfaces
@@ -30,9 +37,18 @@ class ApproveOutAdapter(private val mData: List<MApprove>, private val mContext:
 
     override fun onBindViewHolder(holder: ViewHolderApprove, position: Int) {
         holder.bindData(mData[position])
+        holder.setLevelApprove(mData[position])
 
-        holder.btnQR.setOnClickListener {
+        holder.buttonListQR.setOnClickListener {
             interfaceAdapter!!.onBtnClick(mData[position])
+        }
+
+        holder.buttonPacking.setOnClickListener {
+            holder.showDialogPaking()
+        }
+
+        holder.buttonSender.setOnClickListener {
+            holder.showDialogSender()
         }
     }
 
@@ -43,12 +59,19 @@ class ApproveOutAdapter(private val mData: List<MApprove>, private val mContext:
 }
 
 class ViewHolderApprove(view: View, private val context: Context) : RecyclerView.ViewHolder(view) {
-    var mMerchant = view.findViewById<TextView>(R.id.merchant_text)
-    var mOrder = view.findViewById<TextView>(R.id.no_order_text)
-    var mCustomer = view.findViewById<TextView>(R.id.customer_text)
-    var mCart = view.findViewById<TextView>(R.id.cart_text)
-    var mTanggal = view.findViewById<TextView>(R.id.tgl_validasi)
-    var btnQR = view.findViewById<LinearLayout>(R.id.button_list_qr)
+    private var mMerchant = view.findViewById<TextView>(R.id.merchant_text)
+    private var mOrder = view.findViewById<TextView>(R.id.no_order_text)
+    private var mCustomer = view.findViewById<TextView>(R.id.customer_text)
+    private var mCart = view.findViewById<TextView>(R.id.cart_text)
+    private var mTanggal = view.findViewById<TextView>(R.id.tgl_validasi)
+    var buttonListQR = view.findViewById<LinearLayout>(R.id.button_list_qr)
+    var buttonPacking = view.findViewById<LinearLayout>(R.id.button_packing)
+    var buttonSender = view.findViewById<LinearLayout>(R.id.button_sender)
+    private var buttonApproved = view.findViewById<LinearLayout>(R.id.button_approved)
+
+    private val sharedPreferences = SharedPreferencesUtils(context)
+
+    private val _SPLEVEL = sharedPreferences.getStringSharedPreferences(SP_LEVEL)
 
     fun bindData(data: MApprove) {
         mMerchant.text = data.nama_vendor
@@ -56,5 +79,115 @@ class ViewHolderApprove(view: View, private val context: Context) : RecyclerView
         mCustomer.text = data.penerima
         mCart.text = data.cart
         mTanggal.text = data.dt_approve_act
+    }
+
+    //  Set Status Approve
+    fun setLevelApprove(data: MApprove){
+        if (_SPLEVEL == "PICKER" || _SPLEVEL == "ADMIN"){
+            buttonPacking.visibility = View.GONE
+            buttonSender.visibility = View.GONE
+
+            if (data.approve_picker == "1"){
+                buttonApproved.visibility = View.VISIBLE
+                buttonListQR.visibility = View.GONE
+            } else {
+                buttonApproved.visibility = View.GONE
+                buttonListQR.visibility = View.VISIBLE
+            }
+        }
+
+        if (_SPLEVEL == "CHECKER"){
+            buttonPacking.visibility = View.GONE
+            buttonSender.visibility = View.GONE
+
+            if (data.approve_checker == "1"){
+                buttonApproved.visibility = View.VISIBLE
+                buttonListQR.visibility = View.GONE
+            } else {
+                if (data.approve_picker == "1") {
+                    buttonApproved.visibility = View.GONE
+                    buttonListQR.visibility = View.VISIBLE
+                } else {
+                    buttonApproved.visibility = View.GONE
+                    buttonListQR.visibility = View.GONE
+                }
+            }
+        }
+
+        if (_SPLEVEL == "PACKING") {
+            buttonListQR.visibility = View.GONE
+            buttonSender.visibility = View.GONE
+
+            if (data.approve_packing == "1"){
+                buttonApproved.visibility = View.VISIBLE
+                buttonPacking.visibility = View.GONE
+            } else {
+                if (data.approve_checker == "1") {
+                    buttonApproved.visibility = View.GONE
+                    buttonPacking.visibility = View.VISIBLE
+                } else {
+                    buttonApproved.visibility = View.GONE
+                    buttonPacking.visibility = View.GONE
+                }
+            }
+
+        }
+
+        if (_SPLEVEL == "SENDER") {
+            buttonListQR.visibility = View.GONE
+            buttonPacking.visibility = View.GONE
+
+            if (data.approve_sender == "1"){
+                buttonApproved.visibility = View.VISIBLE
+                buttonSender.visibility = View.GONE
+            } else {
+                if (data.approve_packing == "1") {
+                    buttonApproved.visibility = View.GONE
+                    buttonSender.visibility = View.VISIBLE
+                } else {
+                    buttonApproved.visibility = View.GONE
+                    buttonSender.visibility = View.GONE
+                }
+            }
+        }
+
+    }
+
+    fun showDialogSender(){
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_sender)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val btnNo = dialog.findViewById<Button>(R.id.button_no)
+        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
+
+        btnNo.setOnClickListener { dialog.dismiss() }
+        btnYes.setOnClickListener {
+            buttonApproved.visibility = View.VISIBLE
+
+        } //isi en iki le cek pindah kondisi e
+
+        dialog.show()
+    }
+
+    fun showDialogPaking(){
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_packing)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val btnNo = dialog.findViewById<Button>(R.id.button_no)
+        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
+
+        btnNo.setOnClickListener { dialog.dismiss() }
+        btnYes.setOnClickListener {
+            buttonApproved.visibility = View.VISIBLE
+
+        } //isi en iki le cek pindah kondisi e
+
+        dialog.show()
     }
 }

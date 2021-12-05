@@ -19,11 +19,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.adapter.ApproveOutAdapter
-import com.rizqi.lumecolorsapp.adapter.QRListAdapter
+import com.rizqi.lumecolorsapp.adapter.TabQRList
 import com.rizqi.lumecolorsapp.api.GetDataService
 import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.model.MApprove
+import com.rizqi.lumecolorsapp.model.MTabQR
 import com.rizqi.lumecolorsapp.response.ResponseApprove
+import com.rizqi.lumecolorsapp.response.ResponseTabQR
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
 import com.rizqi.lumecolorsapp.utils.Constants.SP_LEVEL
@@ -35,7 +37,7 @@ import java.util.*
 class ApproveOutActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var mAdapter: ApproveOutAdapter
-    private lateinit var mAdapterQR: QRListAdapter
+    private lateinit var mAdapterQR: TabQRList
     private lateinit var datePicker: DatePickerDialog
     private lateinit var mLoading: ProgressDialog
     //    Variable From Layout
@@ -61,10 +63,10 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var etSearch: EditText
     private lateinit var rlHeader: RelativeLayout
 
-    private lateinit var buttonListQR: LinearLayout
-    private lateinit var buttonPacking: LinearLayout
-    private lateinit var buttonSender: LinearLayout
-    private lateinit var buttonApproved: LinearLayout
+//    private lateinit var buttonListQR: LinearLayout
+//    private lateinit var buttonPacking: LinearLayout
+//    private lateinit var buttonSender: LinearLayout
+//    private lateinit var buttonApproved: LinearLayout
 
     private lateinit var itemList: ArrayList<MApprove>
     private lateinit var searchItem: ArrayList<MApprove>
@@ -86,7 +88,7 @@ class ApproveOutActivity : AppCompatActivity() {
         emptyState = findViewById(R.id.empty_state)
         emptyStateQR = findViewById(R.id.empty_state_qr)
         recyclerView = findViewById(R.id.rv_show)
-//        listQRShow = findViewById(R.id.list_qr_show)
+        listQRShow = findViewById(R.id.list_qr_show)
         textDateFrom = findViewById(R.id.txt_date_from)
         textDateTo = findViewById(R.id.txt_date_to)
         imgDateFrom = findViewById(R.id.img_date_from)
@@ -105,10 +107,10 @@ class ApproveOutActivity : AppCompatActivity() {
         etSearch = findViewById(R.id.edit_text_search)
         rlHeader = findViewById(R.id.header_title)
 
-        buttonListQR = findViewById(R.id.button_list_qr)
-        buttonPacking = findViewById(R.id.button_packing)
-        buttonSender = findViewById(R.id.button_sender)
-        buttonApproved = findViewById(R.id.button_approved)
+//        buttonListQR = findViewById(R.id.button_list_qr)
+//        buttonPacking = findViewById(R.id.button_packing)
+//        buttonSender = findViewById(R.id.button_sender)
+//        buttonApproved = findViewById(R.id.button_approved)
 
         itemList = ArrayList()
         searchItem = ArrayList()
@@ -136,78 +138,78 @@ class ApproveOutActivity : AppCompatActivity() {
 
         searchAction()
 
-        setLevelApprove()
+//        setLevelApprove()
     }
 
-//  Set Status Approve
-    private fun setLevelApprove(){
+////  Set Status Approve
+//    private fun setLevelApprove(){
+//
+//        if (SP_LEVEL == "PICKER" || SP_LEVEL == "CHECKER"){
+//            buttonPacking.visibility = View.GONE
+//            buttonSender.visibility = View.GONE
+//            buttonListQR.visibility = View.VISIBLE
+//            buttonListQR.setOnClickListener {
+//                //iki isien seng nampilno QR le
+//            }
+//        }
+//
+//        if (SP_LEVEL == "PACKING") {
+//            buttonListQR.visibility = View.GONE
+//            buttonSender.visibility = View.GONE
+//            buttonPacking.visibility = View.VISIBLE
+//            buttonPacking.setOnClickListener {
+//                showDialogPaking()
+//            }
+//        }
+//
+//        if (SP_LEVEL == "SENDER") {
+//            buttonListQR.visibility = View.GONE
+//            buttonPacking.visibility = View.GONE
+//            buttonSender.visibility = View.VISIBLE
+//            buttonPacking.setOnClickListener {
+//                showDialogSender()
+//            }
+//        }
+//
+//    }
 
-        if (SP_LEVEL == "PICKER" || SP_LEVEL == "CHECKER"){
-            buttonPacking.visibility = View.GONE
-            buttonSender.visibility = View.GONE
-            buttonListQR.visibility = View.VISIBLE
-            buttonListQR.setOnClickListener {
-                //iki isien seng nampilno QR le
-            }
-        }
-
-        if (SP_LEVEL == "PACKING") {
-            buttonListQR.visibility = View.GONE
-            buttonSender.visibility = View.GONE
-            buttonPacking.visibility = View.VISIBLE
-            buttonPacking.setOnClickListener {
-                showDialogPaking()
-            }
-        }
-
-        if (SP_LEVEL == "SENDER") {
-            buttonListQR.visibility = View.GONE
-            buttonPacking.visibility = View.GONE
-            buttonSender.visibility = View.VISIBLE
-            buttonPacking.setOnClickListener {
-                showDialogSender()
-            }
-        }
-
-    }
-
-    private fun showDialogSender(){
-        val dialog = Dialog(this@ApproveOutActivity)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_sender)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val btnNo = dialog.findViewById<Button>(R.id.button_no)
-        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
-
-        btnNo.setOnClickListener { dialog.dismiss() }
-        btnYes.setOnClickListener {
-            buttonApproved.visibility = View.VISIBLE
-
-        } //isi en iki le cek pindah kondisi e
-
-        dialog.show()
-    }
-
-    private fun showDialogPaking(){
-        val dialog = Dialog(this@ApproveOutActivity)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_packing)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val btnNo = dialog.findViewById<Button>(R.id.button_no)
-        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
-
-        btnNo.setOnClickListener { dialog.dismiss() }
-        btnYes.setOnClickListener {
-            buttonApproved.visibility = View.VISIBLE
-
-        } //isi en iki le cek pindah kondisi e
-
-        dialog.show()
-    }
+//    private fun showDialogSender(){
+//        val dialog = Dialog(this@ApproveOutActivity)
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog.setCancelable(false)
+//        dialog.setContentView(R.layout.dialog_sender)
+//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//
+//        val btnNo = dialog.findViewById<Button>(R.id.button_no)
+//        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
+//
+//        btnNo.setOnClickListener { dialog.dismiss() }
+//        btnYes.setOnClickListener {
+//            buttonApproved.visibility = View.VISIBLE
+//
+//        } //isi en iki le cek pindah kondisi e
+//
+//        dialog.show()
+//    }
+//
+//    private fun showDialogPaking(){
+//        val dialog = Dialog(this@ApproveOutActivity)
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog.setCancelable(false)
+//        dialog.setContentView(R.layout.dialog_packing)
+//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//
+//        val btnNo = dialog.findViewById<Button>(R.id.button_no)
+//        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
+//
+//        btnNo.setOnClickListener { dialog.dismiss() }
+//        btnYes.setOnClickListener {
+//            buttonApproved.visibility = View.VISIBLE
+//
+//        } //isi en iki le cek pindah kondisi e
+//
+//        dialog.show()
+//    }
 
     private fun setOnClickHandler() {
 
@@ -327,7 +329,7 @@ class ApproveOutActivity : AppCompatActivity() {
 //                Log.d("BACOD: ", data.id)
                 lnrChooseQr.visibility = View.VISIBLE
                 isDetail = true
-
+                fetchListQR(data)
 //                fetchListQR(data)
             }
 
@@ -393,11 +395,11 @@ class ApproveOutActivity : AppCompatActivity() {
         emptyStateQR.text = "Memuat..."
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
-        val call = service.approveOutQR(data.order_id)
+        val call = service.tabQR(data.order_id)
 
-        call.enqueue(object : Callback<ResponseApprove> {
+        call.enqueue(object : Callback<ResponseTabQR> {
 
-            override fun onFailure(call: Call<ResponseApprove>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseTabQR>, t: Throwable) {
 
                 Toast.makeText(
                     this@ApproveOutActivity,
@@ -412,7 +414,7 @@ class ApproveOutActivity : AppCompatActivity() {
                 emptyStateQR.text = "Terjadi kesalahan saat memuat data."
             }
 
-            override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
+            override fun onResponse(call: Call<ResponseTabQR>, response: Response<ResponseTabQR>) {
 
                 val res = response.body()!!
 
@@ -447,13 +449,13 @@ class ApproveOutActivity : AppCompatActivity() {
         })
     }
 
-    private fun setRecyclerQR(data: ArrayList<MApprove>) {
-//        linearLayoutManager = LinearLayoutManager(this@ApproveOutActivity)
-//        mAdapterQR = QRListAdapter(data, this@ApproveOutActivity)
-//        listQRShow.apply {
-//            layoutManager = linearLayoutManager
-//            adapter = mAdapterQR
-//        }
+    private fun setRecyclerQR(data: ArrayList<MTabQR>) {
+        linearLayoutManager = LinearLayoutManager(this@ApproveOutActivity)
+        mAdapterQR = TabQRList(data, this@ApproveOutActivity)
+        listQRShow.apply {
+            layoutManager = linearLayoutManager
+            adapter = mAdapterQR
+        }
     }
 
     private fun setDateRange(day: Int, month: Int, year: Int) {
