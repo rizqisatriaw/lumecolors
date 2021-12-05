@@ -291,7 +291,8 @@ class StockOutActivity : AppCompatActivity() {
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
         val call = service.detailStok(data.id)
-//        val call = service.stokIn("2021-10-01", "2021-11-01")
+
+        Log.d("STOKOUTID: ", data.id)
 
         call.enqueue(object : Callback<ResponseStokDetail> {
 
@@ -303,7 +304,7 @@ class StockOutActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                Log.d("FAILED :", t.message.toString())
+//                Log.d("FAILED :", t.message.toString())
 
                 emptyStateDetail.visibility = View.VISIBLE
                 lnrDetail.visibility = View.GONE
@@ -315,12 +316,11 @@ class StockOutActivity : AppCompatActivity() {
                 val res = response.body()!!
 
                 if (res.status == Constants.STAT200) {
-//                if (res.status) {
                     if(res.data.size != 0) {
                         emptyStateDetail.visibility = View.GONE
                         lnrDetail.visibility = View.VISIBLE
 
-                        setDataDetail(res.data[0])
+                        setDataDetail(res)
                     } else {
                         emptyStateDetail.visibility = View.VISIBLE
                         lnrDetail.visibility = View.GONE
@@ -345,10 +345,12 @@ class StockOutActivity : AppCompatActivity() {
         })
     }
 
-    private fun setDataDetail(data: MStok) {
-        referensi.text = data.ref
-        noRef.text = data.no_ref
-        qty.text = data.qty
+    private fun setDataDetail(res: ResponseStokDetail) {
+        val data = res.data[0]
+
+        referensi.text = res.ref
+        noRef.text = res.no_ref
+        qty.text = res.qty
         typeInsert.text = data.insert_by
         dateInsert.text = data.insert_dt
         typeApprove.text = data.approve_by
