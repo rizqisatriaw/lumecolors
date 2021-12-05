@@ -495,7 +495,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="80dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:background="@color/shadow_black"
         android:orientation="vertical">
 
@@ -547,7 +547,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/qr"
+                        android:text="@string/qr_dari"
                         android:textColor="@color/bold"
                         android:fontFamily="@font/poppins_bold"
                         android:textSize="18sp"/>
@@ -579,12 +579,39 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_alignParentEnd="true"
-                                android:src="@drawable/search" />
+                                android:src="@drawable/down" />
 
                         </RelativeLayout>
 
-
                     </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/custom_button_plus"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/plus" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/poppins_semi_bold"
+                                android:textColor="@color/white"
+                                android:text="@string/plus" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 

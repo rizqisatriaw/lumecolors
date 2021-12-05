@@ -64,6 +64,8 @@
     <string name="send_approve">Approve Send</string>
     <string name="list_qr">List QR Code</string>
     <string name="qr">QR Code</string>
+    <string name="qr_dari">QR Code dari</string>
+    <string name="plus">Tambah</string>
     <string name="nama">Nama Produk</string>
     <string name="pilih">Pilih QR Code</string>
     <string name="detail_refrensi">Detail Refrensi :</string>
