@@ -106,6 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="24dp"
+            android:visibility="gone"
             android:paddingBottom="14dp">
 
             <LinearLayout
