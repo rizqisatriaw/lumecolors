@@ -495,7 +495,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="80dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:background="@color/shadow_black"
         android:orientation="vertical">
 
@@ -547,6 +547,57 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:text="@string/produk"
+                        android:textColor="@color/bold"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textSize="18sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_background_search"
+                        android:padding="14dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/edit_search_produk"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:hint="@string/search"
+                            android:textColor="@color/bold"
+                            android:textColorHint="@color/shadow"
+                            android:textSize="18sp" />
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2">
+
+                            <ImageView
+                                android:id="@+id/button_search_produk"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/down1" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/produk_qr_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:text="@string/qr_dari"
                         android:textColor="@color/bold"
                         android:fontFamily="@font/poppins_bold"
@@ -556,6 +607,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="14dp"
+                        android:background="@drawable/custom_background_search"
                         android:orientation="horizontal">
 
                         <EditText
@@ -564,7 +616,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@color/white"
-                            android:hint="@string/search"
                             android:textColor="@color/bold"
                             android:textColorHint="@color/shadow"
                             android:textSize="18sp" />
@@ -586,12 +637,15 @@
                     </LinearLayout>
 
                     <RelativeLayout
+                        android:id="@+id/button_tambah"
+                        android:padding="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <LinearLayout
                             android:layout_width="120dp"
                             android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
                             android:background="@drawable/custom_button_plus"
                             android:orientation="horizontal"
                             android:padding="8dp">
@@ -604,10 +658,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="16sp"
                                 android:fontFamily="@font/poppins_semi_bold"
+                                android:text="@string/plus"
                                 android:textColor="@color/white"
-                                android:text="@string/plus" />
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 
@@ -654,18 +708,57 @@
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/list_qr_show"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="14dp"
-                    tools:listitem="@layout/item_qr_approve_out" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_qr_terpilih"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="14dp"
+                        tools:listitem="@layout/item_qr_approve_out" />
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/button_approve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="120dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/custom_background_approve"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/check" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semi_bold"
+                            android:text="@string/approved"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
         </RelativeLayout>
 
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/linear_image_show"

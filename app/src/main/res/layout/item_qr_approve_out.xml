@@ -3,27 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="@color/white"
     android:padding="14dp">
 
     <TextView
-        android:layout_weight="1"
         android:id="@+id/qr_code"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/kode_ex"
         android:fontFamily="@font/poppins_regular"
         android:textColor="@color/bold"
-        android:text="29mq09q-"
-        android:textSize="16sp"/>
+        android:textSize="20sp"/>
 
     <TextView
+        android:id="@+id/nama_produk"
         android:layout_weight="1"
-        android:id="@+id/produk_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/produk"
         android:fontFamily="@font/poppins_regular"
         android:textColor="@color/bold"
-        android:text="29mq09q-"
-        android:textSize="16sp"/>
+        android:textSize="20sp"/>
+
 
 </LinearLayout>

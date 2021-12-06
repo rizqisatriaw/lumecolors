@@ -62,10 +62,6 @@ class MenuActivity : AppCompatActivity() {
         val _SPLEVEL = sharedPreferences.getStringSharedPreferences(SP_LEVEL)
         mLevel.text = _SPLEVEL
 
-//        Set LEVEL Access
-//        if (_SPLEVEL == "CHECKER"){
-//            actionALl()
-//        }
         if (_SPLEVEL == "PACKING" || _SPLEVEL == "SENDER"){
             hiddenHistory.visibility = View.VISIBLE
 //            hiddenApproveIn.visibility = View.VISIBLE
@@ -77,7 +73,12 @@ class MenuActivity : AppCompatActivity() {
                 val intent = Intent(this@MenuActivity, ApproveOutActivity::class.java)
                 this@MenuActivity.startActivity(intent)
             }
+
+            btnLogout.setOnClickListener {
+                showDialogLogout()
+            }
         }
+
         if (_SPLEVEL == "ADMIN" || _SPLEVEL == "PICKER" || _SPLEVEL == "CHECKER") {
             actionALl()
         }
