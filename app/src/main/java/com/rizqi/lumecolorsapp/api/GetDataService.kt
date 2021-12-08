@@ -90,4 +90,25 @@ interface GetDataService {
     fun tabQR(
         @Field("order_id") order_id: String,
     ): Call<ResponseTabQR>
+
+    @FormUrlEncoded
+    @POST("approve_out/approve_qr")
+    fun approveOut(
+        @Field("order_id") order_id: String,
+        @Field("level") level: String,
+    ): Call<ResponseApprove>
+
+    @FormUrlEncoded
+    @POST("approve_out/approve_packing")
+    fun approvePacking(
+        @Field("id") id: String,
+        @Field("sts_approve") sts_approve: Int,
+    ): Call<ResponseApprove>
+
+    @FormUrlEncoded
+    @POST("approve_out/approve_sender")
+    fun approveSender(
+        @Field("id") id: String,
+        @Field("sts_approve") sts_approve: Int,
+    ): Call<ResponseApprove>
 }

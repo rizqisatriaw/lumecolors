@@ -93,12 +93,23 @@ class LoginActivity : AppCompatActivity() {
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        mTxtPeriode.text = "${month + 1}/${year}"
+        var fixMonth:String = (month + 1).toString()
+
+        if(fixMonth.length == 1) {
+            fixMonth = "0$fixMonth"
+        }
+
+        mTxtPeriode.text = "${fixMonth}/${year}"
 
         periode.setOnClickListener {
             datePicker = DatePickerDialog(this@LoginActivity,
                 { view, year, month, dayOfMonth ->
-                    mTxtPeriode.text = "${month + 1}/${year}"
+                    var fixMonth:String = (month + 1).toString()
+
+                    if(fixMonth.length == 1) {
+                        fixMonth = "0$fixMonth"
+                    }
+                    mTxtPeriode.text = "${fixMonth}/${year}"
                 }, year, month, day)
             datePicker.show()
         }

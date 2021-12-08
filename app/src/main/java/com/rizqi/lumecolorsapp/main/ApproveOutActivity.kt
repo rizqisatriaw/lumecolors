@@ -29,12 +29,16 @@ import com.rizqi.lumecolorsapp.response.ResponseTabQR
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
 import com.rizqi.lumecolorsapp.utils.Constants.SP_LEVEL
+import com.rizqi.lumecolorsapp.utils.SharedPreferencesUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
 class ApproveOutActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferencesUtils
+    private lateinit var _SPLEVEL: String
+
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var mAdapter: ApproveOutAdapter
     private lateinit var mAdapterQR: TabQRList
@@ -62,6 +66,7 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var lnrSearchView: LinearLayout
     private lateinit var etSearch: EditText
     private lateinit var rlHeader: RelativeLayout
+    private lateinit var btnApprove: RelativeLayout
 
 //    private lateinit var buttonListQR: LinearLayout
 //    private lateinit var buttonPacking: LinearLayout
@@ -80,6 +85,8 @@ class ApproveOutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_approve_out)
 
+        sharedPreferences = SharedPreferencesUtils(this@ApproveOutActivity)
+        _SPLEVEL = sharedPreferences.getStringSharedPreferences(SP_LEVEL)!!
 
         mLoading = ProgressDialog(this@ApproveOutActivity)
         mLoading.setCancelable(false)
@@ -88,7 +95,7 @@ class ApproveOutActivity : AppCompatActivity() {
         emptyState = findViewById(R.id.empty_state)
         emptyStateQR = findViewById(R.id.empty_state_qr)
         recyclerView = findViewById(R.id.rv_show)
-        listQRShow = findViewById(R.id.list_qr_show)
+        listQRShow = findViewById(R.id.list_qr_terpilih)
         textDateFrom = findViewById(R.id.txt_date_from)
         textDateTo = findViewById(R.id.txt_date_to)
         imgDateFrom = findViewById(R.id.img_date_from)
@@ -106,6 +113,7 @@ class ApproveOutActivity : AppCompatActivity() {
         lnrSearchView = findViewById(R.id.search_view)
         etSearch = findViewById(R.id.edit_text_search)
         rlHeader = findViewById(R.id.header_title)
+        btnApprove = findViewById(R.id.button_approve)
 
 //        buttonListQR = findViewById(R.id.button_list_qr)
 //        buttonPacking = findViewById(R.id.button_packing)
@@ -123,9 +131,19 @@ class ApproveOutActivity : AppCompatActivity() {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+        var day = c.get(Calendar.DAY_OF_MONTH)
 
-        val dateNow = "${year}-${month + 1}-${day}"
+        var fixMonth:String = (month + 1).toString()
+        var fixDay:String = day.toString()
+
+        if(fixMonth.length == 1) {
+            fixMonth = "0$fixMonth"
+        }
+        if(fixDay.length == 1) {
+            fixDay = "0$fixDay"
+        }
+
+        val dateNow = "${year}-${fixMonth}-${fixDay}"
 
         textDateFrom.text = dateNow
         textDateTo.text = dateNow
@@ -138,78 +156,62 @@ class ApproveOutActivity : AppCompatActivity() {
 
         searchAction()
 
-//        setLevelApprove()
     }
 
-////  Set Status Approve
-//    private fun setLevelApprove(){
-//
-//        if (SP_LEVEL == "PICKER" || SP_LEVEL == "CHECKER"){
-//            buttonPacking.visibility = View.GONE
-//            buttonSender.visibility = View.GONE
-//            buttonListQR.visibility = View.VISIBLE
-//            buttonListQR.setOnClickListener {
-//                //iki isien seng nampilno QR le
-//            }
-//        }
-//
-//        if (SP_LEVEL == "PACKING") {
-//            buttonListQR.visibility = View.GONE
-//            buttonSender.visibility = View.GONE
-//            buttonPacking.visibility = View.VISIBLE
-//            buttonPacking.setOnClickListener {
-//                showDialogPaking()
-//            }
-//        }
-//
-//        if (SP_LEVEL == "SENDER") {
-//            buttonListQR.visibility = View.GONE
-//            buttonPacking.visibility = View.GONE
-//            buttonSender.visibility = View.VISIBLE
-//            buttonPacking.setOnClickListener {
-//                showDialogSender()
-//            }
-//        }
-//
-//    }
+    private fun showDialogApprove(order_id:String){
+        val dialog = Dialog(this@ApproveOutActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_packing)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-//    private fun showDialogSender(){
-//        val dialog = Dialog(this@ApproveOutActivity)
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dialog.setCancelable(false)
-//        dialog.setContentView(R.layout.dialog_sender)
-//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//
-//        val btnNo = dialog.findViewById<Button>(R.id.button_no)
-//        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
-//
-//        btnNo.setOnClickListener { dialog.dismiss() }
-//        btnYes.setOnClickListener {
-//            buttonApproved.visibility = View.VISIBLE
-//
-//        } //isi en iki le cek pindah kondisi e
-//
-//        dialog.show()
-//    }
-//
-//    private fun showDialogPaking(){
-//        val dialog = Dialog(this@ApproveOutActivity)
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dialog.setCancelable(false)
-//        dialog.setContentView(R.layout.dialog_packing)
-//        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//
-//        val btnNo = dialog.findViewById<Button>(R.id.button_no)
-//        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
-//
-//        btnNo.setOnClickListener { dialog.dismiss() }
-//        btnYes.setOnClickListener {
-//            buttonApproved.visibility = View.VISIBLE
-//
-//        } //isi en iki le cek pindah kondisi e
-//
-//        dialog.show()
-//    }
+        val btnNo = dialog.findViewById<Button>(R.id.button_no)
+        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
+
+        btnNo.setOnClickListener { dialog.dismiss() }
+        btnYes.setOnClickListener {
+            dialog.dismiss()
+            fetchApproveOut(order_id)
+        } //isi en iki le cek pindah kondisi e
+
+        dialog.show()
+    }
+    private fun showDialogApprovePacking(order_id:String){
+        val dialog = Dialog(this@ApproveOutActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_packing)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val btnNo = dialog.findViewById<Button>(R.id.button_no)
+        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
+
+        btnNo.setOnClickListener { dialog.dismiss() }
+        btnYes.setOnClickListener {
+            dialog.dismiss()
+            fetchApprovePacking(order_id)
+        } //isi en iki le cek pindah kondisi e
+
+        dialog.show()
+    }
+    private fun showDialogApproveSender(order_id:String){
+        val dialog = Dialog(this@ApproveOutActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_sender)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val btnNo = dialog.findViewById<Button>(R.id.button_no)
+        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
+
+        btnNo.setOnClickListener { dialog.dismiss() }
+        btnYes.setOnClickListener {
+            dialog.dismiss()
+            fetchApproveSender(order_id)
+        } //isi en iki le cek pindah kondisi e
+
+        dialog.show()
+    }
 
     private fun setOnClickHandler() {
 
@@ -240,6 +242,165 @@ class ApproveOutActivity : AppCompatActivity() {
         lytQr.setOnClickListener {  }
 
         lytAlamat.setOnClickListener {  }
+    }
+
+    private fun fetchApproveOut(order_id: String) {
+        mLoading.setMessage(LOADING_MSG)
+        mLoading.show()
+
+        val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.approveOut(order_id, _SPLEVEL)
+
+        call.enqueue(object : Callback<ResponseApprove> {
+
+            override fun onFailure(call: Call<ResponseApprove>, t: Throwable) {
+
+                Toast.makeText(
+                    this@ApproveOutActivity,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Log.d("FAILED :", t.message.toString())
+
+                lnrChooseQr.visibility = View.GONE
+                isDetail = false
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+            }
+
+            override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
+
+                val res = response.body()!!
+
+                if (res.status == Constants.STAT200) {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        "Data berhasil di proses",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                } else {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        res.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                lnrChooseQr.visibility = View.GONE
+                isDetail = false
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+            }
+
+        })
+    }
+
+    private fun fetchApprovePacking(order_id: String) {
+        mLoading.setMessage(LOADING_MSG)
+        mLoading.show()
+
+        val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.approvePacking(order_id, 1)
+
+        call.enqueue(object : Callback<ResponseApprove> {
+
+            override fun onFailure(call: Call<ResponseApprove>, t: Throwable) {
+
+                Toast.makeText(
+                    this@ApproveOutActivity,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Log.d("FAILED :", t.message.toString())
+
+                lnrChooseQr.visibility = View.GONE
+                isDetail = false
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+            }
+
+            override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
+
+                val res = response.body()!!
+
+                if (res.status == Constants.STAT200) {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        "Data berhasil di proses",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                } else {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        res.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                lnrChooseQr.visibility = View.GONE
+                isDetail = false
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+            }
+
+        })
+    }
+
+    private fun fetchApproveSender(order_id: String) {
+        mLoading.setMessage(LOADING_MSG)
+        mLoading.show()
+
+        val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.approveSender(order_id, 1)
+
+        call.enqueue(object : Callback<ResponseApprove> {
+
+            override fun onFailure(call: Call<ResponseApprove>, t: Throwable) {
+
+                Toast.makeText(
+                    this@ApproveOutActivity,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Log.d("FAILED :", t.message.toString())
+
+                lnrChooseQr.visibility = View.GONE
+                isDetail = false
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+            }
+
+            override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
+
+                val res = response.body()!!
+
+                if (res.status == Constants.STAT200) {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        "Data berhasil di proses",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                } else {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        res.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                lnrChooseQr.visibility = View.GONE
+                isDetail = false
+                getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+            }
+
+        })
     }
 
     private fun getListHistory(dari: String, sampai: String) {
@@ -326,11 +487,21 @@ class ApproveOutActivity : AppCompatActivity() {
 
         mAdapter.interfaAction(object: ApproveOutAdapter.InterfaceAdapter{
             override fun onBtnClick(data: MApprove) {
-//                Log.d("BACOD: ", data.id)
                 lnrChooseQr.visibility = View.VISIBLE
                 isDetail = true
                 fetchListQR(data)
-//                fetchListQR(data)
+
+                btnApprove.setOnClickListener {
+                    showDialogApprove(data.order_id)
+                }
+            }
+
+            override fun onApprovePacking(data: MApprove) {
+                showDialogApprovePacking(data.order_id)
+            }
+
+            override fun onApproveSender(data: MApprove) {
+                showDialogApproveSender(data.order_id)
             }
 
             override fun onBtnClickImage(data: MApprove) {
@@ -462,7 +633,17 @@ class ApproveOutActivity : AppCompatActivity() {
         imgDateFrom.setOnClickListener {
             datePicker = DatePickerDialog(this@ApproveOutActivity,
                 { view, year, month, dayOfMonth ->
-                    textDateFrom.text = "${year}-${month + 1}-${dayOfMonth}"
+                    var fixMonth:String = (month + 1).toString()
+                    var fixDay:String = dayOfMonth.toString()
+
+                    if(fixMonth.length == 1) {
+                        fixMonth = "0$fixMonth"
+                    }
+                    if(fixDay.length == 1) {
+                        fixDay = "0$fixDay"
+                    }
+
+                    textDateFrom.text = "${year}-${fixMonth}-${fixDay}"
                 }, year, month, day)
             datePicker.show()
         }
@@ -486,7 +667,18 @@ class ApproveOutActivity : AppCompatActivity() {
         imgDateTo.setOnClickListener {
             datePicker = DatePickerDialog(this@ApproveOutActivity,
                 { view, year, month, dayOfMonth ->
-                    textDateTo.text = "${year}-${month + 1}-${dayOfMonth}"
+
+                    var fixMonth:String = (month + 1).toString()
+                    var fixDay:String = dayOfMonth.toString()
+
+                    if(fixMonth.length == 1) {
+                        fixMonth = "0$fixMonth"
+                    }
+                    if(fixDay.length == 1) {
+                        fixDay = "0$fixDay"
+                    }
+
+                    textDateTo.text = "${year}-${fixMonth}-${fixDay}"
                 }, year, month, day)
             datePicker.show()
         }

@@ -111,7 +111,17 @@ class StockOutActivity : AppCompatActivity() {
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        val dateNow = "${year}-${month + 1}-${day}"
+        var fixMonth:String = (month + 1).toString()
+        var fixDay:String = day.toString()
+
+        if(fixMonth.length == 1) {
+            fixMonth = "0$fixMonth"
+        }
+        if(fixDay.length == 1) {
+            fixDay = "0$fixDay"
+        }
+
+        val dateNow = "${year}-${fixMonth}-${fixDay}"
 
         txtDateFrom.text = dateNow
         txtDateTo.text = dateNow
@@ -361,7 +371,16 @@ class StockOutActivity : AppCompatActivity() {
         imgDateFrom.setOnClickListener {
             datePicker = DatePickerDialog(this@StockOutActivity,
                 { view, year, month, dayOfMonth ->
-                    txtDateFrom.text = "${year}-${month + 1}-${dayOfMonth}"
+                    var fixMonth:String = (month + 1).toString()
+                    var fixDay:String = dayOfMonth.toString()
+
+                    if(fixMonth.length == 1) {
+                        fixMonth = "0$fixMonth"
+                    }
+                    if(fixDay.length == 1) {
+                        fixDay = "0$fixDay"
+                    }
+                    txtDateFrom.text = "${year}-${fixMonth}-${fixDay}"
                 }, year, month, day)
             datePicker.show()
         }
@@ -385,7 +404,16 @@ class StockOutActivity : AppCompatActivity() {
         imgDateTo.setOnClickListener {
             datePicker = DatePickerDialog(this@StockOutActivity,
                 { view, year, month, dayOfMonth ->
-                    txtDateTo.text = "${year}-${month + 1}-${dayOfMonth}"
+                    var fixMonth:String = (month + 1).toString()
+                    var fixDay:String = dayOfMonth.toString()
+
+                    if(fixMonth.length == 1) {
+                        fixMonth = "0$fixMonth"
+                    }
+                    if(fixDay.length == 1) {
+                        fixDay = "0$fixDay"
+                    }
+                    txtDateTo.text = "${year}-${fixMonth}-${fixDay}"
                 }, year, month, day)
             datePicker.show()
         }

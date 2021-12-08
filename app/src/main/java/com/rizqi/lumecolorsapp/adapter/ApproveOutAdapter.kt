@@ -44,16 +44,18 @@ class ApproveOutAdapter(private val mData: List<MApprove>, private val mContext:
         }
 
         holder.buttonPacking.setOnClickListener {
-            holder.showDialogPaking()
+            interfaceAdapter!!.onApprovePacking(mData[position])
         }
 
         holder.buttonSender.setOnClickListener {
-            holder.showDialogSender()
+            interfaceAdapter!!.onApproveSender(mData[position])
         }
     }
 
     interface InterfaceAdapter {
         fun onBtnClick(data: MApprove)
+        fun onApprovePacking(data: MApprove)
+        fun onApproveSender(data: MApprove)
         fun onBtnClickImage(data: MApprove)
     }
 }
@@ -83,7 +85,21 @@ class ViewHolderApprove(view: View, private val context: Context) : RecyclerView
 
     //  Set Status Approve
     fun setLevelApprove(data: MApprove){
-        if (_SPLEVEL == "PICKER" || _SPLEVEL == "ADMIN"){
+
+        if (_SPLEVEL == "ADMIN"){
+            buttonPacking.visibility = View.GONE
+            buttonSender.visibility = View.GONE
+
+            if (data.approve_picker == "1" || data.approve_checker == "1"){
+                buttonApproved.visibility = View.VISIBLE
+                buttonListQR.visibility = View.GONE
+            } else {
+                buttonApproved.visibility = View.GONE
+                buttonListQR.visibility = View.VISIBLE
+            }
+        }
+
+        if (_SPLEVEL == "PICKER"){
             buttonPacking.visibility = View.GONE
             buttonSender.visibility = View.GONE
 
