@@ -168,42 +168,4 @@ class ViewHolderApprove(view: View, private val context: Context) : RecyclerView
         }
 
     }
-
-    fun showDialogSender(){
-        val dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_sender)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val btnNo = dialog.findViewById<Button>(R.id.button_no)
-        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
-
-        btnNo.setOnClickListener { dialog.dismiss() }
-        btnYes.setOnClickListener {
-            buttonApproved.visibility = View.VISIBLE
-
-        } //isi en iki le cek pindah kondisi e
-
-        dialog.show()
-    }
-
-    fun showDialogPaking(){
-        val dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_packing)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val btnNo = dialog.findViewById<Button>(R.id.button_no)
-        val btnYes = dialog.findViewById<Button>(R.id.button_yes)
-
-        btnNo.setOnClickListener { dialog.dismiss() }
-        btnYes.setOnClickListener {
-            buttonApproved.visibility = View.VISIBLE
-
-        } //isi en iki le cek pindah kondisi e
-
-        dialog.show()
-    }
 }

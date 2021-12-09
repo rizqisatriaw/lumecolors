@@ -81,9 +81,9 @@ interface GetDataService {
 
     @FormUrlEncoded
     @POST("approve_out/get_qr")
-    fun approveOutQR(
+    fun QRByProduk(
         @Field("id_produk") id_produk: String,
-    ): Call<ResponseApprove>
+    ): Call<ResponseListQR>
 
     @FormUrlEncoded
     @POST("approve_out/isi_tab_qr")
@@ -111,4 +111,20 @@ interface GetDataService {
         @Field("id") id: String,
         @Field("sts_approve") sts_approve: Int,
     ): Call<ResponseApprove>
+
+    @FormUrlEncoded
+    @POST("approve_out/simpan_qr")
+    fun saveQR(
+        @Field("order_id") id: String,
+        @Field("id_produk_qr") id_produk_qr: String,
+    ): Call<ResponseApprove>
+
+    @FormUrlEncoded
+    @POST("approve_out/hapus_qr")
+    fun removeQR(
+        @Field("qr") qr: String,
+    ): Call<ResponseDeleteQR>
+
+    @POST("approve_out/list_produk")
+    fun listProduk(): Call<ResponseProduk>
 }

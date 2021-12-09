@@ -3,8 +3,8 @@ package com.rizqi.lumecolorsapp.utils
 object Constants {
 
 //    BASE URL
-    const val BASE_URL = "https://tes.smilink.id/api/"
-//    const val BASE_URL = "https://lumecolors.smilink.id/api/"
+//    const val BASE_URL = "https://tes.smilink.id/api/"
+    const val BASE_URL = "https://lumecolors.smilink.id/api/"
 
     const val URL_GAMBAR = "https://tes.smilink.id/assets_user/images/produk/"
     const val URL_QR = "https://tes.smilink.id/assets_user/images/qrcode_stok/"

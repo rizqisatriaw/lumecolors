@@ -13,8 +13,6 @@ import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rizqi.lumecolorsapp.R
@@ -24,8 +22,7 @@ import com.rizqi.lumecolorsapp.api.GetDataService
 import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.model.MApprove
 import com.rizqi.lumecolorsapp.model.MTabQR
-import com.rizqi.lumecolorsapp.response.ResponseApprove
-import com.rizqi.lumecolorsapp.response.ResponseTabQR
+import com.rizqi.lumecolorsapp.response.*
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
 import com.rizqi.lumecolorsapp.utils.Constants.SP_LEVEL
@@ -34,6 +31,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ApproveOutActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferencesUtils
@@ -67,6 +65,9 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var etSearch: EditText
     private lateinit var rlHeader: RelativeLayout
     private lateinit var btnApprove: RelativeLayout
+    private lateinit var spinnerProduk: Spinner
+    private lateinit var spinnerQR: Spinner
+    private lateinit var btnAdd: LinearLayout
 
 //    private lateinit var buttonListQR: LinearLayout
 //    private lateinit var buttonPacking: LinearLayout
@@ -75,6 +76,7 @@ class ApproveOutActivity : AppCompatActivity() {
 
     private lateinit var itemList: ArrayList<MApprove>
     private lateinit var searchItem: ArrayList<MApprove>
+    private lateinit var qrCodeProduk: String
 
     var isDetail: Boolean = false
     var isImgShow: Boolean = false
@@ -113,7 +115,10 @@ class ApproveOutActivity : AppCompatActivity() {
         lnrSearchView = findViewById(R.id.search_view)
         etSearch = findViewById(R.id.edit_text_search)
         rlHeader = findViewById(R.id.header_title)
-        btnApprove = findViewById(R.id.button_approve)
+        btnApprove = findViewById(R.id.button_approved)
+        spinnerProduk = findViewById(R.id.spinner_produk)
+        spinnerQR = findViewById(R.id.spinner_qr)
+        btnAdd = findViewById(R.id.button_tambah)
 
 //        buttonListQR = findViewById(R.id.button_list_qr)
 //        buttonPacking = findViewById(R.id.button_packing)
@@ -122,6 +127,7 @@ class ApproveOutActivity : AppCompatActivity() {
 
         itemList = ArrayList()
         searchItem = ArrayList()
+        qrCodeProduk = ""
 
         isDetail = false
         isImgShow = false
@@ -156,6 +162,268 @@ class ApproveOutActivity : AppCompatActivity() {
 
         searchAction()
 
+        setSpinnerProduk()
+
+    }
+
+    private fun setSpinnerProduk() {
+        mLoading.setMessage(LOADING_MSG)
+        mLoading.show()
+
+        val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.listProduk()
+
+        call.enqueue(object : Callback<ResponseProduk> {
+
+            override fun onFailure(call: Call<ResponseProduk>, t: Throwable) {
+
+                Toast.makeText(
+                    this@ApproveOutActivity,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Log.d("FAILED :", t.message.toString())
+                mLoading.dismiss()
+            }
+
+            override fun onResponse(call: Call<ResponseProduk>, response: Response<ResponseProduk>) {
+
+                val res = response.body()!!
+
+                if (res.status == Constants.STAT200) {
+
+                    val listOfItems = ArrayList<String>()
+
+                    (0 until res.data.size).forEach { position ->
+                        listOfItems.add(res.data[position].nama_produk)
+                    }
+
+                    val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
+                    spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
+                    spinnerProduk.adapter = spinnerAdapter
+                    spinnerProduk.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            setSpinnerQR(res.data[position].id)
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                        }
+
+                    }
+
+                } else {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        res.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                mLoading.dismiss()
+
+            }
+
+        })
+    }
+
+    private fun setSpinnerQR(produkId: String) {
+        mLoading.setMessage(LOADING_MSG)
+        mLoading.show()
+
+        val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.QRByProduk(produkId)
+
+        call.enqueue(object : Callback<ResponseListQR> {
+
+            override fun onFailure(call: Call<ResponseListQR>, t: Throwable) {
+
+                Toast.makeText(
+                    this@ApproveOutActivity,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Log.d("FAILED :", t.message.toString())
+                mLoading.dismiss()
+            }
+
+            override fun onResponse(call: Call<ResponseListQR>, response: Response<ResponseListQR>) {
+
+                val res = response.body()!!
+
+                if (res.status == Constants.STAT200) {
+
+                    if(res.data.size != 0) {
+                        qrCodeProduk = res.data[0].id
+
+                        val listOfItems = ArrayList<String>()
+
+                        (0 until res.data.size).forEach { position ->
+                            listOfItems.add(res.data[position].id)
+                        }
+
+                        val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
+                        spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
+                        spinnerQR.adapter = spinnerAdapter
+                        spinnerQR.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long
+                            ) {
+//                                Toast.makeText(
+//                                    this@ApproveOutActivity,
+//                                    res.data[position].id,
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+
+                                qrCodeProduk = res.data[position].id
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                            }
+
+                        }
+                    } else {
+                        Toast.makeText(
+                            this@ApproveOutActivity,
+                            "Tidak ada QR Code dari Produk ini.",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        qrCodeProduk = ""
+
+                        val listOfItems = ArrayList<String>()
+
+                        val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
+                        spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
+                        spinnerQR.adapter = spinnerAdapter
+                    }
+
+                } else {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        res.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                mLoading.dismiss()
+
+            }
+
+        })
+    }
+
+    private fun addQR(data: MApprove) {
+        if(qrCodeProduk != "") {
+            mLoading.setMessage(LOADING_MSG)
+            mLoading.show()
+
+            val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+            val call = service.saveQR(data.order_id, qrCodeProduk)
+
+            call.enqueue(object : Callback<ResponseApprove> {
+
+                override fun onFailure(call: Call<ResponseApprove>, t: Throwable) {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        "Something went wrong...Please try later!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    Log.d("FAILED :", t.message.toString())
+                    mLoading.dismiss()
+                }
+
+                override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
+
+                    val res = response.body()!!
+
+                    if (res.status == Constants.STAT200) {
+
+                        Toast.makeText(
+                            this@ApproveOutActivity,
+                            "Berhasil Menambahkan QR Code.",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        fetchListQR(data)
+
+                    } else {
+
+                        Toast.makeText(
+                            this@ApproveOutActivity,
+                            res.message,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                    mLoading.dismiss()
+
+                }
+
+            })
+        } else {
+            Toast.makeText(this@ApproveOutActivity, "Tidak QR Code yang Terpilih.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun removeQR(data: MApprove, qr: String) {
+        mLoading.setMessage(LOADING_MSG)
+        mLoading.show()
+
+        val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.removeQR(qr)
+
+        call.enqueue(object : Callback<ResponseDeleteQR> {
+
+            override fun onFailure(call: Call<ResponseDeleteQR>, t: Throwable) {
+
+                Toast.makeText(
+                    this@ApproveOutActivity,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Log.d("FAILED :", t.message.toString())
+                mLoading.dismiss()
+            }
+
+            override fun onResponse(call: Call<ResponseDeleteQR>, response: Response<ResponseDeleteQR>) {
+
+                val res = response.body()!!
+
+                if (res.status == Constants.STAT200) {
+
+                    fetchListQR(data)
+
+                } else {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        res.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                mLoading.dismiss()
+
+            }
+
+        })
     }
 
     private fun showDialogApprove(order_id:String){
@@ -494,6 +762,10 @@ class ApproveOutActivity : AppCompatActivity() {
                 btnApprove.setOnClickListener {
                     showDialogApprove(data.order_id)
                 }
+
+                btnAdd.setOnClickListener {
+                    addQR(data)
+                }
             }
 
             override fun onApprovePacking(data: MApprove) {
@@ -594,7 +866,7 @@ class ApproveOutActivity : AppCompatActivity() {
                         emptyStateQR.visibility = View.GONE
                         listQRShow.visibility = View.VISIBLE
 
-                        setRecyclerQR(res.data)
+                        setRecyclerQR(res.data, data)
 
                     } else {
                         emptyStateQR.visibility = View.VISIBLE
@@ -620,13 +892,20 @@ class ApproveOutActivity : AppCompatActivity() {
         })
     }
 
-    private fun setRecyclerQR(data: ArrayList<MTabQR>) {
+    private fun setRecyclerQR(data: ArrayList<MTabQR>, dataApprove: MApprove) {
         linearLayoutManager = LinearLayoutManager(this@ApproveOutActivity)
         mAdapterQR = TabQRList(data, this@ApproveOutActivity)
         listQRShow.apply {
             layoutManager = linearLayoutManager
             adapter = mAdapterQR
         }
+
+        mAdapterQR.interfaAction(object:  TabQRList.InterfaceAdapter{
+            override fun onDelete(data: MTabQR) {
+                removeQR(dataApprove, data.qrcode)
+            }
+
+        })
     }
 
     private fun setDateRange(day: Int, month: Int, year: Int) {
@@ -745,4 +1024,5 @@ class ApproveOutActivity : AppCompatActivity() {
         }
         super.onBackPressed()
     }
+
 }
