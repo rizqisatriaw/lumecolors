@@ -77,6 +77,7 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var itemList: ArrayList<MApprove>
     private lateinit var searchItem: ArrayList<MApprove>
     private lateinit var qrCodeProduk: String
+    private lateinit var idProduk: String
 
     var isDetail: Boolean = false
     var isImgShow: Boolean = false
@@ -128,6 +129,7 @@ class ApproveOutActivity : AppCompatActivity() {
         itemList = ArrayList()
         searchItem = ArrayList()
         qrCodeProduk = ""
+        idProduk = ""
 
         isDetail = false
         isImgShow = false
@@ -193,6 +195,8 @@ class ApproveOutActivity : AppCompatActivity() {
 
                 if (res.status == Constants.STAT200) {
 
+                    idProduk = res.data[0].id
+
                     val listOfItems = ArrayList<String>()
 
                     (0 until res.data.size).forEach { position ->
@@ -209,6 +213,7 @@ class ApproveOutActivity : AppCompatActivity() {
                             position: Int,
                             id: Long
                         ) {
+                            idProduk = res.data[position].id
                             setSpinnerQR(res.data[position].id)
                         }
 
@@ -327,12 +332,13 @@ class ApproveOutActivity : AppCompatActivity() {
     }
 
     private fun addQR(data: MApprove) {
-        if(qrCodeProduk != "") {
+//        if(qrCodeProduk != "") {
+        if(idProduk != "") {
             mLoading.setMessage(LOADING_MSG)
             mLoading.show()
 
             val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
-            val call = service.saveQR(data.order_id, qrCodeProduk)
+            val call = service.saveQR(data.order_id, idProduk)
 
             call.enqueue(object : Callback<ResponseApprove> {
 
