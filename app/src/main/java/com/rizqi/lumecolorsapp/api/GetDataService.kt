@@ -125,6 +125,9 @@ interface GetDataService {
         @Field("qr") qr: String,
     ): Call<ResponseDeleteQR>
 
+    @FormUrlEncoded
     @POST("approve_out/list_produk")
-    fun listProduk(): Call<ResponseProduk>
+    fun listProduk(
+        @Field("order_id") order_id: String,
+    ): Call<ResponseProduk>
 }

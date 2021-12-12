@@ -164,16 +164,14 @@ class ApproveOutActivity : AppCompatActivity() {
 
         searchAction()
 
-        setSpinnerProduk()
-
     }
 
-    private fun setSpinnerProduk() {
+    private fun setSpinnerProduk(order_id: String) {
         mLoading.setMessage(LOADING_MSG)
         mLoading.show()
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
-        val call = service.listProduk()
+        val call = service.listProduk(order_id)
 
         call.enqueue(object : Callback<ResponseProduk> {
 
@@ -772,6 +770,8 @@ class ApproveOutActivity : AppCompatActivity() {
                 btnAdd.setOnClickListener {
                     addQR(data)
                 }
+
+                setSpinnerProduk(data.order_id)
             }
 
             override fun onApprovePacking(data: MApprove) {
