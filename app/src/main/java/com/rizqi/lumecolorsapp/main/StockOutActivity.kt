@@ -239,6 +239,12 @@ class StockOutActivity : AppCompatActivity() {
                 Glide.with(this@StockOutActivity)
                     .load(Constants.URL_GAMBAR + data.gambar)
                     .into(mImgShow)
+
+                lnrImageShow.setOnClickListener {
+                    lnrImageShow.visibility = View.GONE
+                    isImgShow = false
+
+                }
             }
 
         })

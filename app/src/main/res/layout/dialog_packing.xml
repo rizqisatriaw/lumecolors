@@ -7,7 +7,7 @@
     android:paddingVertical="50dp"
     android:paddingHorizontal="18dp"
     android:layout_gravity="center"
-    tools:context=".main.MenuActivity">
+    tools:context=".main.ApproveOutActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

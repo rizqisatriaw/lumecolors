@@ -242,6 +242,12 @@ class StockInActivity : AppCompatActivity() {
                 Glide.with(this@StockInActivity)
                     .load(URL_GAMBAR + data.gambar)
                     .into(mImgShow)
+
+                lnrImageShow.setOnClickListener {
+                    lnrImageShow.visibility = View.GONE
+                    isImgShow = false
+
+                }
             }
 
         })

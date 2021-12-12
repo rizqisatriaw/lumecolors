@@ -221,7 +221,6 @@ class HistoryLoadingInActivity : AppCompatActivity() {
 
         mAdapter.interfaceClick(object: HistoryAdapter.BtnClickListener{
             override fun onBtnClick(data: MHistory) {
-//                Log.d("BACOD: ", data.id)
                 lytQrList.visibility = View.VISIBLE
                 isDetail = true
 
@@ -235,6 +234,12 @@ class HistoryLoadingInActivity : AppCompatActivity() {
                 Glide.with(this@HistoryLoadingInActivity)
                     .load(URL_GAMBAR + data.gambar)
                     .into(mImgShow)
+
+                lnrImageShow.setOnClickListener {
+                    lnrImageShow.visibility = View.GONE
+                    isImgShow = false
+
+                }
             }
 
         })

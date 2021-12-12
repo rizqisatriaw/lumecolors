@@ -189,6 +189,12 @@ class StockOpnameActivity : AppCompatActivity() {
                 Glide.with(this@StockOpnameActivity)
                     .load(URL_GAMBAR + data.gambar)
                     .into(mImgShow)
+
+                lnrImageShow.setOnClickListener {
+                    lnrImageShow.visibility = View.GONE
+                    isImgShow = false
+
+                }
             }
 
         })

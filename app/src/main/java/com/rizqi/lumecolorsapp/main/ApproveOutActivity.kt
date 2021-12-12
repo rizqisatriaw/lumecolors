@@ -436,7 +436,7 @@ class ApproveOutActivity : AppCompatActivity() {
         val dialog = Dialog(this@ApproveOutActivity)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_packing)
+        dialog.setContentView(R.layout.dialog_pilih_qr)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val btnNo = dialog.findViewById<Button>(R.id.button_no)
@@ -446,7 +446,7 @@ class ApproveOutActivity : AppCompatActivity() {
         btnYes.setOnClickListener {
             dialog.dismiss()
             fetchApproveOut(order_id)
-        } //isi en iki le cek pindah kondisi e
+        }
 
         dialog.show()
     }
@@ -464,7 +464,7 @@ class ApproveOutActivity : AppCompatActivity() {
         btnYes.setOnClickListener {
             dialog.dismiss()
             fetchApprovePacking(order_id)
-        } //isi en iki le cek pindah kondisi e
+        }
 
         dialog.show()
     }
@@ -482,7 +482,7 @@ class ApproveOutActivity : AppCompatActivity() {
         btnYes.setOnClickListener {
             dialog.dismiss()
             fetchApproveSender(order_id)
-        } //isi en iki le cek pindah kondisi e
+        }
 
         dialog.show()
     }

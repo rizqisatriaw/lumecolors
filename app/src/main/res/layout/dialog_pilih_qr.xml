@@ -7,7 +7,7 @@
     android:paddingVertical="50dp"
     android:paddingHorizontal="18dp"
     android:layout_gravity="center"
-    tools:context=".main.ApproveOutActivity">
+    tools:context=".main.MenuActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:fontFamily="@font/poppins_medium"
             android:textColor="@color/bold"
             android:textSize="20sp"
-            android:text="@string/approve_sender" />
+            android:text="@string/approve_qr" />
 
         <LinearLayout
             android:layout_width="match_parent"

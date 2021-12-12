@@ -101,6 +101,7 @@
     <string name="logout">Apakah anda yakin ingin logout ?</string>
     <string name="approve_packing">Apakah anda yakin sudah terpacking ?</string>
     <string name="approve_sender">Apakah anda yakin sudah terkirim ?</string>
+    <string name="approve_qr">Apakah anda yakin sudah memilih QR yang sesuai?</string>
     <string name="terpenuhi">Sudah memenuhi permintaan !</string>
     <string name="tidak_terpenuhi">Jumlah tidak sesuai permintaan</string>
     <string name="tip">Gunakan akun yang telah terdaftar.</string>
