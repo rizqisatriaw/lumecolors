@@ -4,14 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@color/white"
-    android:padding="14dp">
+    android:padding="4dp">
 
     <TextView
         android:layout_weight="1"
         android:id="@+id/qr_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/poppins_light"
         android:textColor="@color/bold"
         android:text="@string/kode_ex"
         android:textSize="16sp"/>
@@ -19,9 +19,10 @@
     <TextView
         android:layout_weight="1"
         android:id="@+id/produk_name"
+        android:layout_marginStart="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/poppins_light"
         android:textColor="@color/bold"
         android:text="@string/produk"
         android:textSize="16sp"/>
