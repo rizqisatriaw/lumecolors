@@ -243,16 +243,34 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/empty_state"
+                <LinearLayout
+                    android:id="@+id/ll_empty_state"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/poppins_light"
+                    android:orientation="vertical"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textColor="@color/bold"
-                    android:textSize="20sp"
-                    android:visibility="gone" />
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/empty_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_light"
+                        android:textColor="@color/bold"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/button_ulangi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Ulangi"
+                        android:background="@drawable/custom_background_approve"
+                        android:visibility="gone"/>
+
+
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_show"

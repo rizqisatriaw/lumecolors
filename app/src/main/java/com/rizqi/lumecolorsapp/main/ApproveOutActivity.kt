@@ -68,6 +68,8 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var spinnerProduk: Spinner
     private lateinit var spinnerQR: Spinner
     private lateinit var btnAdd: LinearLayout
+    private lateinit var llEmpty: LinearLayout
+    private lateinit var btnUlangi: Button
 
 //    private lateinit var buttonListQR: LinearLayout
 //    private lateinit var buttonPacking: LinearLayout
@@ -120,6 +122,8 @@ class ApproveOutActivity : AppCompatActivity() {
         spinnerProduk = findViewById(R.id.spinner_produk)
         spinnerQR = findViewById(R.id.spinner_qr)
         btnAdd = findViewById(R.id.button_tambah)
+        llEmpty = findViewById(R.id.ll_empty_state)
+        btnUlangi = findViewById(R.id.button_ulangi)
 
 //        buttonListQR = findViewById(R.id.button_list_qr)
 //        buttonPacking = findViewById(R.id.button_packing)
@@ -511,6 +515,10 @@ class ApproveOutActivity : AppCompatActivity() {
             isDetail = false
         }
 
+        btnUlangi.setOnClickListener {
+            getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
+        }
+
         lytQr.setOnClickListener {  }
 
         lytAlamat.setOnClickListener {  }
@@ -679,8 +687,9 @@ class ApproveOutActivity : AppCompatActivity() {
         mLoading.setMessage(LOADING_MSG)
         mLoading.show()
 
-        emptyState.visibility = View.GONE
+        llEmpty.visibility = View.GONE
         recyclerView.visibility = View.GONE
+        btnUlangi.visibility = View.GONE
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
         val call = service.approveOutHistory(dari, sampai)
@@ -691,15 +700,18 @@ class ApproveOutActivity : AppCompatActivity() {
 
                 Toast.makeText(
                     this@ApproveOutActivity,
-                    "Something went wrong...Please try later!",
+                    t.message.toString(),
                     Toast.LENGTH_SHORT
                 ).show()
 
-                Log.d("FAILED :", t.message.toString())
+                Log.d("FAILEDLOAD:", t.message.toString())
 
-                emptyState.visibility = View.VISIBLE
+                llEmpty.visibility = View.VISIBLE
                 recyclerView.visibility = View.GONE
-                emptyState.text = "Terjadi kesalahan saat memuat data."
+                btnUlangi.visibility = View.VISIBLE
+
+                if(t.message.toString() == "timeout") emptyState.text = "Timed Out, Ulangi memuat data."
+                else emptyState.text = "Terjadi kesalahan saat memuat data."
 
                 mLoading.dismiss()
             }
@@ -713,13 +725,15 @@ class ApproveOutActivity : AppCompatActivity() {
                     itemList = res.data
 
                     if(res.data.size != 0) {
-                        emptyState.visibility = View.GONE
+                        llEmpty.visibility = View.GONE
                         recyclerView.visibility = View.VISIBLE
+                        btnUlangi.visibility = View.GONE
 //                        Log.d("MERCHANT: ", res.data[0].nama_vendor)
                         setRecyclerView(res.data)
                     } else {
-                        emptyState.visibility = View.VISIBLE
+                        llEmpty.visibility = View.VISIBLE
                         recyclerView.visibility = View.GONE
+                        btnUlangi.visibility = View.GONE
                         emptyState.text = "Tidak ada data pada jangka waktu ini."
                     }
 
@@ -733,8 +747,9 @@ class ApproveOutActivity : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
 
-                    emptyState.visibility = View.VISIBLE
+                    llEmpty.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
+                    btnUlangi.visibility = View.VISIBLE
                     emptyState.text = res.message
                 }
 
@@ -812,24 +827,31 @@ class ApproveOutActivity : AppCompatActivity() {
                     }
 
                     if(searchItem.size != 0) {
-                        emptyState.visibility = View.GONE
+                        llEmpty.visibility = View.GONE
                         recyclerView.visibility = View.VISIBLE
+                        btnUlangi.visibility = View.GONE
+
                         setRecyclerView(searchItem)
                     } else {
-                        emptyState.visibility = View.VISIBLE
+                        llEmpty.visibility = View.VISIBLE
                         recyclerView.visibility = View.GONE
+                        btnUlangi.visibility = View.GONE
+
                         if(itemList.size == 0) emptyState.text = "Tidak ada data pada jangka waktu ini."
                         else emptyState.text = "Barang tidak ditemukan."
                     }
                 } else if(isSearch && etSearch.text.isEmpty()) {
                     setRecyclerView(itemList)
                     if(itemList.size == 0) {
-                        emptyState.visibility = View.VISIBLE
+                        llEmpty.visibility = View.VISIBLE
                         recyclerView.visibility = View.GONE
+                        btnUlangi.visibility = View.GONE
+
                         emptyState.text = "Tidak ada data pada jangka waktu ini."
                     } else {
-                        emptyState.visibility = View.GONE
+                        llEmpty.visibility = View.GONE
                         recyclerView.visibility = View.VISIBLE
+                        btnUlangi.visibility = View.GONE
                         emptyState.text = ""
                     }
                 }
@@ -1017,13 +1039,16 @@ class ApproveOutActivity : AppCompatActivity() {
         if(isSearch) {
             showSearch(false)
             if(itemList.size != 0) {
-                emptyState.visibility = View.GONE
+                llEmpty.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE
+                btnUlangi.visibility = View.GONE
 
                 setRecyclerView(itemList)
             } else {
-                emptyState.visibility = View.VISIBLE
+                llEmpty.visibility = View.VISIBLE
                 recyclerView.visibility = View.GONE
+                btnUlangi.visibility = View.GONE
+
                 emptyState.text = "Tidak ada data pada jangka waktu ini."
             }
             return
