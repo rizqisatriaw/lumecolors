@@ -9,6 +9,8 @@ object Constants {
     const val URL_GAMBAR = "https://lumecolors.smilink.id/assets_user/images/produk/"
     const val URL_QR = "https://lumecolors.smilink.id/assets_user/images/qrcode_stok/"
     const val URL_KARTU = "https://lumecolors.smilink.id/report/kartu_stok/preview/"
+    const val URL_QR_SAMPAI = "https://lumecolors.smilink.id/api/get_qr_sampai"
+    const val URL_GAMBAR_QR = "https://lumecolors.smilink.id/api/generate_qr/run/"
 
 //    ANY VARIABLE
     const val STAT200 = 200
