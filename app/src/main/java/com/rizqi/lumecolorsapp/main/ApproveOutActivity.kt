@@ -67,6 +67,7 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var btnApprove: RelativeLayout
     private lateinit var spinnerProduk: Spinner
     private lateinit var spinnerQR: Spinner
+    private lateinit var spinnerQRSampai: Spinner
     private lateinit var btnAdd: LinearLayout
     private lateinit var llEmpty: LinearLayout
     private lateinit var btnUlangi: Button
@@ -79,6 +80,7 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var itemList: ArrayList<MApprove>
     private lateinit var searchItem: ArrayList<MApprove>
     private lateinit var qrCodeProduk: String
+    private lateinit var qrCodeSampai: String
     private lateinit var idProduk: String
 
     var isDetail: Boolean = false
@@ -121,6 +123,7 @@ class ApproveOutActivity : AppCompatActivity() {
         btnApprove = findViewById(R.id.button_approved)
         spinnerProduk = findViewById(R.id.spinner_produk)
         spinnerQR = findViewById(R.id.spinner_qr)
+        spinnerQRSampai = findViewById(R.id.spinner_qr_sampai)
         btnAdd = findViewById(R.id.button_tambah)
         llEmpty = findViewById(R.id.ll_empty_state)
         btnUlangi = findViewById(R.id.button_ulangi)
@@ -133,6 +136,7 @@ class ApproveOutActivity : AppCompatActivity() {
         itemList = ArrayList()
         searchItem = ArrayList()
         qrCodeProduk = ""
+        qrCodeSampai = ""
         idProduk = ""
 
         isDetail = false
@@ -208,6 +212,7 @@ class ApproveOutActivity : AppCompatActivity() {
                     val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
                     spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
                     spinnerProduk.adapter = spinnerAdapter
+
                     spinnerProduk.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(
                             parent: AdapterView<*>?,
@@ -270,6 +275,7 @@ class ApproveOutActivity : AppCompatActivity() {
 
                     if(res.data.size != 0) {
                         qrCodeProduk = res.data[0].id
+                        setSpinnerQRSampai(idProduk, qrCodeProduk)
 
                         val listOfItems = ArrayList<String>()
 
@@ -285,15 +291,10 @@ class ApproveOutActivity : AppCompatActivity() {
                                 parent: AdapterView<*>?,
                                 view: View?,
                                 position: Int,
-                                id: Long
-                            ) {
-//                                Toast.makeText(
-//                                    this@ApproveOutActivity,
-//                                    res.data[position].id,
-//                                    Toast.LENGTH_LONG
-//                                ).show()
-
+                                id: Long)
+                            {
                                 qrCodeProduk = res.data[position].id
+                                setSpinnerQRSampai(idProduk, qrCodeProduk)
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -315,6 +316,92 @@ class ApproveOutActivity : AppCompatActivity() {
                         val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
                         spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
                         spinnerQR.adapter = spinnerAdapter
+                    }
+
+                } else {
+
+                    Toast.makeText(
+                        this@ApproveOutActivity,
+                        res.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                mLoading.dismiss()
+
+            }
+
+        })
+    }
+
+    private fun setSpinnerQRSampai(produkId: String, qrDari: String){
+        mLoading.setMessage(LOADING_MSG)
+        mLoading.show()
+
+        val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.QRByProdukSampai(produkId, qrDari)
+
+        call.enqueue(object : Callback<ResponseListQRSampai> {
+
+            override fun onFailure(call: Call<ResponseListQRSampai>, t: Throwable) {
+
+                Toast.makeText(
+                    this@ApproveOutActivity,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Log.d("FAILED :", t.message.toString())
+                mLoading.dismiss()
+            }
+
+            override fun onResponse(call: Call<ResponseListQRSampai>, response: Response<ResponseListQRSampai>) {
+
+                val res = response.body()!!
+
+                if (res.status == Constants.STAT200) {
+
+                    if(res.data.size != 0) {
+                        qrCodeSampai = res.data[0].id
+
+                        val listOfItems = ArrayList<String>()
+
+                        (0 until res.data.size).forEach { position ->
+                            listOfItems.add(res.data[position].id)
+                        }
+
+                        val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
+                        spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
+                        spinnerQRSampai.adapter = spinnerAdapter
+                        spinnerQRSampai.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long)
+                            {
+                                qrCodeSampai = res.data[position].id
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                            }
+
+                        }
+                    } else {
+                        Toast.makeText(
+                            this@ApproveOutActivity,
+                            "Tidak ada QR Code dari Produk ini.",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        qrCodeSampai = ""
+
+                        val listOfItems = ArrayList<String>()
+
+                        val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
+                        spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
+                        spinnerQRSampai.adapter = spinnerAdapter
                     }
 
                 } else {

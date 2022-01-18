@@ -1,6 +1,7 @@
 package com.rizqi.lumecolorsapp.adapter
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,9 +32,14 @@ class ViewHolderListQr(view: View,private val mContext: Context): RecyclerView.V
     var QRId = view.findViewById<TextView>(R.id.qr_id)
 
     fun bindData(data: MListQR) {
-        Glide.with(mContext)
-            .load(Constants.URL_QR + data.qrcode)
-            .into(mImage)
+
+        if (data.id != ""){
+            Glide.with(mContext)
+                .load(Constants.URL_GAMBAR_QR + data.id)
+                .into(mImage)
+        } else{
+            mImage.setBackgroundResource(R.drawable.qr_code)
+        }
 
         QRId.text = data.id
     }

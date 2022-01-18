@@ -86,6 +86,13 @@ interface GetDataService {
     ): Call<ResponseListQR>
 
     @FormUrlEncoded
+    @POST("approve_out/get_qr_sampai")
+    fun QRByProdukSampai(
+        @Field("id_produk") id_produk_sampai: String,
+        @Field("qr_code_dari") qr_code_dari: String,
+    ): Call<ResponseListQRSampai>
+
+    @FormUrlEncoded
     @POST("approve_out/isi_tab_qr")
     fun tabQR(
         @Field("order_id") order_id: String,
