@@ -122,7 +122,7 @@ interface GetDataService {
     @FormUrlEncoded
     @POST("approve_out/simpan_qr")
     fun saveQR(
-//        @Field("order_id") id: String,
+        @Field("order_id") id: String,
         @Field("id_produk_qr") id_produk_qr: String,
         @Field("qrcode_dari") qrcode_dari: String,
         @Field("qrcode_sampai") qrcode_sampai: String,

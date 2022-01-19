@@ -42,6 +42,7 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var mAdapterQR: TabQRList
     private lateinit var datePicker: DatePickerDialog
     private lateinit var mLoading: ProgressDialog
+
     //    Variable From Layout
     private lateinit var emptyState: TextView
     private lateinit var emptyStateQR: TextView
@@ -149,13 +150,13 @@ class ApproveOutActivity : AppCompatActivity() {
         val month = c.get(Calendar.MONTH)
         var day = c.get(Calendar.DAY_OF_MONTH)
 
-        var fixMonth:String = (month + 1).toString()
-        var fixDay:String = day.toString()
+        var fixMonth: String = (month + 1).toString()
+        var fixDay: String = day.toString()
 
-        if(fixMonth.length == 1) {
+        if (fixMonth.length == 1) {
             fixMonth = "0$fixMonth"
         }
-        if(fixDay.length == 1) {
+        if (fixDay.length == 1) {
             fixDay = "0$fixDay"
         }
 
@@ -195,7 +196,10 @@ class ApproveOutActivity : AppCompatActivity() {
                 mLoading.dismiss()
             }
 
-            override fun onResponse(call: Call<ResponseProduk>, response: Response<ResponseProduk>) {
+            override fun onResponse(
+                call: Call<ResponseProduk>,
+                response: Response<ResponseProduk>
+            ) {
 
                 val res = response.body()!!
 
@@ -209,26 +213,28 @@ class ApproveOutActivity : AppCompatActivity() {
                         listOfItems.add(res.data[position].nama_produk)
                     }
 
-                    val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
+                    val spinnerAdapter =
+                        ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
                     spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
                     spinnerProduk.adapter = spinnerAdapter
 
-                    spinnerProduk.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>?,
-                            view: View?,
-                            position: Int,
-                            id: Long
-                        ) {
-                            idProduk = res.data[position].id
-                            setSpinnerQR(res.data[position].id)
+                    spinnerProduk.onItemSelectedListener =
+                        object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long
+                            ) {
+                                idProduk = res.data[position].id
+                                setSpinnerQR(res.data[position].id)
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                            }
+
                         }
-
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
-
-                        }
-
-                    }
 
                 } else {
 
@@ -267,15 +273,16 @@ class ApproveOutActivity : AppCompatActivity() {
                 mLoading.dismiss()
             }
 
-            override fun onResponse(call: Call<ResponseListQR>, response: Response<ResponseListQR>) {
+            override fun onResponse(
+                call: Call<ResponseListQR>,
+                response: Response<ResponseListQR>
+            ) {
 
                 val res = response.body()!!
 
                 if (res.status == Constants.STAT200) {
 
-                    if(res.data.size != 0) {
-                        qrCodeProduk = res.data[0].id
-                        setSpinnerQRSampai(idProduk, qrCodeProduk)
+                    if (res.data.size != 0) {
 
                         val listOfItems = ArrayList<String>()
 
@@ -283,25 +290,33 @@ class ApproveOutActivity : AppCompatActivity() {
                             listOfItems.add(res.data[position].id)
                         }
 
-                        val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
+                        qrCodeProduk = listOfItems[0]
+                        setSpinnerQRSampai(idProduk, qrCodeProduk)
+
+                        val spinnerAdapter = ArrayAdapter(
+                            this@ApproveOutActivity,
+                            R.layout.item_spinner,
+                            listOfItems
+                        )
                         spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
                         spinnerQR.adapter = spinnerAdapter
-                        spinnerQR.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(
-                                parent: AdapterView<*>?,
-                                view: View?,
-                                position: Int,
-                                id: Long)
-                            {
-                                qrCodeProduk = res.data[position].id
-                                setSpinnerQRSampai(idProduk, qrCodeProduk)
+                        spinnerQR.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>?,
+                                    view: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    qrCodeProduk = listOfItems[position]
+                                    setSpinnerQRSampai(idProduk, qrCodeProduk)
+                                }
+
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                                }
+
                             }
-
-                            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-                            }
-
-                        }
                     } else {
                         Toast.makeText(
                             this@ApproveOutActivity,
@@ -313,7 +328,11 @@ class ApproveOutActivity : AppCompatActivity() {
 
                         val listOfItems = ArrayList<String>()
 
-                        val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
+                        val spinnerAdapter = ArrayAdapter(
+                            this@ApproveOutActivity,
+                            R.layout.item_spinner,
+                            listOfItems
+                        )
                         spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
                         spinnerQR.adapter = spinnerAdapter
                     }
@@ -334,7 +353,7 @@ class ApproveOutActivity : AppCompatActivity() {
         })
     }
 
-    private fun setSpinnerQRSampai(produkId: String, qrDari: String){
+    private fun setSpinnerQRSampai(produkId: String, qrDari: String) {
         mLoading.setMessage(LOADING_MSG)
         mLoading.show()
 
@@ -355,43 +374,51 @@ class ApproveOutActivity : AppCompatActivity() {
                 mLoading.dismiss()
             }
 
-            override fun onResponse(call: Call<ResponseListQRSampai>, response: Response<ResponseListQRSampai>) {
+            override fun onResponse(
+                call: Call<ResponseListQRSampai>,
+                response: Response<ResponseListQRSampai>
+            ) {
 
                 val res = response.body()!!
 
                 if (res.status == Constants.STAT200) {
 
-                    if(res.data.size != 0) {
+                    if (res.data.size != 0) {
 //                        qrCodeSampai = res.data[0].id
 
                         val listOfItems = ArrayList<String>()
 
                         (0 until res.data.size).forEach { position ->
-                            if(qrDari != res.data[position].id) {
+                            if (qrDari != res.data[position].id) {
                                 listOfItems.add(res.data[position].id)
                             }
                         }
 
                         qrCodeSampai = listOfItems[0]
 
-                        val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
+                        val spinnerAdapter = ArrayAdapter(
+                            this@ApproveOutActivity,
+                            R.layout.item_spinner,
+                            listOfItems
+                        )
                         spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
                         spinnerQRSampai.adapter = spinnerAdapter
-                        spinnerQRSampai.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(
-                                parent: AdapterView<*>?,
-                                view: View?,
-                                position: Int,
-                                id: Long)
-                            {
-                                qrCodeSampai = listOfItems[position]
+                        spinnerQRSampai.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>?,
+                                    view: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    qrCodeSampai = listOfItems[position]
+                                }
+
+                                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                                }
+
                             }
-
-                            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-                            }
-
-                        }
                     } else {
                         Toast.makeText(
                             this@ApproveOutActivity,
@@ -403,7 +430,11 @@ class ApproveOutActivity : AppCompatActivity() {
 
                         val listOfItems = ArrayList<String>()
 
-                        val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
+                        val spinnerAdapter = ArrayAdapter(
+                            this@ApproveOutActivity,
+                            R.layout.item_spinner,
+                            listOfItems
+                        )
                         spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
                         spinnerQRSampai.adapter = spinnerAdapter
                     }
@@ -425,15 +456,12 @@ class ApproveOutActivity : AppCompatActivity() {
     }
 
     private fun addQR(data: MApprove) {
-//        if(qrCodeProduk != "") {
-//        Log.d("DATALOG: ", "$idProduk, $qrCodeProduk, $qrCodeSampai")
-//        return
-        if(idProduk != "") {
+        if (idProduk != "") {
             mLoading.setMessage(LOADING_MSG)
             mLoading.show()
 
             val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
-            val call = service.saveQR(idProduk, qrCodeProduk, qrCodeSampai)
+            val call = service.saveQR(data.order_id, idProduk, qrCodeProduk, qrCodeSampai)
 
             call.enqueue(object : Callback<ResponseApprove> {
 
@@ -449,7 +477,10 @@ class ApproveOutActivity : AppCompatActivity() {
                     mLoading.dismiss()
                 }
 
-                override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
+                override fun onResponse(
+                    call: Call<ResponseApprove>,
+                    response: Response<ResponseApprove>
+                ) {
 
                     val res = response.body()!!
 
@@ -478,7 +509,11 @@ class ApproveOutActivity : AppCompatActivity() {
 
             })
         } else {
-            Toast.makeText(this@ApproveOutActivity, "Tidak ada QR Code yang Terpilih.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@ApproveOutActivity,
+                "Tidak ada QR Code yang Terpilih.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -503,7 +538,10 @@ class ApproveOutActivity : AppCompatActivity() {
                 mLoading.dismiss()
             }
 
-            override fun onResponse(call: Call<ResponseDeleteQR>, response: Response<ResponseDeleteQR>) {
+            override fun onResponse(
+                call: Call<ResponseDeleteQR>,
+                response: Response<ResponseDeleteQR>
+            ) {
 
                 val res = response.body()!!
 
@@ -527,7 +565,7 @@ class ApproveOutActivity : AppCompatActivity() {
         })
     }
 
-    private fun showDialogApprove(order_id:String){
+    private fun showDialogApprove(order_id: String) {
         val dialog = Dialog(this@ApproveOutActivity)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -545,7 +583,8 @@ class ApproveOutActivity : AppCompatActivity() {
 
         dialog.show()
     }
-    private fun showDialogApprovePacking(order_id:String){
+
+    private fun showDialogApprovePacking(order_id: String) {
         val dialog = Dialog(this@ApproveOutActivity)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -563,7 +602,8 @@ class ApproveOutActivity : AppCompatActivity() {
 
         dialog.show()
     }
-    private fun showDialogApproveSender(order_id:String){
+
+    private fun showDialogApproveSender(order_id: String) {
         val dialog = Dialog(this@ApproveOutActivity)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -587,7 +627,7 @@ class ApproveOutActivity : AppCompatActivity() {
         mImageSearch.setOnClickListener {
             showSearch(true)
         }
-        
+
         btnAlamat.setOnClickListener {
             lnrAlamatView.visibility = View.VISIBLE
             isAlamatShow = true
@@ -612,9 +652,9 @@ class ApproveOutActivity : AppCompatActivity() {
             getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
         }
 
-        lytQr.setOnClickListener {  }
+        lytQr.setOnClickListener { }
 
-        lytAlamat.setOnClickListener {  }
+        lytAlamat.setOnClickListener { }
     }
 
     private fun fetchApproveOut(order_id: String) {
@@ -641,7 +681,10 @@ class ApproveOutActivity : AppCompatActivity() {
                 getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
-            override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
+            override fun onResponse(
+                call: Call<ResponseApprove>,
+                response: Response<ResponseApprove>
+            ) {
 
                 val res = response.body()!!
 
@@ -694,7 +737,10 @@ class ApproveOutActivity : AppCompatActivity() {
                 getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
-            override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
+            override fun onResponse(
+                call: Call<ResponseApprove>,
+                response: Response<ResponseApprove>
+            ) {
 
                 val res = response.body()!!
 
@@ -747,7 +793,10 @@ class ApproveOutActivity : AppCompatActivity() {
                 getListHistory(textDateFrom.text.toString(), textDateTo.text.toString())
             }
 
-            override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
+            override fun onResponse(
+                call: Call<ResponseApprove>,
+                response: Response<ResponseApprove>
+            ) {
 
                 val res = response.body()!!
 
@@ -803,13 +852,17 @@ class ApproveOutActivity : AppCompatActivity() {
                 recyclerView.visibility = View.GONE
                 btnUlangi.visibility = View.VISIBLE
 
-                if(t.message.toString() == "timeout") emptyState.text = "Timed Out, Ulangi memuat data."
+                if (t.message.toString() == "timeout") emptyState.text =
+                    "Timed Out, Ulangi memuat data."
                 else emptyState.text = "Terjadi kesalahan saat memuat data."
 
                 mLoading.dismiss()
             }
 
-            override fun onResponse(call: Call<ResponseApprove>, response: Response<ResponseApprove>) {
+            override fun onResponse(
+                call: Call<ResponseApprove>,
+                response: Response<ResponseApprove>
+            ) {
 
                 val res = response.body()!!
 
@@ -817,7 +870,7 @@ class ApproveOutActivity : AppCompatActivity() {
 
                     itemList = res.data
 
-                    if(res.data.size != 0) {
+                    if (res.data.size != 0) {
                         llEmpty.visibility = View.GONE
                         recyclerView.visibility = View.VISIBLE
                         btnUlangi.visibility = View.GONE
@@ -865,7 +918,7 @@ class ApproveOutActivity : AppCompatActivity() {
             isDetail = false
         }
 
-        mAdapter.interfaAction(object: ApproveOutAdapter.InterfaceAdapter{
+        mAdapter.interfaAction(object : ApproveOutAdapter.InterfaceAdapter {
             override fun onBtnClick(data: MApprove) {
                 lnrChooseQr.visibility = View.VISIBLE
                 isDetail = true
@@ -879,7 +932,7 @@ class ApproveOutActivity : AppCompatActivity() {
                     addQR(data)
                 }
 
-                setSpinnerProduk(data.order_id)
+//                setSpinnerProduk(data.order_id)
             }
 
             override fun onApprovePacking(data: MApprove) {
@@ -899,7 +952,7 @@ class ApproveOutActivity : AppCompatActivity() {
     }
 
     private fun searchAction() {
-        etSearch.addTextChangedListener(object: TextWatcher {
+        etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -909,17 +962,17 @@ class ApproveOutActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if(isSearch && etSearch.text.isNotEmpty()) {
+                if (isSearch && etSearch.text.isNotEmpty()) {
                     searchItem = ArrayList()
 
                     for (i in 0 until itemList.size) {
                         val item = itemList[i]
-                        if(item.nama_vendor.contains(etSearch.text, ignoreCase = true)) {
+                        if (item.nama_vendor.contains(etSearch.text, ignoreCase = true)) {
                             searchItem.add(item)
                         }
                     }
 
-                    if(searchItem.size != 0) {
+                    if (searchItem.size != 0) {
                         llEmpty.visibility = View.GONE
                         recyclerView.visibility = View.VISIBLE
                         btnUlangi.visibility = View.GONE
@@ -930,12 +983,13 @@ class ApproveOutActivity : AppCompatActivity() {
                         recyclerView.visibility = View.GONE
                         btnUlangi.visibility = View.GONE
 
-                        if(itemList.size == 0) emptyState.text = "Tidak ada data pada jangka waktu ini."
+                        if (itemList.size == 0) emptyState.text =
+                            "Tidak ada data pada jangka waktu ini."
                         else emptyState.text = "Barang tidak ditemukan."
                     }
-                } else if(isSearch && etSearch.text.isEmpty()) {
+                } else if (isSearch && etSearch.text.isEmpty()) {
                     setRecyclerView(itemList)
-                    if(itemList.size == 0) {
+                    if (itemList.size == 0) {
                         llEmpty.visibility = View.VISIBLE
                         recyclerView.visibility = View.GONE
                         btnUlangi.visibility = View.GONE
@@ -983,7 +1037,7 @@ class ApproveOutActivity : AppCompatActivity() {
                 val res = response.body()!!
 
                 if (res.status == Constants.STAT200) {
-                    if(res.data.size != 0) {
+                    if (res.data.size != 0) {
                         emptyStateQR.visibility = View.GONE
                         listQRShow.visibility = View.VISIBLE
 
@@ -995,6 +1049,7 @@ class ApproveOutActivity : AppCompatActivity() {
                         emptyStateQR.text = "Tidak ada data."
                     }
 
+                    setSpinnerProduk(data.order_id)
 
                 } else {
 
@@ -1021,7 +1076,7 @@ class ApproveOutActivity : AppCompatActivity() {
             adapter = mAdapterQR
         }
 
-        mAdapterQR.interfaAction(object:  TabQRList.InterfaceAdapter{
+        mAdapterQR.interfaAction(object : TabQRList.InterfaceAdapter {
             override fun onDelete(data: MTabQR) {
                 removeQR(dataApprove, data.qrcode)
             }
@@ -1033,22 +1088,23 @@ class ApproveOutActivity : AppCompatActivity() {
         imgDateFrom.setOnClickListener {
             datePicker = DatePickerDialog(this@ApproveOutActivity,
                 { view, year, month, dayOfMonth ->
-                    var fixMonth:String = (month + 1).toString()
-                    var fixDay:String = dayOfMonth.toString()
+                    var fixMonth: String = (month + 1).toString()
+                    var fixDay: String = dayOfMonth.toString()
 
-                    if(fixMonth.length == 1) {
+                    if (fixMonth.length == 1) {
                         fixMonth = "0$fixMonth"
                     }
-                    if(fixDay.length == 1) {
+                    if (fixDay.length == 1) {
                         fixDay = "0$fixDay"
                     }
 
                     textDateFrom.text = "${year}-${fixMonth}-${fixDay}"
-                }, year, month, day)
+                }, year, month, day
+            )
             datePicker.show()
         }
 
-        textDateFrom.addTextChangedListener(object : TextWatcher{
+        textDateFrom.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 //                Do Something
             }
@@ -1068,22 +1124,23 @@ class ApproveOutActivity : AppCompatActivity() {
             datePicker = DatePickerDialog(this@ApproveOutActivity,
                 { view, year, month, dayOfMonth ->
 
-                    var fixMonth:String = (month + 1).toString()
-                    var fixDay:String = dayOfMonth.toString()
+                    var fixMonth: String = (month + 1).toString()
+                    var fixDay: String = dayOfMonth.toString()
 
-                    if(fixMonth.length == 1) {
+                    if (fixMonth.length == 1) {
                         fixMonth = "0$fixMonth"
                     }
-                    if(fixDay.length == 1) {
+                    if (fixDay.length == 1) {
                         fixDay = "0$fixDay"
                     }
 
                     textDateTo.text = "${year}-${fixMonth}-${fixDay}"
-                }, year, month, day)
+                }, year, month, day
+            )
             datePicker.show()
         }
 
-        textDateTo.addTextChangedListener(object : TextWatcher{
+        textDateTo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 //                Do Something
             }
@@ -1101,7 +1158,7 @@ class ApproveOutActivity : AppCompatActivity() {
     }
 
     private fun showSearch(show: Boolean) {
-        if(show) {
+        if (show) {
             isSearch = true
             lnrSearchView.visibility = View.VISIBLE
             rlHeader.visibility = View.GONE
@@ -1114,24 +1171,24 @@ class ApproveOutActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(isImgShow) {
+        if (isImgShow) {
             isImgShow = false
             lnrImageShow.visibility = View.GONE
             return
         }
-        if(isDetail) {
+        if (isDetail) {
             isDetail = false
             lnrChooseQr.visibility = View.GONE
             return
         }
-        if(isAlamatShow) {
+        if (isAlamatShow) {
             isAlamatShow = false
             lnrAlamatView.visibility = View.GONE
             return
         }
-        if(isSearch) {
+        if (isSearch) {
             showSearch(false)
-            if(itemList.size != 0) {
+            if (itemList.size != 0) {
                 llEmpty.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE
                 btnUlangi.visibility = View.GONE
