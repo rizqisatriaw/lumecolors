@@ -362,13 +362,17 @@ class ApproveOutActivity : AppCompatActivity() {
                 if (res.status == Constants.STAT200) {
 
                     if(res.data.size != 0) {
-                        qrCodeSampai = res.data[0].id
+//                        qrCodeSampai = res.data[0].id
 
                         val listOfItems = ArrayList<String>()
 
                         (0 until res.data.size).forEach { position ->
-                            listOfItems.add(res.data[position].id)
+                            if(qrDari != res.data[position].id) {
+                                listOfItems.add(res.data[position].id)
+                            }
                         }
+
+                        qrCodeSampai = listOfItems[0]
 
                         val spinnerAdapter = ArrayAdapter(this@ApproveOutActivity, R.layout.item_spinner, listOfItems)
                         spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
@@ -380,7 +384,7 @@ class ApproveOutActivity : AppCompatActivity() {
                                 position: Int,
                                 id: Long)
                             {
-                                qrCodeSampai = res.data[position].id
+                                qrCodeSampai = listOfItems[position]
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -422,12 +426,14 @@ class ApproveOutActivity : AppCompatActivity() {
 
     private fun addQR(data: MApprove) {
 //        if(qrCodeProduk != "") {
+//        Log.d("DATALOG: ", "$idProduk, $qrCodeProduk, $qrCodeSampai")
+//        return
         if(idProduk != "") {
             mLoading.setMessage(LOADING_MSG)
             mLoading.show()
 
             val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
-            val call = service.saveQR(data.order_id, idProduk)
+            val call = service.saveQR(idProduk, qrCodeProduk, qrCodeSampai)
 
             call.enqueue(object : Callback<ResponseApprove> {
 
@@ -472,7 +478,7 @@ class ApproveOutActivity : AppCompatActivity() {
 
             })
         } else {
-            Toast.makeText(this@ApproveOutActivity, "Tidak QR Code yang Terpilih.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@ApproveOutActivity, "Tidak ada QR Code yang Terpilih.", Toast.LENGTH_SHORT).show()
         }
     }
 
