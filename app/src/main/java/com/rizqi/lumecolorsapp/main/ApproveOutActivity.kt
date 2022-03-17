@@ -253,8 +253,8 @@ class ApproveOutActivity : AppCompatActivity() {
     }
 
     private fun setSpinnerQR(produkId: String) {
-        mLoading.setMessage(LOADING_MSG)
-        mLoading.show()
+//        mLoading.setMessage(LOADING_MSG)
+//        mLoading.show()
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
         val call = service.QRByProduk(produkId)
@@ -354,8 +354,8 @@ class ApproveOutActivity : AppCompatActivity() {
     }
 
     private fun setSpinnerQRSampai(produkId: String, qrDari: String) {
-        mLoading.setMessage(LOADING_MSG)
-        mLoading.show()
+//        mLoading.setMessage(LOADING_MSG)
+//        mLoading.show()
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
         val call = service.QRByProdukSampai(produkId, qrDari)
