@@ -73,11 +73,6 @@ class ApproveOutActivity : AppCompatActivity() {
     private lateinit var llEmpty: LinearLayout
     private lateinit var btnUlangi: Button
 
-//    private lateinit var buttonListQR: LinearLayout
-//    private lateinit var buttonPacking: LinearLayout
-//    private lateinit var buttonSender: LinearLayout
-//    private lateinit var buttonApproved: LinearLayout
-
     private lateinit var itemList: ArrayList<MApprove>
     private lateinit var searchItem: ArrayList<MApprove>
     private lateinit var qrCodeProduk: String

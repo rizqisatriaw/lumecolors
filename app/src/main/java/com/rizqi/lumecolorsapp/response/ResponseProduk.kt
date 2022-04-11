@@ -1,6 +1,5 @@
 package com.rizqi.lumecolorsapp.response
 
-import com.rizqi.lumecolorsapp.model.MApprove
 import com.rizqi.lumecolorsapp.model.MProduk
 import java.io.Serializable
 

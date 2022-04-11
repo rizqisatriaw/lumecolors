@@ -84,9 +84,13 @@
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_stock_opname.xml" value="0.3546875" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/item_stock_out.xml" value="0.3546875" />
         <entry key="..\:/Users/majoo/Documents/project/Lumecolors/app/src/main/res/layout/list_qr_approve_out.xml" value="0.3546875" />
-        <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout/activity_approve_out.xml" value="0.19739583333333333" />
+        <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout-v26/activity_login.xml" value="0.35989583333333336" />
+        <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout/activity_approve_out.xml" value="0.33" />
+        <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout/activity_login.xml" value="0.35989583333333336" />
+        <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout/activity_stock_opname.xml" value="0.21" />
         <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout/item_list_qr.xml" value="0.19739583333333333" />
         <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout/item_spinner.xml" value="0.19739583333333333" />
+        <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout/item_stock_opname.xml" value="0.18931159420289856" />
         <entry key="app/src/main/res/layout/activity_approve_out.xml" value="0.25104166666666666" />
       </map>
     </option>

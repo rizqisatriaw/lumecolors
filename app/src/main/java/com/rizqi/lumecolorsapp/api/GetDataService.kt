@@ -1,6 +1,7 @@
 package com.rizqi.lumecolorsapp.api
 
 import com.rizqi.lumecolorsapp.response.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -11,6 +12,8 @@ interface GetDataService {
     fun userLogin(
         @Field("username") username: String,
         @Field("password") password: String,
+        @Field("id_gudang") id_gudang: String,
+        @Field("level") level: String,
         @Field("periode") periode: String
     ): Call<ResponseLogin>
 
@@ -139,4 +142,11 @@ interface GetDataService {
     fun listProduk(
         @Field("order_id") order_id: String,
     ): Call<ResponseProduk>
+
+    @FormUrlEncoded
+    @POST("master/gudang")
+    fun location(
+        @Field("id_gudang") id_gudang: String,
+    ): Call<ResponseLocation>
+
 }

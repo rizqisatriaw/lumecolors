@@ -7,21 +7,22 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.rizqi.lumecolorsapp.R
 import com.rizqi.lumecolorsapp.api.GetDataService
 import com.rizqi.lumecolorsapp.api.RetrofitClients
 import com.rizqi.lumecolorsapp.main.MenuActivity
+import com.rizqi.lumecolorsapp.response.ResponseLocation
 import com.rizqi.lumecolorsapp.response.ResponseLogin
+import com.rizqi.lumecolorsapp.response.ResponseProduk
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
 import com.rizqi.lumecolorsapp.utils.Constants.LOGGED_IN
 import com.rizqi.lumecolorsapp.utils.Constants.LOGGED_STATE
+import com.rizqi.lumecolorsapp.utils.Constants.NAMA_GUDANG
 import com.rizqi.lumecolorsapp.utils.Constants.PERIODE
 import com.rizqi.lumecolorsapp.utils.Constants.SP_LEVEL
 import com.rizqi.lumecolorsapp.utils.SharedPreferencesUtils
@@ -34,12 +35,19 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferencesUtils
     private lateinit var datePicker: DatePickerDialog
     private lateinit var mLoading: ProgressDialog
+
 //    Variable From Layout
     private lateinit var login: LinearLayout
     private lateinit var username: EditText
     private lateinit var password: EditText
     private lateinit var periode: LinearLayout
     private lateinit var mTxtPeriode: TextView
+    private lateinit var spinnerLocation: Spinner
+    private lateinit var spinnerLevel: Spinner
+
+    private lateinit var idGudang: String
+    private lateinit var textLocation: TextView
+    private lateinit var textLevel: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +62,10 @@ class LoginActivity : AppCompatActivity() {
         password = findViewById(R.id.edit_password)
         periode = findViewById(R.id.periode)
         mTxtPeriode = findViewById(R.id.txt_periode)
+        spinnerLocation = findViewById(R.id.spinner_location)
+        spinnerLevel = findViewById(R.id.spinner_level)
+
+        idGudang = ""
 
         sharedPreferences = SharedPreferencesUtils(this@LoginActivity)
 
@@ -64,10 +76,16 @@ class LoginActivity : AppCompatActivity() {
         }
 
         setPeriode()
+        setSpinnerLevel()
+        setSpinnerLocation(idGudang)
 
         login.setOnClickListener {
             if(validation()) {
-                responseLogin(username.text.toString().trim(), password.text.toString().trim(), mTxtPeriode.text.toString().trim())
+                responseLogin(username.text.toString().trim(),
+                    password.text.toString().trim(),
+                    textLocation.toString().trim(),
+                    textLevel.toString().trim(),
+                    mTxtPeriode.text.toString().trim())
             }
         }
 
@@ -116,12 +134,12 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun responseLogin(username: String, password: String, periode: String) {
+    private fun responseLogin(username: String, password: String, id_gudang: String, level: String, periode: String) {
         mLoading.setMessage(LOADING_MSG)
         mLoading.show()
 
         val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
-        val call = service.userLogin(username, password, periode)
+        val call = service.userLogin(username, password, id_gudang, level, periode)
 
         call.enqueue(object : Callback<ResponseLogin> {
 
@@ -147,6 +165,7 @@ class LoginActivity : AppCompatActivity() {
                     val data = res.data[0]
 
                     setDataUser(SP_LEVEL, 0, data.nama)
+                    setDataUser(NAMA_GUDANG, 0, data.nama_gudang)
                     setDataUser(PERIODE, 0, res.periode)
                     setDataUser(LOGGED_STATE, 0, LOGGED_IN)
 
@@ -177,6 +196,100 @@ class LoginActivity : AppCompatActivity() {
         } else {
             sharedPreferences.setSharedPreferences(key, int)
         }
+    }
+
+    private fun setSpinnerLevel() {
+        val level = arrayOf("PICKER", "CHECKER", "PACKING", "SENDER")
+
+        val spinnerAdapter = ArrayAdapter(this@LoginActivity, R.layout.item_spinner, level)
+        spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
+        spinnerLevel.adapter = spinnerAdapter
+
+        spinnerLevel.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                )
+                {
+                    level[position]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+            }
+
+
+    }
+
+    private fun setSpinnerLocation(id_gudang: String) {
+
+        val service = RetrofitClients().getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.location(id_gudang)
+
+        call.enqueue(object : Callback<ResponseLocation> {
+
+            override fun onFailure(call: Call<ResponseLocation>, t: Throwable) {
+
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Something went wrong...Please try later!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                Log.d("FAILED :", t.message.toString())
+                mLoading.dismiss()
+            }
+
+            override fun onResponse(
+                call: Call<ResponseLocation>,
+                response: Response<ResponseLocation>
+            ) {
+
+                val res = response.body()!!
+
+                if (!res.data.equals(null)) {
+
+                    idGudang = res.data[0].id_gudang
+
+                    val listOfItems = ArrayList<String>()
+
+                    (0 until res.data.size).forEach { position ->
+                        listOfItems.add(res.data[position].nama_gudang)
+                    }
+
+                    val spinnerAdapter =
+                        ArrayAdapter(this@LoginActivity, R.layout.item_spinner, listOfItems)
+                    spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
+                    spinnerLocation.adapter = spinnerAdapter
+
+                    spinnerLocation.onItemSelectedListener =
+                        object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long
+                            ) {
+                                idGudang = res.data[position].id_gudang
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                            }
+
+                        }
+                    }
+
+                mLoading.dismiss()
+
+            }
+
+        })
     }
 
 }
