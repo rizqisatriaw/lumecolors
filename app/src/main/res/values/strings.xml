@@ -91,6 +91,7 @@
     <string name="status">Status</string>
     <string name="detail">Detail</string>
     <string name="ex_date">2001-10-11</string>
+    <string name="gudang">Gudang</string>
     <string name="ex_period">11/2021</string>
     <string name="exp_date">Expired Date</string>
     <string name="approve">Approve</string>

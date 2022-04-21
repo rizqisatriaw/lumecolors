@@ -21,6 +21,7 @@ import com.rizqi.lumecolorsapp.model.MOpname
 import com.rizqi.lumecolorsapp.response.ResponseOpname
 import com.rizqi.lumecolorsapp.utils.Constants
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
+import com.rizqi.lumecolorsapp.utils.Constants.NAMA_GUDANG
 import com.rizqi.lumecolorsapp.utils.Constants.PERIODE
 import com.rizqi.lumecolorsapp.utils.Constants.URL_GAMBAR
 import com.rizqi.lumecolorsapp.utils.Constants.URL_KARTU
@@ -40,6 +41,7 @@ class StockOpnameActivity : AppCompatActivity() {
     private lateinit var emptyState: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var datePeriod: TextView
+    private lateinit var nameGudang: TextView
     private lateinit var lytQrList: LinearLayout
     private lateinit var vBack: LinearLayout
     private lateinit var lnrImageShow: LinearLayout
@@ -68,6 +70,7 @@ class StockOpnameActivity : AppCompatActivity() {
         emptyState = findViewById(R.id.empty_state)
         recyclerView = findViewById(R.id.rv_show)
         datePeriod = findViewById(R.id.periode)
+        nameGudang = findViewById(R.id.gudang_name)
 //        lytQrList = findViewById(R.id.layout_qr)
 //        vBack = findViewById(R.id.view_back)
         lnrImageShow = findViewById(R.id.linear_image_show)
@@ -89,8 +92,10 @@ class StockOpnameActivity : AppCompatActivity() {
         }
 
         val periode = sharedPreferences.getStringSharedPreferences(PERIODE)!!
+        val nama_gudang = sharedPreferences.getStringSharedPreferences(NAMA_GUDANG)!!
 
         datePeriod.text = periode
+        nameGudang.text = nama_gudang
 
         getListOpname(periode)
 

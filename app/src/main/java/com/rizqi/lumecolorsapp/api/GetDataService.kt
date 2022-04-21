@@ -149,4 +149,14 @@ interface GetDataService {
         @Field("id_gudang") id_gudang: String,
     ): Call<ResponseLocation>
 
+    @FormUrlEncoded
+    @POST("stok/simpan_opname")
+    fun saveOpname(
+        @Field("id_produk") id_produk: String,
+        @Field("qty") qty: String,
+        @Field("periode") periode: String,
+        @Field("id_gudang") id_gudang: String,
+        @Field("id_user") id_user : String,
+    ): Call<ResponseOpname>
+
 }

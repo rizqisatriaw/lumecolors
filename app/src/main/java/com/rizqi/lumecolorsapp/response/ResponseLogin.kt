@@ -9,6 +9,10 @@ class ResponseLogin(
      val message : String,
      val data : ArrayList<MUser>,
      val periode : String,
+     val level : String,
+     val id_gudang : String,
+     val nama_gudang : String,
+
 
 ): Serializable
 

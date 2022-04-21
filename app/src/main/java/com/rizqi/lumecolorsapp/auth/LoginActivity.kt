@@ -45,9 +45,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var spinnerLocation: Spinner
     private lateinit var spinnerLevel: Spinner
 
-    private lateinit var idGudang: String
-    private lateinit var textLocation: TextView
-    private lateinit var textLevel: TextView
+    private lateinit var selectedLocation: String
+    private lateinit var selectedLevel: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +64,8 @@ class LoginActivity : AppCompatActivity() {
         spinnerLocation = findViewById(R.id.spinner_location)
         spinnerLevel = findViewById(R.id.spinner_level)
 
-        idGudang = ""
+        selectedLevel = ""
+        selectedLocation = ""
 
         sharedPreferences = SharedPreferencesUtils(this@LoginActivity)
 
@@ -77,14 +77,14 @@ class LoginActivity : AppCompatActivity() {
 
         setPeriode()
         setSpinnerLevel()
-        setSpinnerLocation(idGudang)
+        setSpinnerLocation(selectedLocation)
 
         login.setOnClickListener {
             if(validation()) {
                 responseLogin(username.text.toString().trim(),
                     password.text.toString().trim(),
-                    textLocation.toString().trim(),
-                    textLevel.toString().trim(),
+                    selectedLocation.trim(),
+                    selectedLevel.trim(),
                     mTxtPeriode.text.toString().trim())
             }
         }
@@ -164,8 +164,8 @@ class LoginActivity : AppCompatActivity() {
 
                     val data = res.data[0]
 
-                    setDataUser(SP_LEVEL, 0, data.nama)
-                    setDataUser(NAMA_GUDANG, 0, data.nama_gudang)
+                    setDataUser(SP_LEVEL, 0, selectedLevel)
+                    setDataUser(NAMA_GUDANG, 0, res.nama_gudang)
                     setDataUser(PERIODE, 0, res.periode)
                     setDataUser(LOGGED_STATE, 0, LOGGED_IN)
 
@@ -214,7 +214,7 @@ class LoginActivity : AppCompatActivity() {
                     id: Long
                 )
                 {
-                    level[position]
+                    selectedLevel = level[position]
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -222,8 +222,6 @@ class LoginActivity : AppCompatActivity() {
                 }
 
             }
-
-
     }
 
     private fun setSpinnerLocation(id_gudang: String) {
@@ -254,7 +252,7 @@ class LoginActivity : AppCompatActivity() {
 
                 if (!res.data.equals(null)) {
 
-                    idGudang = res.data[0].id_gudang
+                    selectedLocation = res.data[0].id_gudang
 
                     val listOfItems = ArrayList<String>()
 
@@ -275,7 +273,7 @@ class LoginActivity : AppCompatActivity() {
                                 position: Int,
                                 id: Long
                             ) {
-                                idGudang = res.data[position].id_gudang
+                                selectedLocation = res.data[position].id_gudang
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -7,5 +7,4 @@ class MUser (
     var nama : String = "",
     var level : String = "",
     var valid : String = "",
-    var nama_gudang : String = "",
 )

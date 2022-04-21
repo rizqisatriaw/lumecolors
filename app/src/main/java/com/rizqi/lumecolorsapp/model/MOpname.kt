@@ -2,6 +2,8 @@ package com.rizqi.lumecolorsapp.model
 
 class MOpname(
     var id : String = "",
+    var id_produk : String = "",
+    var id_user : String = "",
     var kode_produk : String = "",
     var nama_produk : String = "",
     var id_kategori : String = "",
@@ -20,4 +22,5 @@ class MOpname(
     var nama_kategori : String = "",
     var qty : String = "",
     var saldo_awal : String = "",
+    var periode : String = "",
 )

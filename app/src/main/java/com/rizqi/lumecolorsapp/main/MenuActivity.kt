@@ -67,7 +67,7 @@ class MenuActivity : AppCompatActivity() {
 //            hiddenApproveIn.visibility = View.VISIBLE
             hiddenStockIn.visibility = View.VISIBLE
             hiddenStockOut.visibility = View.VISIBLE
-            hiddenStockOpname.visibility = View.VISIBLE
+//            hiddenStockOpname.visibility = View.VISIBLE
 
             approveOut.setOnClickListener {
                 val intent = Intent(this@MenuActivity, ApproveOutActivity::class.java)
