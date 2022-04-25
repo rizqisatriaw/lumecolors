@@ -91,8 +91,18 @@
         <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout/item_list_qr.xml" value="0.19739583333333333" />
         <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout/item_spinner.xml" value="0.19739583333333333" />
         <entry key="..\:/Users/user/Documents/project/Lumecolors/app/src/main/res/layout/item_stock_opname.xml" value="0.18931159420289856" />
+        <entry key="app/src/main/res/drawable/custom_background_alamat.xml" value="0.1405" />
+        <entry key="app/src/main/res/drawable/custom_background_approve.xml" value="0.1405" />
+        <entry key="app/src/main/res/drawable/custom_background_detail.xml" value="0.1405" />
+        <entry key="app/src/main/res/drawable/custom_background_edittext.xml" value="0.1405" />
+        <entry key="app/src/main/res/drawable/custom_background_ref.xml" value="0.1405" />
+        <entry key="app/src/main/res/drawable/more_black.xml" value="0.1405" />
         <entry key="app/src/main/res/layout/activity_approve_out.xml" value="0.25104166666666666" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2296195652173913" />
         <entry key="app/src/main/res/layout/activity_stock_opname.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/item_edit_stock_opname.xml" value="0.5089667942212975" />
+        <entry key="app/src/main/res/layout/item_stock_opname.xml" value="0.2296195652173913" />
+        <entry key="app/src/main/res/layout/item_stock_opname_edit.xml" value="0.19234924316406252" />
       </map>
     </option>
   </component>

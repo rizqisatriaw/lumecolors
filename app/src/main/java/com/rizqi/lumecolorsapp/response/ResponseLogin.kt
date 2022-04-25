@@ -12,6 +12,7 @@ class ResponseLogin(
      val level : String,
      val id_gudang : String,
      val nama_gudang : String,
+//     val id_user: String,
 
 
 ): Serializable

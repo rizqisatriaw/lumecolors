@@ -19,6 +19,8 @@ import com.rizqi.lumecolorsapp.response.ResponseLocation
 import com.rizqi.lumecolorsapp.response.ResponseLogin
 import com.rizqi.lumecolorsapp.response.ResponseProduk
 import com.rizqi.lumecolorsapp.utils.Constants
+import com.rizqi.lumecolorsapp.utils.Constants.ID_GUDANG
+import com.rizqi.lumecolorsapp.utils.Constants.ID_USER
 import com.rizqi.lumecolorsapp.utils.Constants.LOADING_MSG
 import com.rizqi.lumecolorsapp.utils.Constants.LOGGED_IN
 import com.rizqi.lumecolorsapp.utils.Constants.LOGGED_STATE
@@ -168,6 +170,8 @@ class LoginActivity : AppCompatActivity() {
                     setDataUser(NAMA_GUDANG, 0, res.nama_gudang)
                     setDataUser(PERIODE, 0, res.periode)
                     setDataUser(LOGGED_STATE, 0, LOGGED_IN)
+                    setDataUser(ID_GUDANG, 0, res.id_gudang)
+//                    setDataUser(ID_USER, 0, res.id_user)
 
                     val intent = Intent(this@LoginActivity, MenuActivity::class.java)
                     this@LoginActivity.startActivity(intent)

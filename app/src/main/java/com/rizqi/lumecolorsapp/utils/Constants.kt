@@ -39,5 +39,7 @@ object Constants {
     const val SP_LEVEL = "sp_level"
     const val PERIODE = "periode"
     const val NAMA_GUDANG = "nama_gudang"
+    const val ID_GUDANG = "id_gudang"
+    const val ID_USER = "id_user"
 
 }

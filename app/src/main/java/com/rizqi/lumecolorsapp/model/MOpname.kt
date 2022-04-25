@@ -4,6 +4,7 @@ class MOpname(
     var id : String = "",
     var id_produk : String = "",
     var id_user : String = "",
+    var id_gudang : String = "",
     var kode_produk : String = "",
     var nama_produk : String = "",
     var id_kategori : String = "",

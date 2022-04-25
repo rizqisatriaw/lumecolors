@@ -59,6 +59,7 @@
     <string name="telp">No. Telp</string>
     <string name="qty_pass">Qty pass</string>
     <string name="qty">Qty</string>
+    <string name="qty_">Qty :</string>
     <string name="approved">Approved</string>
     <string name="packing_approve">Approve Packing</string>
     <string name="send_approve">Approve Send</string>
@@ -114,6 +115,9 @@
     <string name="produk">Produk</string>
     <string name="qty_stock">QTY Stock</string>
     <string name="kartu_stock">Kartu Stock</string>
+    <string name="edit_stock">Edit Stock</string>
+    <string name="save">Save Stock</string>
+    <string name="back">Kembali</string>
     <string name="pilih_lokasi">Pilih Lokasi</string>
     <string name="pilih_level">Pilih Level</string>
 </resources>

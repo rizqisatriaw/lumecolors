@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rizqi.lumecolorsapp.R
@@ -38,6 +39,7 @@ class OpnameAdapter(private val mData: List<MOpname>, private val mContext: Cont
 
         holder.btnListQr.setOnClickListener {
             interfaceAdapter!!.onBtnClick(mData[position])
+
         }
     }
 
@@ -54,8 +56,10 @@ class ViewHolderOpname(view: View, private val context: Context) : RecyclerView.
     var mKategori = view.findViewById<TextView>(R.id.kategori_text)
     var mQty = view.findViewById<TextView>(R.id.qty_text)
     var btnListQr = view.findViewById<LinearLayout>(R.id.button_kartu)
+    var mIdProduk = ""
 
     fun bindData(data: MOpname) {
+
         Glide.with(context)
             .load(Constants.URL_GAMBAR + data.gambar)
             .into(mImage)
@@ -64,5 +68,7 @@ class ViewHolderOpname(view: View, private val context: Context) : RecyclerView.
         mKode.text = data.kode_produk
         mKategori.text = data.nama_kategori
         mQty.text = data.qty
+        mIdProduk = data.id_produk
+        println("produkId $mIdProduk")
     }
 }
